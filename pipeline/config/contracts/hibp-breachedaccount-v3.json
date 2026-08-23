@@ -1,0 +1,17 @@
+{
+  "contract_version": "2026-08-22",
+  "source": "https://haveibeenpwned.com/API/V3",
+  "base_url": "https://haveibeenpwned.com/api/v3",
+  "operation": {
+    "method": "GET",
+    "path": "/breachedaccount/{account}",
+    "required_headers": ["hibp-api-key", "user-agent"],
+    "fixed_query": {
+      "truncateResponse": "true",
+      "includeUnverified": "true"
+    },
+    "accepted_statuses": [200, 404],
+    "retry_status": 429
+  },
+  "prohibited_operations": ["breacheddomain", "domainsearch", "stealerLogsByDomain"]
+}

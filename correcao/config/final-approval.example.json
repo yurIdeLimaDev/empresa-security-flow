@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "case_id": "CASE-001",
+  "decision": "approved",
+  "reviewer": "NOME DO REVISOR",
+  "reviewed_at": "2026-08-22T12:00:00Z",
+  "reviewed_commit": "0123456789abcdef0123456789abcdef01234567",
+  "reviewed_bundle_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "requested_ticket_ids": [],
+  "notes": "Revisão final do diff, gates e evidências concluída."
+}

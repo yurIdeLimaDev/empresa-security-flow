@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "O contrato HIBP é identificado por SHA-256, não por chave de API."
+targetRules = ["generic-api-key"]
+paths = ['''pipeline/tools\.lock\.json''']
+regexTarget = "line"
+regexes = ['''"api_contract_sha256":\s*"sha256:[a-f0-9]{64}"''']

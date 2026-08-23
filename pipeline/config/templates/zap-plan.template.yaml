@@ -1,0 +1,38 @@
+env:
+  contexts:
+    - name: engagement
+      urls:
+        - {{BASE_URL}}
+      includePaths: {{INCLUDE_PATHS}}
+      excludePaths: {{EXCLUDE_PATHS}}
+      authentication:
+        method: script
+        parameters:
+          script: {{LOGIN_SCRIPT}}
+          scriptEngine: "ECMAScript : Graal.js"
+        verification:
+          method: response
+          loggedInRegex: {{LOGGED_IN_REGEX}}
+          loggedOutRegex: {{LOGGED_OUT_REGEX}}
+      sessionManagement:
+        method: cookie
+      users:
+        - name: test_user_a
+          credentials:
+            username: {{USER_EMAIL}}
+            password: {{USER_PASSWORD}}
+jobs:
+  - type: spider
+    parameters:
+      context: engagement
+      user: test_user_a
+      maxDuration: {{SPIDER_MINUTES}}
+  - type: activeScan
+    parameters:
+      context: engagement
+      user: test_user_a
+      maxRuleDurationInMins: {{RULE_MINUTES}}
+  - type: report
+    parameters:
+      template: traditional-json
+      reportFile: {{REPORT_FILE}}

@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: pipeline
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Go
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
+        with:
+          go-version-file: pipeline/go.mod
+          cache-dependency-path: pipeline/go.sum
+
+      - name: Secret scan
+        working-directory: ${{ github.workspace }}
+        run: >-
+          docker run --rm --network none --cap-drop ALL
+          --security-opt no-new-privileges=true --read-only
+          --tmpfs /tmp:rw,noexec,nosuid,nodev,size=64m
+          --mount type=bind,src="$GITHUB_WORKSPACE",dst=/repo,readonly
+          ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+          dir /repo --config /repo/.gitleaks.toml --no-banner --redact=100
+
+      - name: Tests
+        run: go test ./... -count=1
+
+      - name: Race detector
+        run: go test -race ./... -count=1
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Build
+        run: go build -trimpath ./cmd/pipeline
+
+      - name: Supply-chain policy
+        run: go run ./cmd/pipeline supply-chain --lock tools.lock.json --sbom sbom.cdx.json --strict

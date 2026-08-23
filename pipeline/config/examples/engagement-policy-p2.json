@@ -1,0 +1,30 @@
+{
+  "engagement_id": "eng_client_001",
+  "pipeline_mode": "pipeline2_active",
+  "authorization": {
+    "confirmed": true,
+    "confirmed_at": "2026-08-22T00:00:00Z",
+    "confirmed_by": "SUBSTITUIR_RESPONSAVEL",
+    "document_reference": "SOW-SHA256-SUBSTITUIR"
+  },
+  "environment": {
+    "targets": [
+      {"host": "staging.example.com", "ip": "192.0.2.30", "port": 443, "rate_per_second": 3, "max_concurrency": 5, "max_requests": 500}
+    ],
+    "external_apis": [],
+    "authoritative_ns": [
+      {"host": "ns1.example.com", "ip": "192.0.2.53"}
+    ],
+    "dns_resolver_ip": "1.1.1.1",
+    "canary_image": "curlimages/curl:8.15.0@sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922"
+  },
+  "emergency_stop": {"script": "eng-stop.sh", "owner": "SUBSTITUIR_RESPONSAVEL"},
+  "canary": {
+    "negative_url": "https://negative-canary.operator.example/health",
+    "negative_ip": "192.0.2.10",
+    "negative_port": 443,
+    "positive_url": "https://staging.example.com/health",
+    "positive_ip": "192.0.2.30",
+    "positive_port": 443
+  }
+}

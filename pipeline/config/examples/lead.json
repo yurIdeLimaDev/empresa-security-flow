@@ -1,0 +1,22 @@
+{
+  "case_id": "LEAD-001",
+  "domain": "example.com",
+  "base_url": "https://example.com",
+  "cors_origin": "https://security-check.example",
+  "application_category": "unknown",
+  "lead_origin": "landing-page",
+  "tags": ["hypothesis-only"],
+  "output_root": "../artifacts",
+  "max_requests": 50,
+  "requests_per_second": 1,
+  "max_download_bytes": 5242880,
+  "tool_lock_path": "tools.lock.json",
+  "policies": {
+    "engagement": "config/examples/engagement-policy-p1.json",
+    "tool": "config/examples/tool-policy-p1.json",
+    "matrix": "config/examples/test-matrix-p1.json"
+  },
+  "hibp_api_key_env": "HIBP_API_KEY",
+  "hibp_user_agent": "EmpresaSecurity-PublicObservation/0.4",
+  "public_contact_paths": ["/about", "/team", "/contact"]
+}

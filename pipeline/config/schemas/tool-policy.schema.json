@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://empresa-security.local/schemas/tool-policy.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tools"],
+  "properties": {
+    "version": {"const": 1},
+    "tools": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "subfinder", "amass", "httpx", "testssl", "jsluice", "gitleaks",
+          "dnsreaper", "trufflehog", "hibp", "ffuf", "feroxbuster", "amass_active",
+          "schemathesis", "hadrian", "nuclei", "osv-scanner", "semgrep", "trivy",
+          "supabase_rls_checker", "supashield", "firepwn", "keyleak", "zap",
+          "jwt_tool", "dalfox", "sqlmap"
+        ]
+      },
+      "additionalProperties": {"$ref": "#/$defs/tool"}
+    }
+  },
+  "$defs": {
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "pipeline", "pin", "max_duration_minutes", "prohibitions", "flags"],
+      "properties": {
+        "mode": {"enum": ["automatic", "manual_gui", "disabled"]},
+        "pipeline": {"enum": [1, 2]},
+        "pin": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "value"],
+          "properties": {
+            "source": {"enum": ["docker_digest", "git_commit", "pypi_version", "npm_version", "binary_sha256", "api_contract_sha256"]},
+            "value": {"type": "string", "minLength": 1}
+          }
+        },
+        "max_duration_minutes": {"type": "integer", "minimum": 1, "maximum": 240},
+        "prohibitions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "flags": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "claim_resource", "verify_secrets", "baas_validate", "domain_search",
+            "auto_register_accounts", "apply_changes", "allow_stored_xss",
+            "allow_time_based_sqli", "allow_stacked_queries", "allow_jwt_playbook",
+            "allow_jwt_bruteforce"
+          ],
+          "properties": {
+            "claim_resource": {"const": false},
+            "verify_secrets": {"type": "boolean"},
+            "baas_validate": {"type": "boolean"},
+            "domain_search": {"type": "boolean"},
+            "auto_register_accounts": {"const": false},
+            "apply_changes": {"const": false},
+            "allow_stored_xss": {"type": "boolean"},
+            "allow_time_based_sqli": {"type": "boolean"},
+            "allow_stacked_queries": {"type": "boolean"},
+            "allow_jwt_playbook": {"type": "boolean"},
+            "allow_jwt_bruteforce": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}

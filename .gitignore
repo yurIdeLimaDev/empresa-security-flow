@@ -1,0 +1,32 @@
+# Builds e caches
+pipeline/bin/
+*.test
+*.test.exe
+*.exe
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Runtime de casos
+correcao/runtime/
+correcao/worktrees/
+artifacts/
+artefatos/
+resultados-brutos/
+*.har
+*.pcap
+
+# Segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# IDE e sistema
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

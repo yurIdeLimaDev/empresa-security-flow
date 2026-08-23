@@ -1,0 +1,285 @@
+{
+  "schema_version": "1.0.0",
+  "checked_at": "2026-08-22T23:14:14Z",
+  "docker_version": "29.6.1",
+  "pull_requested": true,
+  "approved": true,
+  "checks": [
+    {
+      "tool": "amass",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "owaspamass/amass:v5.1.1@sha256:79c06d6c8de06fc4140a3593c6c1f4ee3203e57ad06f7ce26047233ee428111a",
+      "image_id": "sha256:79c06d6c8de06fc4140a3593c6c1f4ee3203e57ad06f7ce26047233ee428111a",
+      "artifact_digest": "sha256:6d858147ec9877184a5bd2aadc1d94bb22747fef929a11d02dde35650ee989b8",
+      "observed_output": "v5.1.1",
+      "duration_ms": 612,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "dalfox",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "hahwul/dalfox:v3.2.1@sha256:970398742165633c2ff0f835ccae3fb64e6a80aaa20437072704f3780148a9e4",
+      "image_id": "sha256:970398742165633c2ff0f835ccae3fb64e6a80aaa20437072704f3780148a9e4",
+      "artifact_digest": "sha256:c2a0747bf3407e617de271c044890e36a0766e05da3ec697d57b7ddc27311d0f",
+      "observed_output": "dalfox 3.2.1",
+      "duration_ms": 412,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "dnsreaper",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "punksecurity/dnsreaper:2.0.3@sha256:6bd99203cf59f7137418f676d1dbf69cdc3193a808b2d91b420f5f9f33255649",
+      "image_id": "sha256:6bd99203cf59f7137418f676d1dbf69cdc3193a808b2d91b420f5f9f33255649",
+      "artifact_digest": "sha256:f8416284f68fe1b530624d2e114a2ea31d550bc326974102b2f21cc44ec20f96",
+      "observed_output": "usage: \ndocker run punksecurity/dnsreaper -- provider [options] \n\noutput:\n  findings output to screen and (by default) results.csv \n\nhelp:\ndocker run punksecurity/dnsreaper -- --help\n\nproviders:\n  \u003e bind - Read domains from a dns BIND zone file, or path to multiple\n  \u003e googlecloud - Scan multiple domains by fetching them from Google Cloud. Requires GOOGLE_APPLICATION_CREDENTIALS environment variable.\n  \u003e projectdiscovery - Scan multiple domains by fetching them from ProjectDiscovery\n  \u003e cloudflare - Scan multiple domains by fetching them from Cloudflare\n  \u003e azure - Scan multiple domains by fetching them from Azure DNS services\n  \u003e godaddy - Scan multiple domains by fetching them from GoDaddy\n  \u003e zonetransfer - Scan multiple domains by fetching records via DNS zone transfer\n  \u003e digitalocean - Scan multiple domains by fetching them from Digital Ocean\n  \u003e securitytrails - Scan multiple domains by fetching them from Security Trails\n  \u003e file - Read domains from a file (or folder of files), one per line\n  \u003e single - Scan a single domain by providing a domain on the commandline\n  \u003e aws - Scan multiple domains by fetching them from AWS Route53\n\npositional arguments:\n  {bind,googlecloud,projectdiscovery,cloudflare,azure,godaddy,zonetransfer,digitalocean,securitytrails,file,single,aws}\n\noptions:\n  -h, --help            Show this help message and exit\n  --out OUT             Output file (default: results) - use 'stdout' to\n                        stream out\n  --out-format {csv,json}\n  --resolver RESOLVER   Provide a custom DNS resolver (or multiple seperated\n                        by commas), or '' to use system resolver. We\n                        loadbalance a public resolver list by default\n  --parallelism PARALLELISM\n                        Number of domains to test in parallel - too high and\n                        you may see odd DNS results (default: 30)\n  --disable-probable    Do not check for probable conditions\n  --enable-unlikely     Check for more conditions, but with a high false\n                        positive rate\n  --signature SIGNATURE\n                        Only scan with this signature (multiple accepted)\n  --exclude-signature EXCLUDE_SIGNATURE\n                        Do not scan with this signature (multiple accepted)\n  --pipeline            Exit Non-Zero on detection (used to fail a pipeline)\n  -v, --verbose         -v for verbose, -vv for extra verbose\n  --nocolour            Turns off coloured text\n\nbind:\n  Read domains from a dns BIND zone file, or path to multiple\n\n  --bind-zone-file BIND_ZONE_FILE\n                        Required\n\ngooglecloud:\n  Scan multiple domains by fetching them from Google Cloud. Requires GOOGLE_APPLICATION_CREDENTIALS environment variable.\n\n  --project-id PROJECT_ID\n                        Required\n\nprojectdiscovery:\n  Scan multiple domains by fetching them from ProjectDiscovery\n\n  --pd-api-key PD_API_KEY\n                        Required\n  --pd-domains PD_DOMAINS\n                        Required\n\ncloudflare:\n  Scan multiple domains by fetching them from Cloudflare\n\n  --cloudflare-token CLOUDFLARE_TOKEN\n                        Required\n\nazure:\n  Scan multiple domains by fetching them from Azure DNS services\n\n  --az-subscription-id AZ_SUBSCRIPTION_ID\n                        Required\n  --az-tenant-id AZ_TENANT_ID\n                        Required\n  --az-client-id AZ_CLIENT_ID\n                        Required\n  --az-client-secret AZ_CLIENT_SECRET\n                        Required\n\ngodaddy:\n  Scan multiple domains by fetching them from GoDaddy\n\n  --gd-api-key GD_API_KEY\n                        Required\n  --gd-api-secret GD_API_SECRET\n                        Required\n  --gd-domains GD_DOMAINS\n                        Optional\n\nzonetransfer:\n  Scan multiple domains by fetching records via DNS zone transfer\n\n  --zonetransfer-nameserver ZONETRANSFER_NAMESERVER\n                        Required\n  --zonetransfer-domain ZONETRANSFER_DOMAIN\n                        Required\n\ndigitalocean:\n  Scan multiple domains by fetching them from Digital Ocean\n\n  --do-api-key DO_API_KEY\n                       ",
+      "duration_ms": 2901,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "feroxbuster",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "epi052/feroxbuster@sha256:5cab630e43eface8cc79a6d32f8899dbe6f708f1260b0c23f4efda7c1f521042",
+      "image_id": "sha256:5cab630e43eface8cc79a6d32f8899dbe6f708f1260b0c23f4efda7c1f521042",
+      "artifact_digest": "sha256:2792481aca70de43d80850e6f91c6a9cf5919f229fbb789371492b1a7c37e065",
+      "observed_output": "feroxbuster 2.13.1",
+      "duration_ms": 472,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "ffuf",
+      "execution_class": "disabled",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "firepwn",
+      "execution_class": "manual",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "gitleaks",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+      "image_id": "sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+      "artifact_digest": "sha256:ec8400d0d444988bdaeff38bdda057c1f3f450121314ae88610a76d9114663ae",
+      "observed_output": "v8.30.1",
+      "duration_ms": 451,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "hadrian",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+      "image_id": "sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+      "artifact_digest": "sha256:abadfecea233c10a45c0e0d8fa0945dba51d1516ab69e99bcc6da81aa3f23051",
+      "observed_output": "Hadrian v1.0.0\n\u001b[1m\u001b[31m\n    __  _____    ____  ____  _______    _   __\n   / / / /   |  / __ \\/ __ \\/  _/   |  / | / /\n  / /_/ / /| | / / / / /_/ // // /| | /  |/ /\n / __  / ___ |/ /_/ / _, _// // ___ |/ /|  /\n/_/ /_/_/  |_/_____/_/ |_/___/_/  |_/_/ |_/\n\n Praetorian Security, Inc.\n\u001b[0m\n\u001b[90m  v1.0.0\u001b[0m",
+      "duration_ms": 565,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "hibp",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "curlimages/curl:8.15.0@sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922",
+      "image_id": "sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922",
+      "artifact_digest": "sha256:c0ffca93665b0d75d6104566d350ca6c9955ba0af972ebd27f0aa763a6e57457",
+      "observed_output": "curl 8.15.0 (x86_64-pc-linux-musl) libcurl/8.15.0 OpenSSL/3.5.1 zlib/1.3.1 brotli/1.1.0 zstd/1.5.7 libidn2/2.3.7 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.65.0\nRelease-Date: 2025-07-16\nProtocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp ws wss\nFeatures: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz NTLM PSL SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd",
+      "duration_ms": 447,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "httpx",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "projectdiscovery/httpx:v1.10.0@sha256:e2f89a700e535b3e0d5ccf95e3383ebb54c2faecd8e8100573455cd0cbe8e02d",
+      "image_id": "sha256:e2f89a700e535b3e0d5ccf95e3383ebb54c2faecd8e8100573455cd0cbe8e02d",
+      "artifact_digest": "sha256:52b61249b5f708e9a805d429b0ea6326b2add90d90985a02a3d6033ff1486a28",
+      "observed_output": "__    __  __       _  __\n   / /_  / /_/ /_____ | |/ /\n  / __ \\/ __/ __/ __ \\|   /\n / / / / /_/ /_/ /_/ /   |\n/_/ /_/\\__/\\__/ .___/_/|_|\n             /_/\n\n\t\tprojectdiscovery.io\n\n[\u001b[34mINF\u001b[0m] Current Version: v1.10.0",
+      "duration_ms": 594,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "interactsh-server",
+      "execution_class": "infrastructure",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "jsluice",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "debian:trixie-slim@sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258",
+      "image_id": "sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258",
+      "artifact_digest": "sha256:50ba73e5b95a7e58ec0f30e9795b5c20b55216103ea4ce34d7aa48ba98628a0d",
+      "observed_output": "jsluice - Extract URLs, paths, and secrets from JavaScript files\n\nUsage:\n  jsluice \u003cmode\u003e [options] [file...]\n\nModes:\n  urls      Extract URLs and paths\n  secrets   Extract secrets and other interesting bits\n  tree      Print syntax trees for input files\n  query     Run tree-sitter a query against input files\n  format    Format JavaScript source using jsbeautifier-go\n\nGlobal options:\n  -c, --concurrency int        Number of files to process concurrently (default 1)\n  -C, --cookie string          Cookies to use when making requests to the specified HTTP based arguments\n  -H, --header string          Headers to use when making requests to the specified HTTP based arguments (can be specified multiple times)\n  -P, --placeholder string     Set the expression placeholder to a custom string (default 'EXPR')\n  -j, --raw-input              Read raw JavaScript source from stdin\n  -w, --warc                   Treat the input files as WARC (Web ARChive) files\n  -i, --no-check-certificate\tIgnore validation of server certificates\n\nURLs mode:\n  -I, --ignore-strings         Ignore matches from string literals\n  -S, --include-source         Include the source code where the URL was found\n  -R, --resolve-paths \u003curl\u003e    Resolve relative paths using the absolute URL provided\n  -u, --unique                 Only output each URL once per input file\n\nSecrets mode:\n  -p, --patterns \u003cfile\u003e        JSON file containing user-defined secret patterns to look for\n\nQuery mode:\n  -q, --query \u003cquery\u003e          Tree sitter query to run; e.g. '(string) @matches'\n  -r, --raw-output             Do not convert values to native types\n  -f, --include-filename       Include the filename in the output\n  -F, --format                 Format source code in the output\n\nExamples:\n  jsluice urls -C 'auth=true; user=admin;' -H 'Specific-Header-One: true' -H 'Specific-Header-Two: false' local_file.js https://remote.host/example.js\n  jsluice query -q '(object) @m' one.js two.js\n  find . -name '*.js' | jsluice secrets -c 5 --patterns=apikeys.json",
+      "duration_ms": 522,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "jwt_tool",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "ticarpi/jwt_tool:v2.3.0@sha256:1828f4e611b29e78f6823275b4a715a02427897aa7cb7def3ed1a6e126ec4cbd",
+      "image_id": "sha256:1828f4e611b29e78f6823275b4a715a02427897aa7cb7def3ed1a6e126ec4cbd",
+      "artifact_digest": "sha256:f81ac670e5e136da2d4904c8b2593cab67a880d35c027269b8f491999c63d7e9",
+      "observed_output": "usage: jwt_tool.py [-h] [-b] [-t TARGETURL] [-r REQUEST] [-rt RATE] [-i]\n                   [-rc COOKIES] [-rh HEADERS] [-pd POSTDATA]\n                   [-cv CANARYVALUE] [-np] [-nr] [-M MODE] [-X EXPLOIT]\n                   [-ju JWKSURL] [-S SIGN] [-pr PRIVKEY] [-T] [-I]\n                   [-hc HEADERCLAIM] [-pc PAYLOADCLAIM] [-hv HEADERVALUE]\n                   [-pv PAYLOADVALUE] [-C] [-d DICT] [-p PASSWORD]\n                   [-kf KEYFILE] [-V] [-pk PUBKEY] [-jw JWKSFILE] [-Q QUERY]\n                   [-v]\n                   [jwt]\n\npositional arguments:\n  jwt                   the JWT to tinker with (no need to specify if in header/cookies)\n\noptional arguments:\n  -h, --help            show this help message and exit\n  -b, --bare            return TOKENS ONLY\n  -t TARGETURL, --targeturl TARGETURL\n                        URL to send HTTP request to with new JWT\n  -r REQUEST, --request REQUEST\n                        URL request to base on\n  -rt RATE, --rate RATE\n                        Max. number of requests per minute\n  -i, --insecure        Use HTTP for passed request\n  -rc COOKIES, --cookies COOKIES\n                        request cookies to send with the forged HTTP request\n  -rh HEADERS, --headers HEADERS\n                        request headers to send with the forged HTTP request (can be used multiple times for additional headers)\n  -pd POSTDATA, --postdata POSTDATA\n                        text string that contains all the data to be sent in a POST request\n  -cv CANARYVALUE, --canaryvalue CANARYVALUE\n                        text string that appears in response for valid token (e.g. \"Welcome, ticarpi\")\n  -np, --noproxy        disable proxy for current request (change in jwtconf.ini if permanent)\n  -nr, --noredir        disable redirects for current request (change in jwtconf.ini if permanent)\n  -M MODE, --mode MODE  Scanning mode:\n                        pb = playbook audit\n                        er = fuzz existing claims to force errors\n                        cc = fuzz common claims\n                        at - All Tests!\n  -X EXPLOIT, --exploit EXPLOIT\n                        eXploit known vulnerabilities:\n                        a = alg:none\n                        n = null signature\n                        b = blank password accepted in signature\n                        p = 'psychic signature' accepted in ECDSA signing\n                        s = spoof JWKS (specify JWKS URL with -ju, or set in jwtconf.ini to automate this attack)\n                        k = key confusion (specify public key with -pk)\n                        i = inject inline JWKS\n  -ju JWKSURL, --jwksurl JWKSURL\n                        URL location where you can host a spoofed JWKS\n  -S SIGN, --sign SIGN  sign the resulting token:\n                        hs256/hs384/hs512 = HMAC-SHA signing (specify a secret with -k/-p)\n                        rs256/rs384/rs512 = RSA signing (specify an RSA private key with -pr)\n                        es256/es384/es512 = Elliptic Curve signing (specify an EC private key with -pr)\n                        ps256/ps384/ps512 = PSS-RSA signing (specify an RSA private key with -pr)\n  -pr PRIVKEY, --privkey PRIVKEY\n                        Private Key for Asymmetric crypto\n  -T, --tamper          tamper with the JWT contents\n                        (set signing options with -S or use exploits with -X)\n  -I, --injectclaims    inject new claims and update existing claims with new values\n                        (set signing options with -S or use exploits with -X)\n                        (set target claim with -hc/-pc and injection values/lists with -hv/-pv\n  -hc HEADERCLAIM, --headerclaim HEADERCLAIM\n                        Header claim to tamper with\n  -pc PAYLOADCLAIM, --payloadclaim PAYLOADCLAIM\n                        Payload claim to tamper with\n  -hv HEADERVALUE, --headervalue HEADERVALUE\n                        Value (or file containing values) to inject into tampered header claim\n  -pv PAYLOADVALUE, --payloadvalue PAYLOADVALUE\n                        Value (or file containing values) to inject into tampered",
+      "duration_ms": 823,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "keyleak-detector",
+      "execution_class": "disabled",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "nuclei",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "projectdiscovery/nuclei:v3.11.1@sha256:582d5546902e67052097cb2d07296c642d50a1afc5e44623cb038845df9a32eb",
+      "image_id": "sha256:582d5546902e67052097cb2d07296c642d50a1afc5e44623cb038845df9a32eb",
+      "artifact_digest": "sha256:71377b73c7969fc345f911dc68b97dbabade9a0f5c05607bddce4f1ddf1a8b13",
+      "observed_output": "[\u001b[34mINF\u001b[0m] Nuclei Engine Version: v3.11.1\n[\u001b[34mINF\u001b[0m] Nuclei Config Directory: /tmp/.config/nuclei\n[\u001b[34mINF\u001b[0m] Nuclei Cache Directory: /tmp/.cache/nuclei\n[\u001b[34mINF\u001b[0m] PDCP Directory: /tmp/.pdcp",
+      "duration_ms": 698,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "osv-scanner",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "ghcr.io/google/osv-scanner:v2.5.1@sha256:8108ae94eadea5a02c9bec6e646909d5b790b44bd62d7f5b7f0b1d6d0ffc7734",
+      "image_id": "sha256:8108ae94eadea5a02c9bec6e646909d5b790b44bd62d7f5b7f0b1d6d0ffc7734",
+      "artifact_digest": "sha256:793d563de7eb223fe03aa05471d34b13b1a958fd237af5b978ee0e9bf6eaa552",
+      "observed_output": "osv-scanner version: 2.5.1\nosv-scalibr version: 0.5.2\ncommit: c84fa4568f2526d0333e9a914ea8a0a5f74ad68b\nbuilt at: 2026-08-17T03:44:26Z",
+      "duration_ms": 614,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "rlsgate",
+      "execution_class": "disabled",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "schemathesis",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "schemathesis/schemathesis:v4.24.3@sha256:dd1ebf7519958c34c276a65c20f9f2f808dbefb06c86163eb284ff5674c6a9f3",
+      "image_id": "sha256:dd1ebf7519958c34c276a65c20f9f2f808dbefb06c86163eb284ff5674c6a9f3",
+      "artifact_digest": "sha256:3a981f819c2f0522fb1dc4e67f16c6812cbb85dae9fb94adf52008121a09313b",
+      "observed_output": "schemathesis, version 4.24.3",
+      "duration_ms": 4025,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "semgrep",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "semgrep/semgrep:1.173.0@sha256:67319956da3dcb58baf5b322899c15458e3963e7018a86aeeb5cd224e69cb77a",
+      "image_id": "sha256:67319956da3dcb58baf5b322899c15458e3963e7018a86aeeb5cd224e69cb77a",
+      "artifact_digest": "sha256:2238e8f7153652d17cf1a84cb384725bd64fe657df43d59b37d5bf4e8f711c4d",
+      "observed_output": "1.173.0",
+      "duration_ms": 3997,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "sqlmap",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "python:3.13-slim-bookworm@sha256:00faa2debb87529f9f0764e9491d8ba400a3678976616c3bd7cb193745ac20d1",
+      "image_id": "sha256:00faa2debb87529f9f0764e9491d8ba400a3678976616c3bd7cb193745ac20d1",
+      "artifact_digest": "sha256:2ab31848b84c87d79fc040c14de68757059ece9afe89dec315fec07d58560c62",
+      "observed_output": "1.10#stable",
+      "duration_ms": 2014,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "subfinder",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+      "image_id": "sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+      "artifact_digest": "sha256:f7cc4a9819cbd56fa74f6dce06c8fa3bc3f6260b546593d76b973477e71f19df",
+      "observed_output": "[\u001b[34mINF\u001b[0m] Current Version: v2.15.0\n[\u001b[34mINF\u001b[0m] Subfinder Config Directory: /tmp/.config/subfinder",
+      "duration_ms": 984,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "supabase-rls-checker",
+      "execution_class": "manual",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "supashield",
+      "execution_class": "disabled",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "testssl",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "drwetter/testssl.sh:3.2@sha256:953f4080fdb053b44b4810ff32c01b9f29d8e91867b8da35220c8fbb54d08f6e",
+      "image_id": "sha256:953f4080fdb053b44b4810ff32c01b9f29d8e91867b8da35220c8fbb54d08f6e",
+      "artifact_digest": "sha256:6d96ab09b61003fc283e54cdff28a7e1651a7f5c3df0aeba962a790d93c414a5",
+      "observed_output": "\u001b[1m\n#####################################################################\u001b[m\n  \u001b[1mtestssl.sh\u001b[m version \u001b[1m3.2.4\u001b[m from \u001b[1mhttps://testssl.sh/\u001b[m\n\u001b[1m\n  This program is free software. Distribution and modification under\n  GPLv2 permitted. USAGE w/o ANY WARRANTY. USE IT AT YOUR OWN RISK!\u001b[m\n\n  Please file bugs @ \u001b[1mhttps://testssl.sh/bugs/\u001b[m\n\u001b[1m#####################################################################\u001b[m\n\n  Using \u001b[3mOpenSSL 1.0.2-bad (Mar 28 2025)\u001b[m  [~183 ciphers]\n  on es-liveness-testssl-bd058c77:/home/testssl/bin/openssl.Linux.x86_64\n  built: \u001b[3mFri Mar 28 16:54:51 2025\u001b[m, platform: \u001b[3mlinux-x86_64\u001b[m\n  Using \u001b[3mbash 4.4.23\u001b[m",
+      "duration_ms": 1164,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "trivy",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "aquasec/trivy:0.74.0@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+      "image_id": "sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+      "artifact_digest": "sha256:460744fa15f41d54951ef3fce5b57567b7d7d864b54766ccf788cefb034c0100",
+      "observed_output": "Version: 0.74.0",
+      "duration_ms": 674,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "trufflehog",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "trufflesecurity/trufflehog:3.97.0@sha256:ff4c95e9df7d645daf2140e3ca1039031c63106268d5fbb25feb43ceca1bcc33",
+      "image_id": "sha256:ff4c95e9df7d645daf2140e3ca1039031c63106268d5fbb25feb43ceca1bcc33",
+      "artifact_digest": "sha256:3bca6817cef7d95c0d81f64ac2bef2dd658ead25f5d1079a9e70c7485cffeca7",
+      "observed_output": "trufflehog 3.97.0",
+      "duration_ms": 2104,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    },
+    {
+      "tool": "wappalyzer",
+      "execution_class": "disabled",
+      "status": "restricted",
+      "exit_code": -1,
+      "reason": "não executável por decisão de adoção"
+    },
+    {
+      "tool": "zap",
+      "execution_class": "automatic",
+      "status": "passed",
+      "image": "ghcr.io/zaproxy/zaproxy:2.17.0@sha256:781a2bdaea47324e7bab583e2263f21d257b0aee61ed51521a5be45f5f5081ef",
+      "image_id": "sha256:781a2bdaea47324e7bab583e2263f21d257b0aee61ed51521a5be45f5f5081ef",
+      "artifact_digest": "sha256:e8728b8b7475a2b1ee8273117c9f99dbe18b50a58cc35e82468a742dcbddb9af",
+      "observed_output": "Found Java version 17.0.20\nAvailable memory: 15943 MB\nUsing JVM args: -Xmx3985m\n1121 [main] INFO  org.parosproxy.paros.Constant - Copying default configuration to /home/zap/.ZAP/config.xml\n1342 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/session\n1342 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/dirbuster\n1342 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/fuzzers\n1343 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/plugin\n2.17.0\nAug 22, 2026 11:14:53 PM java.util.prefs.FileSystemPreferences$1 run\nINFO: Created user preferences directory.",
+      "duration_ms": 22322,
+      "hardening_profile": "network=none,cap-drop=ALL,no-new-privileges,read-only,tmpfs,resource-limits"
+    }
+  ]
+}

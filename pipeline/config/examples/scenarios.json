@@ -1,0 +1,26 @@
+{
+  "scenarios": [
+    {
+      "name": "concorrencia-credito-sintetico",
+      "domain": "credit",
+      "module": "race-conditions",
+      "method": "POST",
+      "path": "/api/test-fixtures/consume-credit",
+      "headers_from_env": {
+        "Authorization": "PIPELINE_TOKEN_USER_A"
+      },
+      "body": {"amount": 1, "fixture": true},
+      "concurrency": 5,
+      "expected_statuses": [200, 409, 429],
+      "state_check": {
+        "method": "GET",
+        "path": "/api/test-fixtures/credit-balance",
+        "headers_from_env": {
+          "Authorization": "PIPELINE_TOKEN_USER_A"
+        },
+        "json_pointer": "/balance",
+        "expected_delta": -1
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scenarios"],
+  "properties": {
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "domain", "module", "method", "path", "concurrency", "expected_statuses", "state_check"],
+        "properties": {
+          "name": {"type": "string", "minLength": 3},
+          "domain": {"enum": ["credit", "billing"]},
+          "module": {"enum": ["business-logic", "race-conditions"]},
+          "method": {"enum": ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]},
+          "path": {"type": "string", "pattern": "^/"},
+          "headers_from_env": {"type": "object", "additionalProperties": {"type": "string"}},
+          "body": {},
+          "concurrency": {"type": "integer", "minimum": 1, "maximum": 20},
+          "expected_statuses": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 100, "maximum": 599}},
+          "state_check": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["method", "path", "json_pointer", "expected_delta"],
+            "properties": {
+              "method": {"enum": ["GET", "HEAD"]},
+              "path": {"type": "string", "pattern": "^/[^/]"},
+              "headers_from_env": {"type": "object", "additionalProperties": {"type": "string"}},
+              "json_pointer": {"type": "string", "pattern": "^/"},
+              "expected_delta": {"type": "number"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

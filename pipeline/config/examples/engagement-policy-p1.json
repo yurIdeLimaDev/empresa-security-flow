@@ -1,0 +1,30 @@
+{
+  "engagement_id": "eng_lead_001",
+  "pipeline_mode": "pipeline1_public_low_impact",
+  "public_observation": {
+    "acknowledged": true,
+    "acknowledged_at": "2026-08-22T00:00:00Z",
+    "acknowledged_by": "SUBSTITUIR_RESPONSAVEL"
+  },
+  "environment": {
+    "targets": [
+      {"host": "example.com", "ip": "93.184.216.34", "port": 443, "rate_per_second": 1, "max_concurrency": 1, "max_requests": 50}
+    ],
+    "external_apis": [
+      {"host": "haveibeenpwned.com", "ip": "192.0.2.20", "port": 443, "purpose": "hibp"},
+      {"host": "crt.sh", "ip": "192.0.2.21", "port": 443, "purpose": "certificate-transparency"}
+    ],
+    "authoritative_ns": [],
+    "dns_resolver_ip": "1.1.1.1",
+    "canary_image": "curlimages/curl:8.15.0@sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922"
+  },
+  "emergency_stop": {"script": "eng-stop.sh", "owner": "SUBSTITUIR_RESPONSAVEL"},
+  "canary": {
+    "negative_url": "https://negative-canary.operator.example/health",
+    "negative_ip": "192.0.2.10",
+    "negative_port": 443,
+    "positive_url": "https://example.com/",
+    "positive_ip": "93.184.216.34",
+    "positive_port": 443
+  }
+}

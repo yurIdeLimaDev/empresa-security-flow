@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stack profile — hipótese ou confirmação",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "status", "observations", "collected_at"],
+  "properties": {
+    "subject": {"type": "string", "description": "Empresa ou domínio, sem dado pessoal desnecessário."},
+    "status": {"enum": ["hypothesis", "unconfirmed_plan", "confirmed_by_client"]},
+    "collected_at": {"type": "string", "format": "date-time"},
+    "application_category": {"enum": ["baas", "web-application", "custom-backend", "static", "unknown"]},
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["category", "value", "source_type", "source_url", "observed_at", "confidence"],
+        "properties": {
+          "category": {"enum": ["backend", "auth_provider", "hosting", "framework", "lead_origin"]},
+          "value": {"type": "string"},
+          "source_type": {"enum": ["lead_origin", "public_registry", "direct_observation", "client_confirmation"]},
+          "source_url": {"type": "string", "format": "uri"},
+          "observed_at": {"type": "string", "format": "date-time"},
+          "confidence": {"enum": ["low", "medium", "high"]},
+          "limitations": {"type": "string"}
+        }
+      }
+    },
+    "approved_modules": {"type": "array", "items": {"type": "string"}}
+  }
+}

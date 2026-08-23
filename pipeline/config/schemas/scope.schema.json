@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case_id", "base_url", "output_root", "authorization", "execution_isolation", "allowed_schemes", "allowed_hosts", "allowed_ports", "allow_private_ips", "max_requests", "requests_per_second", "max_concurrency", "timeout_seconds", "policies", "automation"],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "base_url": {"type": "string", "format": "uri"},
+    "output_root": {"type": "string"},
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmed", "sow_path", "sow_sha256", "emergency_contact", "payment_status"],
+      "properties": {
+        "confirmed": {"type": "boolean"},
+        "sow_path": {"type": "string"},
+        "sow_sha256": {"type": "string"},
+        "emergency_contact": {"type": "string"},
+        "payment_status": {"enum": ["pending", "paid", "refunded"]}
+      }
+    },
+    "execution_isolation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmed"],
+      "properties": {
+        "confirmed": {"type": "boolean"},
+        "method": {"enum": ["container-egress-policy", "host-firewall", "proxy-enforced"]},
+        "evidence_path": {"type": "string"},
+        "evidence_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+      }
+    },
+    "allowed_schemes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["http", "https"]}},
+    "allowed_hosts": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "allowed_ports": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 1, "maximum": 65535}},
+    "allow_private_ips": {"type": "boolean"},
+    "max_requests": {"type": "integer", "minimum": 1, "maximum": 10000},
+    "requests_per_second": {"type": "number", "exclusiveMinimum": 0, "maximum": 50},
+    "max_concurrency": {"type": "integer", "minimum": 1, "maximum": 20},
+    "timeout_seconds": {"type": "integer", "minimum": 1, "maximum": 120},
+    "stack_profile_path": {"type": "string"},
+    "repository_path": {"type": "string"},
+    "semgrep_config_path": {"type": "string"},
+    "wordlist_path": {"type": "string"},
+    "openapi_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+    "scenario_path": {"type": "string"},
+    "hadrian_roles_path": {"type": "string"},
+    "hadrian_auth_path": {"type": "string"},
+    "hadrian_allow_mutations": {"type": "boolean"},
+    "interactsh_server": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "interactsh_token_env": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+    "enabled_modules": {"type": "array", "uniqueItems": true, "items": {"enum": ["active-recon", "api-mapping", "authentication", "authorization", "business-logic", "dependencies", "reporting", "baas", "storage", "custom-backend", "race-conditions"]}},
+    "nuclei_templates": {"type": "array", "items": {"type": "string"}},
+    "tool_lock_path": {"type": "string", "minLength": 1},
+    "policies": {
+      "type": "object", "additionalProperties": false,
+      "required": ["engagement", "tool", "matrix"],
+      "properties": {
+        "engagement": {"type": "string", "minLength": 1},
+        "tool": {"type": "string", "minLength": 1},
+        "matrix": {"type": "string", "minLength": 1}
+      }
+    },
+    "automation": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "amass_active": {"$ref": "#/$defs/amassActive"},
+        "supashield": {"$ref": "#/$defs/supashield"},
+        "zap": {"$ref": "#/$defs/zap"},
+        "jwt_tool": {"$ref": "#/$defs/jwt"},
+        "dalfox": {"$ref": "#/$defs/dalfox"},
+        "sqlmap": {"$ref": "#/$defs/sqlmap"}
+      }
+    }
+  },
+  "$defs": {
+    "amassActive": {
+      "type": "object", "additionalProperties": false, "required": ["datasources_path"],
+      "properties": {"datasources_path": {"type": "string", "minLength": 1}}
+    },
+    "supashield": {
+      "type": "object", "additionalProperties": false,
+      "required": ["environment", "backup_reference", "database_url_env"],
+      "properties": {
+        "environment": {"const": "staging"},
+        "backup_reference": {"type": "string", "minLength": 1},
+        "database_url_env": {"const": "SUPASHIELD_DATABASE_URL"}
+      }
+    },
+    "zap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["template_path", "login_script_path", "user_email_env", "user_password_env", "include_paths", "exclude_paths", "logged_in_regex", "logged_out_regex", "spider_minutes", "rule_minutes"],
+      "properties": {
+        "template_path": {"type": "string", "minLength": 1},
+        "login_script_path": {"type": "string", "minLength": 1},
+        "user_email_env": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+        "user_password_env": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+        "include_paths": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "exclude_paths": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+        "logged_in_regex": {"type": "string", "minLength": 1},
+        "logged_out_regex": {"type": "string", "minLength": 1},
+        "spider_minutes": {"type": "integer", "minimum": 1, "maximum": 30},
+        "rule_minutes": {"type": "integer", "minimum": 1, "maximum": 30}
+      }
+    },
+    "jwt": {
+      "type": "object", "additionalProperties": false,
+      "required": ["token_env", "target_url", "expected_issuer", "expected_audience", "expected_algorithm", "public_key_path"],
+      "properties": {
+        "token_env": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+        "target_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "expected_issuer": {"type": "string", "minLength": 1},
+        "expected_audience": {"type": "string", "minLength": 1},
+        "expected_algorithm": {"enum": ["RS256", "HS256", "ES256"]},
+        "public_key_path": {"type": "string"}
+      }
+    },
+    "dalfox": {
+      "type": "object", "additionalProperties": false, "required": ["targets_path", "payloads_path"],
+      "properties": {"targets_path": {"type": "string", "minLength": 1}, "payloads_path": {"type": "string", "minLength": 1}}
+    },
+    "sqlmap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["request_path", "parameter", "safe_url", "target_kind"],
+      "properties": {
+        "request_path": {"type": "string", "minLength": 1},
+        "parameter": {"type": "string", "minLength": 1},
+        "safe_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "target_kind": {"enum": ["postgres_rpc", "custom_backend"]}
+      }
+    }
+  }
+}

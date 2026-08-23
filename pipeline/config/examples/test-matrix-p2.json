@@ -1,0 +1,6 @@
+{
+  "engagement_id": "eng_client_001",
+  "tests": [
+    {"id": "t01", "resource": "table public.orders", "user": "test_a", "action": "read", "expected_result": "somente_proprio_recurso", "evidence_path": "evidence/rls/t01.json"}
+  ]
+}

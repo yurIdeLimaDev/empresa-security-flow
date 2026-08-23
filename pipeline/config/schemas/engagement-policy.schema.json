@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://empresa-security.local/schemas/engagement-policy.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["engagement_id", "pipeline_mode", "environment", "emergency_stop", "canary"],
+  "properties": {
+    "engagement_id": {"type": "string", "pattern": "^eng_[a-z0-9_]+$"},
+    "pipeline_mode": {"enum": ["pipeline1_public_low_impact", "pipeline2_active"]},
+    "public_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acknowledged", "acknowledged_at", "acknowledged_by"],
+      "properties": {
+        "acknowledged": {"const": true},
+        "acknowledged_at": {"type": "string", "format": "date-time"},
+        "acknowledged_by": {"type": "string", "minLength": 1}
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confirmed", "confirmed_at", "confirmed_by", "document_reference"],
+      "properties": {
+        "confirmed": {"const": true},
+        "confirmed_at": {"type": "string", "format": "date-time"},
+        "confirmed_by": {"type": "string", "minLength": 1},
+        "document_reference": {"type": "string", "minLength": 1}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targets", "external_apis", "authoritative_ns", "dns_resolver_ip", "canary_image"],
+      "properties": {
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/destinationWithLimits"}
+        },
+        "external_apis": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/destination"}
+        },
+        "authoritative_ns": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nameserver"}
+        },
+        "dns_resolver_ip": {"type": "string", "format": "ipv4"},
+        "canary_image": {"type": "string", "pattern": "^[^@\\s]+@sha256:[a-f0-9]{64}$"}
+      }
+    },
+    "emergency_stop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script", "owner"],
+      "properties": {
+        "script": {"const": "eng-stop.sh"},
+        "owner": {"type": "string", "minLength": 1}
+      }
+    },
+    "canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["negative_url", "negative_ip", "negative_port", "positive_url", "positive_ip", "positive_port"],
+      "properties": {
+        "negative_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "negative_ip": {"type": "string", "format": "ipv4"},
+        "negative_port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "positive_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "positive_ip": {"type": "string", "format": "ipv4"},
+        "positive_port": {"type": "integer", "minimum": 1, "maximum": 65535}
+      }
+    }
+  },
+  "$defs": {
+    "destination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "ip", "port", "purpose"],
+      "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "ip": {"type": "string", "format": "ipv4"},
+        "port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "destinationWithLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "ip", "port", "rate_per_second", "max_concurrency", "max_requests"],
+      "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "ip": {"type": "string", "format": "ipv4"},
+        "port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "rate_per_second": {"type": "number", "exclusiveMinimum": 0, "maximum": 50},
+        "max_concurrency": {"type": "integer", "minimum": 1, "maximum": 20},
+        "max_requests": {"type": "integer", "minimum": 1, "maximum": 10000}
+      }
+    },
+    "nameserver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["host", "ip"],
+      "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "ip": {"type": "string", "format": "ipv4"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"pipeline_mode": {"const": "pipeline1_public_low_impact"}}, "required": ["pipeline_mode"]},
+      "then": {"required": ["public_observation"], "not": {"required": ["authorization"]}}
+    },
+    {
+      "if": {"properties": {"pipeline_mode": {"const": "pipeline2_active"}}, "required": ["pipeline_mode"]},
+      "then": {"required": ["authorization"], "not": {"required": ["public_observation"]}}
+    }
+  ]
+}

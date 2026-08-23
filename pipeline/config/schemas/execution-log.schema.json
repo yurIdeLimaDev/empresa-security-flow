@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://empresa-security.local/schemas/execution-log.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "engagement_id", "tool", "tool_digest", "container_digest", "policy_files_hash", "input_hashes", "runtime_artifacts", "network", "started_at", "ended_at", "exit_code", "timed_out", "stdout_truncated", "stderr_truncated", "counts", "artifacts", "artifact_hashes", "reviewed_by", "reviewed_at"],
+  "properties": {
+    "run_id": {"type": "string", "pattern": "^run_[a-z0-9_]+$"},
+    "engagement_id": {"type": "string", "pattern": "^eng_[a-z0-9_]+$"},
+    "tool": {"type": "string", "minLength": 1},
+    "tool_digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "container_digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "policy_files_hash": {
+      "type": "object", "additionalProperties": false,
+      "required": ["engagement", "tool", "matrix"],
+      "properties": {
+        "engagement": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "tool": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "matrix": {"type": "string", "pattern": "^(sha256:[a-f0-9]{64}|not-applicable)$"}
+      }
+    },
+    "input_hashes": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}, "size_bytes": {"type": "integer", "minimum": 0}}
+      }
+    },
+    "runtime_artifacts": {"type": "array", "items": {"$ref": "#/$defs/pathHash"}},
+    "network": {
+      "type": "object", "additionalProperties": false,
+      "required": ["bridge", "chain", "proxy_log"],
+      "properties": {"bridge": {"type": "string"}, "chain": {"type": "string"}, "proxy_log": {"type": "string"}}
+    },
+    "started_at": {"type": "string", "format": "date-time"},
+    "ended_at": {"type": "string", "format": "date-time"},
+    "exit_code": {"type": "integer"},
+    "timed_out": {"type": "boolean"},
+    "stdout_truncated": {"type": "boolean"},
+    "stderr_truncated": {"type": "boolean"},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requests"], "properties": {"requests": {"type": "integer", "minimum": 0}}
+    },
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "artifact_hashes": {"type": "array", "items": {"$ref": "#/$defs/pathHash"}},
+    "reviewed_by": {"type": ["string", "null"]},
+    "reviewed_at": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "$defs": {
+    "pathHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "size_bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

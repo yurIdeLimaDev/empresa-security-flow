@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.1.0",
+  "checked_at": "2026-08-22T23:14:14Z",
+  "lock_path": "tools.lock.json",
+  "sbom_path": "sbom.cdx.json",
+  "approved": true,
+  "checks": [
+    {
+      "tool": "amass",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "dalfox",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "dnsreaper",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "feroxbuster",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "ffuf",
+      "execution_class": "disabled",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "firepwn",
+      "execution_class": "manual",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "gitleaks",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "hadrian",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "hibp",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "httpx",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "interactsh-server",
+      "execution_class": "infrastructure",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "jsluice",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "jwt_tool",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "keyleak-detector",
+      "execution_class": "disabled",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "nuclei",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "osv-scanner",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "rlsgate",
+      "execution_class": "disabled",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "schemathesis",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "semgrep",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "sqlmap",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "subfinder",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "supabase-rls-checker",
+      "execution_class": "manual",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "supashield",
+      "execution_class": "disabled",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "testssl",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "trivy",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "trufflehog",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "wappalyzer",
+      "execution_class": "disabled",
+      "review_status": "restricted",
+      "approved": true,
+      "blockers": []
+    },
+    {
+      "tool": "zap",
+      "execution_class": "automatic",
+      "review_status": "approved",
+      "approved": true,
+      "blockers": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "case_id": "CLIENT-001",
+  "base_url": "https://staging.example.com",
+  "output_root": "../artifacts",
+  "authorization": {
+    "confirmed": false,
+    "sow_path": "config/examples/SOW-PLACEHOLDER.md",
+    "sow_sha256": "SUBSTITUIR_PELO_SHA256_DO_SOW_ASSINADO",
+    "emergency_contact": "SUBSTITUIR_CONTATO",
+    "payment_status": "pending"
+  },
+  "execution_isolation": {
+    "confirmed": false,
+    "method": "container-egress-policy"
+  },
+  "allowed_schemes": ["https"],
+  "allowed_hosts": ["staging.example.com"],
+  "allowed_ports": [443],
+  "allow_private_ips": false,
+  "max_requests": 500,
+  "requests_per_second": 2,
+  "max_concurrency": 5,
+  "timeout_seconds": 15,
+  "stack_profile_path": "../artifacts/LEAD-001/pipeline-1/stack-profile.json",
+  "repository_path": "",
+  "semgrep_config_path": "",
+  "wordlist_path": "",
+  "openapi_url": "https://staging.example.com/openapi.json",
+  "scenario_path": "config/examples/scenarios.json",
+  "hadrian_roles_path": "",
+  "hadrian_auth_path": "",
+  "hadrian_allow_mutations": false,
+  "enabled_modules": [],
+  "nuclei_templates": [],
+  "tool_lock_path": "tools.lock.json",
+  "policies": {
+    "engagement": "config/examples/engagement-policy-p2.json",
+    "tool": "config/examples/tool-policy-p2.json",
+    "matrix": "config/examples/test-matrix-p2.json"
+  },
+  "automation": {}
+}

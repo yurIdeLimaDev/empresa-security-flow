@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "decision",
+    "reviewer",
+    "reviewed_at",
+    "reviewed_commit",
+    "reviewed_bundle_sha256",
+    "requested_ticket_ids",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "decision": {"enum": ["approved", "changes_requested", "rejected"]},
+    "reviewer": {"type": "string", "minLength": 2, "maxLength": 200},
+    "reviewed_at": {"type": "string", "format": "date-time"},
+    "reviewed_commit": {"type": "string", "pattern": "^[A-Fa-f0-9]{40}$"},
+    "reviewed_bundle_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "requested_ticket_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^REM-[A-Fa-f0-9]{12}$"}
+    },
+    "notes": {"type": "string", "maxLength": 4000}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"decision": {"const": "changes_requested"}}},
+      "then": {"properties": {"requested_ticket_ids": {"minItems": 1}}},
+      "else": {"properties": {"requested_ticket_ids": {"maxItems": 0}}}
+    }
+  ]
+}

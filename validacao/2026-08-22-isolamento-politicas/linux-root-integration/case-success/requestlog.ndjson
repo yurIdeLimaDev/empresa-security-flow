@@ -1,0 +1,1 @@
+{"id":"request_ad0c593d0eb32072004d28ef","tool_run_id":"run_isolation_smoke","observed_at":"2026-08-22T05:15:36.580190719Z","method":"GET","url":"http://target.canary.test:8080/health","status":200,"duration_ms":1,"request_sha256":"1bd92fa82fe48d2721aecabb2e484c6a7c7a9ee1ea36603ce906939efa1121b0","scope_decision":"allowed_pinned"}

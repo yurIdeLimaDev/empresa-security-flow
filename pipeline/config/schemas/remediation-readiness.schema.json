@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "config_path",
+    "config_source_sha256",
+    "config_sha256",
+    "repository_path",
+    "approved",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "config_path": {"type": "string", "minLength": 1},
+    "config_source_sha256": {"$ref": "#/$defs/sha256"},
+    "config_sha256": {"$ref": "#/$defs/sha256"},
+    "repository_path": {"type": "string", "minLength": 1},
+    "approved": {"type": "boolean"},
+    "checks": {
+      "type": "array",
+      "minItems": 4,
+      "items": {"$ref": "#/$defs/check"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "status", "command_sha256", "expected_sha256", "reason"],
+      "properties": {
+        "kind": {"enum": ["agent", "gate"]},
+        "id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ready", "blocked"]},
+        "command_sha256": {"$ref": "#/$defs/sha256"},
+        "executable_path": {"type": "string", "minLength": 1},
+        "expected_sha256": {"$ref": "#/$defs/sha256"},
+        "executable_sha256": {"$ref": "#/$defs/sha256"},
+        "working_directory": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

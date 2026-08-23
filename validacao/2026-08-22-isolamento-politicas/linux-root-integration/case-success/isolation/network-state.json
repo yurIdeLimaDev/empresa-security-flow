@@ -1,0 +1,10 @@
+{
+  "network_name": "eng_smoke_20260822_net",
+  "chain": "ENG_SMOKE_20260_5470A8D5_EGR",
+  "input_chain": "ENG_SMOKE_20260_5470A8D5_INP",
+  "proxy_log": "/work/case/requestlog.ndjson",
+  "setup_script": "/work/case/isolation/network-setup.sh",
+  "canary_script": "/work/case/isolation/network-canary.sh",
+  "stop_script": "/work/case/isolation/eng-stop.sh",
+  "teardown_script": "/work/case/isolation/network-teardown.sh"
+}

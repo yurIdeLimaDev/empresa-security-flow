@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "case_id": "CASE-001",
+  "repository_path": "C:/CLIENTE/projeto",
+  "baseline_ref": "0123456789abcdef0123456789abcdef01234567",
+  "baseline_bundle_path": "C:/RUNTIME/CASE-001/baseline.bundle.json",
+  "output_root": "C:/RUNTIME/empresa-security",
+  "security_changes_only": true,
+  "human_review_stage": "final",
+  "limits": {
+    "max_attempts_per_ticket": 3,
+    "max_total_attempts": 20
+  },
+  "change_policy": {
+    "default_allowed_paths": ["src/**"],
+    "test_paths": ["tests/**"],
+    "protected_paths": [".github/**", "docs/**", "public/**"],
+    "max_files_changed": 12,
+    "max_changed_lines": 800,
+    "allow_dependency_changes": false,
+    "allow_binary_changes": false
+  },
+  "candidate_bundle_gate_id": "security-full",
+  "default_retest_gate_ids": ["retest-finding"],
+  "environment_allowlist": [],
+  "agent": {
+    "command": ["SECURITY_FIX_AGENT_ADAPTER", "--prompt", "{prompt}", "--repository", "{repository}"],
+    "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "timeout_seconds": 1800,
+    "auto_commit": true
+  },
+  "gates": [
+    {
+      "id": "quality-project",
+      "class": "quality",
+      "command": ["PROJECT_QUALITY_ADAPTER", "--repository", "{repository}"],
+      "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timeout_seconds": 900,
+      "required": true,
+      "working_directory": "",
+      "artifact_paths": []
+    },
+    {
+      "id": "security-full",
+      "class": "security",
+      "command": ["GOVERNED_SECURITY_ADAPTER", "--repository", "{repository}", "--output", "{gate_output}/candidate-bundle.json"],
+      "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timeout_seconds": 1800,
+      "required": true,
+      "working_directory": "",
+      "artifact_paths": ["candidate-bundle.json"]
+    },
+    {
+      "id": "retest-finding",
+      "class": "retest",
+      "command": ["FINDING_RETEST_ADAPTER", "--repository", "{repository}", "--ticket", "{ticket_id}", "--output", "{gate_output}"],
+      "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timeout_seconds": 900,
+      "required": true,
+      "working_directory": "",
+      "artifact_paths": []
+    },
+    {
+      "id": "smoke-project",
+      "class": "smoke",
+      "command": ["PROJECT_SMOKE_ADAPTER", "--repository", "{repository}"],
+      "executable_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timeout_seconds": 600,
+      "required": true,
+      "working_directory": "",
+      "artifact_paths": []
+    }
+  ],
+  "finding_overrides": []
+}

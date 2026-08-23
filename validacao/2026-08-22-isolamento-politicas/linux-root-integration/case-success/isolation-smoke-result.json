@@ -1,0 +1,7 @@
+{
+  "engagement_id": "eng_smoke_20260822",
+  "network_name": "eng_smoke_20260822_net",
+  "proxy_url": "http://172.30.0.1:36791",
+  "canary": "negative-blocked-and-positive-allowed",
+  "proxy_request": "allowed-pinned-request-logged"
+}

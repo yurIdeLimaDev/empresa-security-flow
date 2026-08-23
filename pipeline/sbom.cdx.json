@@ -1,0 +1,824 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:245cd241-a079-4fc2-908f-e1df5503b8ca",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-08-22T22:30:00Z",
+    "component": {
+      "type": "application",
+      "bom-ref": "app:empresa-security-pipeline",
+      "name": "empresa-security-pipeline",
+      "version": "0.5.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:golang/github.com/santhosh-tekuri/jsonschema/v6@v6.0.2",
+      "name": "github.com/santhosh-tekuri/jsonschema/v6",
+      "version": "6.0.2",
+      "purl": "pkg:golang/github.com/santhosh-tekuri/jsonschema/v6@v6.0.2"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:golang/golang.org/x/text@v0.14.0",
+      "name": "golang.org/x/text",
+      "version": "0.14.0",
+      "purl": "pkg:golang/golang.org/x/text@v0.14.0"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:golang/github.com/dlclark/regexp2@v1.11.0",
+      "name": "github.com/dlclark/regexp2",
+      "version": "1.11.0",
+      "purl": "pkg:golang/github.com/dlclark/regexp2@v1.11.0"
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:subfinder",
+      "name": "subfinder",
+      "version": "2.15.0",
+      "purl": "pkg:github/projectdiscovery/subfinder@v2.15.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "74a4de720d615df0ca9a6635d873bb8bf711df4d"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "tool-artifacts/linux-amd64/subfinder@sha256:f874b5463d1d1e338d3f0312b93464d7ada609dbfd3bc180daaeca1fc24a3ceb"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:amass",
+      "name": "amass",
+      "version": "5.1.1",
+      "purl": "pkg:github/owasp-amass/amass@v5.1.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "79299dce87b0085db0f2f4ef3e9c52cccb49f514"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "owaspamass/amass:v5.1.1@sha256:79c06d6c8de06fc4140a3593c6c1f4ee3203e57ad06f7ce26047233ee428111a"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:httpx",
+      "name": "httpx",
+      "version": "1.10.0",
+      "purl": "pkg:github/projectdiscovery/httpx@v1.10.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "13037dd08b9715cfbd960a70ae1edfef6686a857"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "projectdiscovery/httpx:v1.10.0@sha256:e2f89a700e535b3e0d5ccf95e3383ebb54c2faecd8e8100573455cd0cbe8e02d"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "tool:wappalyzer",
+      "name": "wappalyzergo",
+      "version": "0.2.94",
+      "purl": "pkg:golang/github.com/projectdiscovery/wappalyzergo@v0.2.94",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "disabled"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "67561525d918b88c2b2cbad40f3ca4231706ba68"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:gitleaks",
+      "name": "gitleaks",
+      "version": "8.30.1",
+      "purl": "pkg:github/gitleaks/gitleaks@v8.30.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "83d9cd684c87d95d656c1458ef04895a7f1cbd8e"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:trufflehog",
+      "name": "trufflehog",
+      "version": "3.97.0",
+      "purl": "pkg:github/trufflesecurity/trufflehog@v3.97.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "bcfcf73aaf4759d4dadc2783177c245a02792318"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "trufflesecurity/trufflehog:3.97.0@sha256:ff4c95e9df7d645daf2140e3ca1039031c63106268d5fbb25feb43ceca1bcc33"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:hibp",
+      "name": "curlimages/curl (HIBP breachedaccount client)",
+      "version": "8.15.0",
+      "purl": "pkg:oci/curlimages/curl@sha256%3A4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "cfbfb65047e85e6b08af65fe9cdbcf68e9ad496a"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "curlimages/curl:8.15.0@sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:testssl",
+      "name": "testssl.sh",
+      "version": "3.2.4",
+      "purl": "pkg:github/testssl/testssl.sh@v3.2.4",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "97763a411c525720a5f9bd9d2cded416b10f210a"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "drwetter/testssl.sh:3.2@sha256:953f4080fdb053b44b4810ff32c01b9f29d8e91867b8da35220c8fbb54d08f6e"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:nuclei",
+      "name": "nuclei",
+      "version": "3.11.1",
+      "purl": "pkg:github/projectdiscovery/nuclei@v3.11.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "a8c88feb4a1c8e961b7902534ce3af97e9d524a4"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "projectdiscovery/nuclei:v3.11.1@sha256:582d5546902e67052097cb2d07296c642d50a1afc5e44623cb038845df9a32eb"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:zap",
+      "name": "ZAP",
+      "version": "2.17.0",
+      "purl": "pkg:github/zaproxy/zaproxy@v2.17.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "8a1bff313f4d183dba5aa154ecbe89ad751c9153"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "ghcr.io/zaproxy/zaproxy:2.17.0@sha256:781a2bdaea47324e7bab583e2263f21d257b0aee61ed51521a5be45f5f5081ef"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:schemathesis",
+      "name": "schemathesis",
+      "version": "4.24.3",
+      "purl": "pkg:pypi/schemathesis@4.24.3",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "613ce31793d999a1ed43f2b8b8529d14a60710e8"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "schemathesis/schemathesis:v4.24.3@sha256:dd1ebf7519958c34c276a65c20f9f2f808dbefb06c86163eb284ff5674c6a9f3"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:jwt_tool",
+      "name": "jwt_tool",
+      "version": "2.3.0",
+      "purl": "pkg:github/ticarpi/jwt_tool@v2.3.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "3bc7407cf2222d6a821dcc19c776e5a1b1cb9a9b"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "ticarpi/jwt_tool:v2.3.0@sha256:1828f4e611b29e78f6823275b4a715a02427897aa7cb7def3ed1a6e126ec4cbd"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:sqlmap",
+      "name": "sqlmap",
+      "version": "1.10",
+      "purl": "pkg:github/sqlmapproject/sqlmap@1.10",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "ea8c6bdb63a3b2da1584f328836eb0d28116f7c4"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "python:3.13-slim-bookworm@sha256:00faa2debb87529f9f0764e9491d8ba400a3678976616c3bd7cb193745ac20d1"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "tool-artifacts/linux-amd64/sqlmap.pyz@sha256:66054f4518c59fefccbdf59ebabc91cafc6d52a62fb6b8542a9cf6e99790e78a"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:dalfox",
+      "name": "dalfox",
+      "version": "3.2.1",
+      "purl": "pkg:github/hahwul/dalfox@v3.2.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "6567e133f93c13faad1ffb04b8003a3c62ba94d1"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "hahwul/dalfox:v3.2.1@sha256:970398742165633c2ff0f835ccae3fb64e6a80aaa20437072704f3780148a9e4"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:osv-scanner",
+      "name": "osv-scanner",
+      "version": "2.5.1",
+      "purl": "pkg:github/google/osv-scanner@v2.5.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "c84fa4568f2526d0333e9a914ea8a0a5f74ad68b"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "ghcr.io/google/osv-scanner:v2.5.1@sha256:8108ae94eadea5a02c9bec6e646909d5b790b44bd62d7f5b7f0b1d6d0ffc7734"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:trivy",
+      "name": "trivy",
+      "version": "0.74.0",
+      "purl": "pkg:github/aquasecurity/trivy@v0.74.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "e1fd17a0ea4a8cf24bc4b4dd7e2cfbf4bb31b994"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "aquasec/trivy:0.74.0@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:semgrep",
+      "name": "semgrep",
+      "version": "1.173.0",
+      "purl": "pkg:pypi/semgrep@1.173.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "abce3b5391706850837d4339f84bfaa3ec08604b"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "semgrep/semgrep:1.173.0@sha256:67319956da3dcb58baf5b322899c15458e3963e7018a86aeeb5cd224e69cb77a"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:ffuf",
+      "name": "ffuf",
+      "version": "2.2.1",
+      "purl": "pkg:github/ffuf/ffuf@v2.2.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "disabled"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "1571aa17535d8bfcf42258659a141df0b12efa51"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:feroxbuster",
+      "name": "feroxbuster",
+      "version": "2.13.1",
+      "purl": "pkg:github/epi052/feroxbuster@v2.13.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "aa8e1335801e91d98ce0d4fd148c2159a667a83b"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "epi052/feroxbuster@sha256:5cab630e43eface8cc79a6d32f8899dbe6f708f1260b0c23f4efda7c1f521042"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:hadrian",
+      "name": "hadrian",
+      "version": "1.0.0",
+      "purl": "pkg:github/praetorian-inc/hadrian@v1.0.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "9513d9ee8df9148d6db58060ff287e05bed882fb"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "tool-artifacts/linux-amd64/hadrian@sha256:20345648122283b4ca984181f64a89f525b37b3038148fdc20851bffab47c8da"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:jsluice",
+      "name": "jsluice",
+      "version": "0ddfab153e060a9eeaded4d8669233f7c071e7e4",
+      "purl": "pkg:github/BishopFox/jsluice@0ddfab153e060a9eeaded4d8669233f7c071e7e4",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "0ddfab153e060a9eeaded4d8669233f7c071e7e4"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "debian:trixie-slim@sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "tool-artifacts/linux-amd64/jsluice@sha256:49640235e94e96066cbbf13de3f5738331c4048083b134a9d7e68e2931eb8b21"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:dnsreaper",
+      "name": "dnsReaper",
+      "version": "2.0.3",
+      "purl": "pkg:github/punk-security/dnsReaper@2.0.3",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "automatic"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "approved"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "c1588b22772d157f207e9334a7f4d7c24afbfd0a"
+        },
+        {
+          "name": "empresa-security:container",
+          "value": "punksecurity/dnsreaper:2.0.3@sha256:6bd99203cf59f7137418f676d1dbf69cdc3193a808b2d91b420f5f9f33255649"
+        },
+        {
+          "name": "empresa-security:runtime-artifact",
+          "value": "@"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:keyleak-detector",
+      "name": "keyleak-detector",
+      "version": "0.6.1",
+      "purl": "pkg:pypi/keyleak-detector@0.6.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "disabled"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "c3c2e4e2754824b6d177e9fe54e978e7d4452657"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:supabase-rls-checker",
+      "name": "supabase-rls-checker",
+      "version": "a092d71cba990c0748190f9331ebf7dd188205fb",
+      "purl": "pkg:github/sahilahluwalia/Supabase-RLS-Checker@a092d71cba990c0748190f9331ebf7dd188205fb",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "manual"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "a092d71cba990c0748190f9331ebf7dd188205fb"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:supashield",
+      "name": "supashield",
+      "version": "0.3.0",
+      "purl": "pkg:github/Rodrigotari1/supashield@v0.3.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "disabled"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "ab01656ba6e6664f6aca2879b3eec8270601b48d"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:firepwn",
+      "name": "firepwn-tool",
+      "version": "1.2.0",
+      "purl": "pkg:github/0xbigshaq/firepwn-tool@v1.2.0",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "manual"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "79a678fa561ef0ca765a4ac3e483454ea1afc5f0"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:rlsgate",
+      "name": "rlsgate",
+      "version": "08606c640387ef31369e912b3af866b5cd736e6e",
+      "purl": "pkg:github/GerardoRdz96/rlsgate@08606c640387ef31369e912b3af866b5cd736e6e",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "disabled"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "08606c640387ef31369e912b3af866b5cd736e6e"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "tool:interactsh-server",
+      "name": "interactsh-server",
+      "version": "1.3.1",
+      "purl": "pkg:github/projectdiscovery/interactsh@v1.3.1",
+      "properties": [
+        {
+          "name": "empresa-security:execution-class",
+          "value": "infrastructure"
+        },
+        {
+          "name": "empresa-security:review-status",
+          "value": "restricted"
+        },
+        {
+          "name": "empresa-security:source-commit",
+          "value": "810180a230fe2265385ed45695a6635b5026452a"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "app:empresa-security-pipeline",
+      "dependsOn": [
+        "pkg:golang/github.com/santhosh-tekuri/jsonschema/v6@v6.0.2",
+        "pkg:golang/golang.org/x/text@v0.14.0",
+        "pkg:golang/github.com/dlclark/regexp2@v1.11.0",
+        "tool:subfinder",
+        "tool:amass",
+        "tool:httpx",
+        "tool:wappalyzer",
+        "tool:gitleaks",
+        "tool:trufflehog",
+        "tool:hibp",
+        "tool:testssl",
+        "tool:nuclei",
+        "tool:zap",
+        "tool:schemathesis",
+        "tool:jwt_tool",
+        "tool:sqlmap",
+        "tool:dalfox",
+        "tool:osv-scanner",
+        "tool:trivy",
+        "tool:semgrep",
+        "tool:ffuf",
+        "tool:feroxbuster",
+        "tool:hadrian",
+        "tool:jsluice",
+        "tool:dnsreaper",
+        "tool:keyleak-detector",
+        "tool:supabase-rls-checker",
+        "tool:supashield",
+        "tool:firepwn",
+        "tool:rlsgate",
+        "tool:interactsh-server"
+      ]
+    }
+  ]
+}

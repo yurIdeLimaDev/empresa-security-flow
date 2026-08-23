@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://empresa-security.local/schemas/test-matrix.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["engagement_id", "tests"],
+  "properties": {
+    "engagement_id": {"type": "string", "pattern": "^eng_[a-z0-9_]+$"},
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "resource", "user", "action", "expected_result", "evidence_path"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "resource": {"type": "string", "minLength": 1},
+          "user": {"enum": ["test_a", "test_b", "anon"]},
+          "action": {"enum": ["read", "insert", "update", "delete", "rpc_call"]},
+          "expected_result": {"enum": ["negado", "somente_proprio_recurso", "publico_por_design"]},
+          "evidence_path": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1040 @@
+{
+  "schema_version": "1.1.0",
+  "generated_at": "2026-08-22T22:30:00Z",
+  "policy": {
+    "deny_latest": true,
+    "require_pinned_version": true,
+    "require_commit": true,
+    "require_artifact_sha256": true,
+    "require_container_digest": true,
+    "require_code_review": true,
+    "require_sbom": true
+  },
+  "tools": [
+    {
+      "name": "subfinder",
+      "repository": "projectdiscovery/subfinder",
+      "organization": "ProjectDiscovery",
+      "license": "MIT",
+      "role": "passive-subdomain-enumeration",
+      "release": {
+        "tag": "v2.15.0",
+        "release_id": 365641440,
+        "published_at": "2026-08-05T15:49:42Z",
+        "commit": "74a4de720d615df0ca9a6635d873bb8bf711df4d",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Release e commit resolvidos pela API do GitHub; tag leve sem assinatura criptográfica."
+      },
+      "sbom_component_ref": "tool:subfinder",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "74a4de720d615df0ca9a6635d873bb8bf711df4d",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-version"
+        ],
+        "expected_pattern": "(?i)2\\.15\\.0"
+      },
+      "container": {
+        "image": "gcr.io/distroless/static-debian12:nonroot",
+        "digest": "sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+        "entrypoint": "/opt/tool/subfinder",
+        "runtime_artifacts": [
+          {
+            "path": "tool-artifacts/linux-amd64/subfinder",
+            "sha256": "sha256:f874b5463d1d1e338d3f0312b93464d7ada609dbfd3bc180daaeca1fc24a3ceb",
+            "mount_path": "/opt/tool/subfinder"
+          }
+        ]
+      }
+    },
+    {
+      "name": "amass",
+      "repository": "owasp-amass/amass",
+      "organization": "OWASP",
+      "license": "NOASSERTION",
+      "role": "attack-surface-discovery",
+      "release": {
+        "tag": "v5.1.1",
+        "release_id": 305890933,
+        "published_at": "2026-04-07T02:08:08Z",
+        "commit": "79299dce87b0085db0f2f4ef3e9c52cccb49f514",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Release e commit resolvidos pela API do GitHub; imagem pinada por digest."
+      },
+      "container": {
+        "image": "owaspamass/amass:v5.1.1",
+        "digest": "sha256:79c06d6c8de06fc4140a3593c6c1f4ee3203e57ad06f7ce26047233ee428111a"
+      },
+      "sbom_component_ref": "tool:amass",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "79299dce87b0085db0f2f4ef3e9c52cccb49f514",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-version"
+        ],
+        "expected_pattern": "(?i)5\\.1\\.1"
+      }
+    },
+    {
+      "name": "httpx",
+      "repository": "projectdiscovery/httpx",
+      "organization": "ProjectDiscovery",
+      "license": "MIT",
+      "role": "http-probing",
+      "release": {
+        "tag": "v1.10.0",
+        "release_id": 351642582,
+        "published_at": "2026-07-09T16:14:52Z",
+        "commit": "13037dd08b9715cfbd960a70ae1edfef6686a857",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Release e commit resolvidos pela API do GitHub; imagem pinada por digest."
+      },
+      "container": {
+        "image": "projectdiscovery/httpx:v1.10.0",
+        "digest": "sha256:e2f89a700e535b3e0d5ccf95e3383ebb54c2faecd8e8100573455cd0cbe8e02d"
+      },
+      "sbom_component_ref": "tool:httpx",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "13037dd08b9715cfbd960a70ae1edfef6686a857",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-version"
+        ],
+        "expected_pattern": "(?i)1\\.10\\.0"
+      }
+    },
+    {
+      "name": "wappalyzer",
+      "repository": "projectdiscovery/wappalyzergo",
+      "organization": "ProjectDiscovery",
+      "license": "MIT",
+      "role": "technology-fingerprint",
+      "release": {
+        "tag": "v0.2.94",
+        "release_id": 371191168,
+        "published_at": "2026-08-16T00:21:05Z",
+        "commit": "67561525d918b88c2b2cbad40f3ca4231706ba68",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Biblioteca Go, sem binário/imagem oficial aprovada; integração bloqueada até build reprodutível e revisão."
+      },
+      "dependency_lock": "go.sum",
+      "sbom_component_ref": "tool:wappalyzer",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "67561525d918b88c2b2cbad40f3ca4231706ba68",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: disabled item; executor prohibition and documented reason"
+      },
+      "execution_class": "disabled"
+    },
+    {
+      "name": "gitleaks",
+      "repository": "gitleaks/gitleaks",
+      "organization": "Gitleaks",
+      "license": "MIT",
+      "role": "secret-detection",
+      "release": {
+        "tag": "v8.30.1",
+        "release_id": 299662760,
+        "published_at": "2026-03-21T02:17:58Z",
+        "commit": "83d9cd684c87d95d656c1458ef04895a7f1cbd8e",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada por digest; artefato local ainda sem checksum aprovado."
+      },
+      "container": {
+        "image": "ghcr.io/gitleaks/gitleaks:v8.30.1",
+        "digest": "sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f"
+      },
+      "sbom_component_ref": "tool:gitleaks",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "83d9cd684c87d95d656c1458ef04895a7f1cbd8e",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "version"
+        ],
+        "expected_pattern": "(?i)8\\.30\\.1"
+      }
+    },
+    {
+      "name": "trufflehog",
+      "repository": "trufflesecurity/trufflehog",
+      "organization": "Truffle Security",
+      "license": "AGPL-3.0",
+      "role": "secret-detection",
+      "release": {
+        "tag": "v3.97.0",
+        "release_id": 370755429,
+        "published_at": "2026-08-14T18:35:16Z",
+        "commit": "bcfcf73aaf4759d4dadc2783177c245a02792318",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada por digest; verificação externa de segredos não é automatizada."
+      },
+      "container": {
+        "image": "trufflesecurity/trufflehog:3.97.0",
+        "digest": "sha256:ff4c95e9df7d645daf2140e3ca1039031c63106268d5fbb25feb43ceca1bcc33"
+      },
+      "sbom_component_ref": "tool:trufflehog",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "bcfcf73aaf4759d4dadc2783177c245a02792318",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)3\\.97\\.0"
+      }
+    },
+    {
+      "name": "testssl",
+      "repository": "testssl/testssl.sh",
+      "organization": "testssl",
+      "license": "GPL-2.0",
+      "role": "tls-review",
+      "release": {
+        "tag": "v3.2.4",
+        "release_id": 352819821,
+        "published_at": "2026-07-12T18:50:39Z",
+        "commit": "97763a411c525720a5f9bd9d2cded416b10f210a",
+        "tag_type": "annotated",
+        "signature_status": "verified",
+        "verification_notes": "Tag anotada com assinatura verificada no GitHub; sem artefato Windows/container aprovado."
+      },
+      "sbom_component_ref": "tool:testssl",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "97763a411c525720a5f9bd9d2cded416b10f210a",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)3\\.2\\.4"
+      },
+      "container": {
+        "image": "drwetter/testssl.sh:3.2",
+        "digest": "sha256:953f4080fdb053b44b4810ff32c01b9f29d8e91867b8da35220c8fbb54d08f6e"
+      }
+    },
+    {
+      "name": "nuclei",
+      "repository": "projectdiscovery/nuclei",
+      "organization": "ProjectDiscovery",
+      "license": "MIT",
+      "role": "reviewed-template-scanning",
+      "release": {
+        "tag": "v3.11.1",
+        "release_id": 367195598,
+        "published_at": "2026-08-08T12:21:32Z",
+        "commit": "a8c88feb4a1c8e961b7902534ce3af97e9d524a4",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada por digest; templates continuam exigindo allowlist e revisão."
+      },
+      "container": {
+        "image": "projectdiscovery/nuclei:v3.11.1",
+        "digest": "sha256:582d5546902e67052097cb2d07296c642d50a1afc5e44623cb038845df9a32eb"
+      },
+      "sbom_component_ref": "tool:nuclei",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "a8c88feb4a1c8e961b7902534ce3af97e9d524a4",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-version"
+        ],
+        "expected_pattern": "(?i)3\\.11\\.1"
+      }
+    },
+    {
+      "name": "zap",
+      "repository": "zaproxy/zaproxy",
+      "organization": "OWASP",
+      "license": "Apache-2.0",
+      "role": "authenticated-dast",
+      "release": {
+        "tag": "v2.17.0",
+        "release_id": 270391993,
+        "published_at": "2025-12-15T14:41:51Z",
+        "commit": "8a1bff313f4d183dba5aa154ecbe89ad751c9153",
+        "tag_type": "annotated",
+        "signature_status": "not-verified",
+        "verification_notes": "Tag anotada não assinada; imagem pinada por digest."
+      },
+      "container": {
+        "image": "ghcr.io/zaproxy/zaproxy:2.17.0",
+        "digest": "sha256:781a2bdaea47324e7bab583e2263f21d257b0aee61ed51521a5be45f5f5081ef",
+        "entrypoint": "/zap/zap.sh"
+      },
+      "sbom_component_ref": "tool:zap",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "8a1bff313f4d183dba5aa154ecbe89ad751c9153",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-cmd",
+          "-silent",
+          "-version"
+        ],
+        "expected_pattern": "(?i)2\\.17\\.0"
+      }
+    },
+    {
+      "name": "schemathesis",
+      "repository": "schemathesis/schemathesis",
+      "organization": "Schemathesis",
+      "license": "MIT",
+      "role": "schema-based-api-testing",
+      "release": {
+        "tag": "v4.24.3",
+        "release_id": 359877847,
+        "published_at": "2026-07-25T22:54:19Z",
+        "commit": "613ce31793d999a1ed43f2b8b8529d14a60710e8",
+        "tag_type": "annotated",
+        "signature_status": "verified",
+        "verification_notes": "Tag anotada com assinatura verificada; imagem pinada por digest."
+      },
+      "container": {
+        "image": "schemathesis/schemathesis:v4.24.3",
+        "digest": "sha256:dd1ebf7519958c34c276a65c20f9f2f808dbefb06c86163eb284ff5674c6a9f3"
+      },
+      "dependency_lock": "requirements.lock",
+      "sbom_component_ref": "tool:schemathesis",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "613ce31793d999a1ed43f2b8b8529d14a60710e8",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)4\\.24\\.3"
+      }
+    },
+    {
+      "name": "jwt_tool",
+      "repository": "ticarpi/jwt_tool",
+      "organization": "ticarpi",
+      "license": "GPL-3.0",
+      "role": "jwt-validation-manual",
+      "release": {
+        "tag": "v2.3.0",
+        "release_id": 215974734,
+        "published_at": "2025-05-01T11:57:50Z",
+        "commit": "3bc7407cf2222d6a821dcc19c776e5a1b1cb9a9b",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada; sem contrato estável de relatório, portanto sem findings automáticos."
+      },
+      "container": {
+        "image": "ticarpi/jwt_tool:v2.3.0",
+        "digest": "sha256:1828f4e611b29e78f6823275b4a715a02427897aa7cb7def3ed1a6e126ec4cbd"
+      },
+      "dependency_lock": "requirements.txt pinned by upstream review",
+      "sbom_component_ref": "tool:jwt_tool",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "3bc7407cf2222d6a821dcc19c776e5a1b1cb9a9b",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "-h"
+        ],
+        "expected_pattern": "(?i)jwt[_ -]?tool|usage"
+      }
+    },
+    {
+      "name": "sqlmap",
+      "repository": "sqlmapproject/sqlmap",
+      "organization": "sqlmapproject",
+      "license": "GPL-2.0",
+      "role": "sql-injection-validation-manual",
+      "release": {
+        "tag": "1.10",
+        "release_id": 273722963,
+        "published_at": "2026-01-01T18:27:27Z",
+        "commit": "ea8c6bdb63a3b2da1584f328836eb0d28116f7c4",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Sem imagem oficial/digest aprovado; execução permanece manual e bloqueada no runner."
+      },
+      "sbom_component_ref": "tool:sqlmap",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "ea8c6bdb63a3b2da1584f328836eb0d28116f7c4",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)1\\.10"
+      },
+      "container": {
+        "image": "python:3.13-slim-bookworm",
+        "digest": "sha256:00faa2debb87529f9f0764e9491d8ba400a3678976616c3bd7cb193745ac20d1",
+        "entrypoint": "/usr/local/bin/python3",
+        "command_prefix": [
+          "/opt/tool/sqlmap.pyz"
+        ],
+        "runtime_artifacts": [
+          {
+            "path": "tool-artifacts/linux-amd64/sqlmap.pyz",
+            "sha256": "sha256:66054f4518c59fefccbdf59ebabc91cafc6d52a62fb6b8542a9cf6e99790e78a",
+            "mount_path": "/opt/tool/sqlmap.pyz"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dalfox",
+      "repository": "hahwul/dalfox",
+      "organization": "hahwul",
+      "license": "MIT",
+      "role": "xss-validation-manual",
+      "release": {
+        "tag": "v3.2.1",
+        "release_id": 370031207,
+        "published_at": "2026-08-13T15:46:38Z",
+        "commit": "6567e133f93c13faad1ffb04b8003a3c62ba94d1",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada; uso continua restrito a parâmetros autorizados."
+      },
+      "container": {
+        "image": "hahwul/dalfox:v3.2.1",
+        "digest": "sha256:970398742165633c2ff0f835ccae3fb64e6a80aaa20437072704f3780148a9e4",
+        "entrypoint": "/app/dalfox"
+      },
+      "sbom_component_ref": "tool:dalfox",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "6567e133f93c13faad1ffb04b8003a3c62ba94d1",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)3\\.2\\.1"
+      }
+    },
+    {
+      "name": "osv-scanner",
+      "repository": "google/osv-scanner",
+      "organization": "Google",
+      "license": "Apache-2.0",
+      "role": "dependency-vulnerabilities",
+      "release": {
+        "tag": "v2.5.1",
+        "release_id": 371526268,
+        "published_at": "2026-08-17T04:29:53Z",
+        "commit": "c84fa4568f2526d0333e9a914ea8a0a5f74ad68b",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada; upstream documenta verificação SLSA para artefatos de release."
+      },
+      "container": {
+        "image": "ghcr.io/google/osv-scanner:v2.5.1",
+        "digest": "sha256:8108ae94eadea5a02c9bec6e646909d5b790b44bd62d7f5b7f0b1d6d0ffc7734"
+      },
+      "sbom_component_ref": "tool:osv-scanner",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "c84fa4568f2526d0333e9a914ea8a0a5f74ad68b",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)2\\.5\\.1"
+      }
+    },
+    {
+      "name": "trivy",
+      "repository": "aquasecurity/trivy",
+      "organization": "Aqua Security",
+      "license": "Apache-2.0",
+      "role": "dependency-and-misconfiguration-scan",
+      "release": {
+        "tag": "v0.74.0",
+        "release_id": 370531397,
+        "published_at": "2026-08-14T11:29:11Z",
+        "commit": "e1fd17a0ea4a8cf24bc4b4dd7e2cfbf4bb31b994",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem pinada por digest."
+      },
+      "container": {
+        "image": "aquasec/trivy:0.74.0",
+        "digest": "sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+      },
+      "sbom_component_ref": "tool:trivy",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "e1fd17a0ea4a8cf24bc4b4dd7e2cfbf4bb31b994",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)0\\.74\\.0"
+      }
+    },
+    {
+      "name": "semgrep",
+      "repository": "semgrep/semgrep",
+      "organization": "Semgrep",
+      "license": "LGPL-2.1",
+      "role": "static-analysis",
+      "release": {
+        "tag": "v1.173.0",
+        "release_id": 370069155,
+        "published_at": "2026-08-13T16:49:55Z",
+        "commit": "abce3b5391706850837d4339f84bfaa3ec08604b",
+        "tag_type": "annotated",
+        "signature_status": "not-verified",
+        "verification_notes": "Tag anotada não assinada; imagem pinada por digest; regras remotas desabilitadas no runner."
+      },
+      "container": {
+        "image": "semgrep/semgrep:1.173.0",
+        "digest": "sha256:67319956da3dcb58baf5b322899c15458e3963e7018a86aeeb5cd224e69cb77a",
+        "entrypoint": "/usr/bin/semgrep",
+        "environment": {
+          "SEMGREP_SEND_METRICS": "off",
+          "EIO_BACKEND": "posix"
+        }
+      },
+      "sbom_component_ref": "tool:semgrep",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "abce3b5391706850837d4339f84bfaa3ec08604b",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version",
+          "--disable-version-check",
+          "--metrics=off"
+        ],
+        "expected_pattern": "(?i)1\\.173\\.0"
+      }
+    },
+    {
+      "name": "ffuf",
+      "repository": "ffuf/ffuf",
+      "organization": "ffuf",
+      "license": "MIT",
+      "role": "authorized-content-discovery",
+      "release": {
+        "tag": "v2.2.1",
+        "release_id": 353280946,
+        "published_at": "2026-07-13T16:15:53Z",
+        "commit": "1571aa17535d8bfcf42258659a141df0b12efa51",
+        "tag_type": "annotated",
+        "signature_status": "not-verified",
+        "verification_notes": "Tag anotada, mas não assinada; binário local e revisão ainda pendentes."
+      },
+      "sbom_component_ref": "tool:ffuf",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "1571aa17535d8bfcf42258659a141df0b12efa51",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: disabled item; executor prohibition and documented reason"
+      },
+      "execution_class": "disabled"
+    },
+    {
+      "name": "feroxbuster",
+      "repository": "epi052/feroxbuster",
+      "organization": "epi052",
+      "license": "MIT",
+      "role": "authorized-content-discovery-alternative",
+      "release": {
+        "tag": "v2.13.1",
+        "release_id": 270098283,
+        "published_at": "2025-12-13T14:11:09Z",
+        "commit": "aa8e1335801e91d98ce0d4fd148c2159a667a83b",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Release e commit resolvidos pela API do GitHub; execução é alternativa manual ao ffuf."
+      },
+      "sbom_component_ref": "tool:feroxbuster",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "aa8e1335801e91d98ce0d4fd148c2159a667a83b",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)2\\.13\\.1"
+      },
+      "container": {
+        "image": "epi052/feroxbuster",
+        "digest": "sha256:5cab630e43eface8cc79a6d32f8899dbe6f708f1260b0c23f4efda7c1f521042"
+      }
+    },
+    {
+      "name": "hibp",
+      "repository": "curl/curl",
+      "organization": "curl",
+      "license": "curl",
+      "role": "pinned-client-for-hibp-breachedaccount-only",
+      "release": {
+        "tag": "curl-8_15_0",
+        "release_id": 232748613,
+        "published_at": "2025-07-16T06:30:51Z",
+        "commit": "cfbfb65047e85e6b08af65fe9cdbcf68e9ad496a",
+        "tag_type": "annotated",
+        "signature_status": "verified",
+        "verification_notes": "Tag anotada e assinada do curl; imagem OCI multiarch resolvida no registry. O contrato local limita a integração ao endpoint breachedaccount."
+      },
+      "container": {
+        "image": "curlimages/curl:8.15.0",
+        "digest": "sha256:4026b29997dc7c823b51c164b71e2b51e0fd95cce4601f78202c513d97da2922"
+      },
+      "api_contract_path": "config/contracts/hibp-breachedaccount-v3.json",
+      "api_contract_sha256": "e82328f1148979e01dbfff6c16a3e5e2abc34e9b98a3e14d7e4d66edd27b69c0",
+      "sbom_component_ref": "tool:hibp",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "cfbfb65047e85e6b08af65fe9cdbcf68e9ad496a",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--version"
+        ],
+        "expected_pattern": "(?i)curl 8\\.15\\.0"
+      }
+    },
+    {
+      "name": "hadrian",
+      "repository": "praetorian-inc/hadrian",
+      "organization": "Praetorian",
+      "license": "Apache-2.0",
+      "role": "authorized-multi-identity-authorization-testing",
+      "release": {
+        "tag": "v1.0.0",
+        "release_id": 301987298,
+        "published_at": "2026-03-26T16:50:14Z",
+        "commit": "9513d9ee8df9148d6db58060ff287e05bed882fb",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "artifact": "hadrian_1.0.0_windows_amd64.tar.gz",
+        "artifact_sha256": "e50e8b9073aa47cffbddd21def691975fd029357aa95a94e0aa2e69609bc69e8",
+        "verification_notes": "Release e commit resolvidos pela API do GitHub; SHA-256 do artefato publicado pela release. Mutações continuam opt-in."
+      },
+      "dependency_lock": "go.sum",
+      "sbom_component_ref": "tool:hadrian",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "9513d9ee8df9148d6db58060ff287e05bed882fb",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "version"
+        ],
+        "expected_pattern": "(?i)1\\.0\\.0"
+      },
+      "container": {
+        "image": "gcr.io/distroless/static-debian12:nonroot",
+        "digest": "sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
+        "entrypoint": "/opt/tool/hadrian",
+        "runtime_artifacts": [
+          {
+            "path": "tool-artifacts/linux-amd64/hadrian",
+            "sha256": "sha256:20345648122283b4ca984181f64a89f525b37b3038148fdc20851bffab47c8da",
+            "mount_path": "/opt/tool/hadrian"
+          }
+        ]
+      }
+    },
+    {
+      "name": "jsluice",
+      "repository": "BishopFox/jsluice",
+      "organization": "Bishop Fox",
+      "license": "MIT",
+      "role": "offline-javascript-endpoint-extraction",
+      "release": {
+        "tag": "commit-0ddfab153e06",
+        "release_id": 0,
+        "published_at": "",
+        "commit": "0ddfab153e060a9eeaded4d8669233f7c071e7e4",
+        "tag_type": "commit",
+        "signature_status": "not-verified",
+        "verification_notes": "Upstream não publica release; commit exato e go.sum existem, mas artefato e revisão permanecem pendentes."
+      },
+      "dependency_lock": "go.sum",
+      "sbom_component_ref": "tool:jsluice",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "0ddfab153e060a9eeaded4d8669233f7c071e7e4",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--help"
+        ],
+        "expected_pattern": "(?i)jsluice"
+      },
+      "container": {
+        "image": "debian:trixie-slim",
+        "digest": "sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258",
+        "entrypoint": "/opt/tool/jsluice",
+        "runtime_artifacts": [
+          {
+            "path": "tool-artifacts/linux-amd64/jsluice",
+            "sha256": "sha256:49640235e94e96066cbbf13de3f5738331c4048083b134a9d7e68e2931eb8b21",
+            "mount_path": "/opt/tool/jsluice"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dnsreaper",
+      "repository": "punk-security/dnsReaper",
+      "organization": "Punk Security",
+      "license": "AGPL-3.0",
+      "role": "subdomain-takeover-candidate-only",
+      "release": {
+        "tag": "2.0.3",
+        "release_id": 252377157,
+        "published_at": "2025-10-06T10:58:46Z",
+        "commit": "c1588b22772d157f207e9334a7f4d7c24afbfd0a",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Imagem OCI multiarch 2.0.3 resolvida no registry. Uso automático permanece somente como gerador de candidato; nenhuma reivindicação de recurso."
+      },
+      "container": {
+        "image": "punksecurity/dnsreaper:2.0.3",
+        "digest": "sha256:6bd99203cf59f7137418f676d1dbf69cdc3193a808b2d91b420f5f9f33255649"
+      },
+      "dependency_lock": "requirements.txt",
+      "sbom_component_ref": "tool:dnsreaper",
+      "code_review": {
+        "status": "approved",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "c1588b22772d157f207e9334a7f4d7c24afbfd0a",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: pinned source, dependencies, install/update paths, governed adapter, network/destructive modes and runtime liveness"
+      },
+      "execution_class": "automatic",
+      "liveness": {
+        "command": [
+          "--help"
+        ],
+        "expected_pattern": "(?i)dnsreaper|usage"
+      }
+    },
+    {
+      "name": "keyleak-detector",
+      "repository": "Amal-David/keyleak-detector",
+      "organization": "Amal-David",
+      "license": "MIT",
+      "role": "authorized-runtime-leak-and-baas-validation",
+      "release": {
+        "tag": "v0.6.1",
+        "release_id": 350770209,
+        "published_at": "2026-07-08T07:42:36Z",
+        "commit": "c3c2e4e2754824b6d177e9fe54e978e7d4452657",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "artifact": "keyleak_detector-0.6.1-py3-none-any.whl",
+        "artifact_sha256": "5038cb1d55bc361cb32166a22af6ed0ee80e6d713ce243bf539199c7f0961e32",
+        "verification_notes": "Modo remoto faz crawl e validações ativas; desligado no Pipeline 1 e manual no Pipeline 2."
+      },
+      "dependency_lock": "poetry.lock",
+      "sbom_component_ref": "tool:keyleak-detector",
+      "validated_claims": [
+        {
+          "name": "supabase-rollback-zero-persistence",
+          "status": "pending"
+        }
+      ],
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "c3c2e4e2754824b6d177e9fe54e978e7d4452657",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: disabled item; executor prohibition and documented reason"
+      },
+      "execution_class": "disabled"
+    },
+    {
+      "name": "supabase-rls-checker",
+      "repository": "sahilahluwalia/Supabase-RLS-Checker",
+      "organization": "sahilahluwalia",
+      "license": "NOASSERTION",
+      "role": "authorized-supabase-rls-candidate-generation",
+      "release": {
+        "tag": "commit-a092d71cba99",
+        "release_id": 0,
+        "published_at": "",
+        "commit": "a092d71cba990c0748190f9331ebf7dd188205fb",
+        "tag_type": "commit",
+        "signature_status": "not-verified",
+        "verification_notes": "App React/Vite canônico selecionado para operação local. Usa pnpm-lock.yaml e deve ser instalado com pnpm install --frozen-lockfile. Não confundir com hand-dot, que é uma extensão Chrome com heurística distinta. A chave anon por si só não prova falha de RLS."
+      },
+      "dependency_lock": "pnpm-lock.yaml",
+      "sbom_component_ref": "tool:supabase-rls-checker",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "a092d71cba990c0748190f9331ebf7dd188205fb",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: manual-only item; executor prohibition and documented confirmation requirements"
+      },
+      "execution_class": "manual"
+    },
+    {
+      "name": "supashield",
+      "repository": "Rodrigotari1/supashield",
+      "organization": "Rodrigotari1",
+      "license": "MIT",
+      "role": "authorized-supabase-database-audit",
+      "release": {
+        "tag": "v0.3.0",
+        "release_id": 284046832,
+        "published_at": "2026-02-07T16:29:12Z",
+        "commit": "ab01656ba6e6664f6aca2879b3eec8270601b48d",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "verification_notes": "Sem artefato de release verificado; exige credencial de banco e permanece manual em staging/local."
+      },
+      "sbom_component_ref": "tool:supashield",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "ab01656ba6e6664f6aca2879b3eec8270601b48d",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: disabled item; executor prohibition and documented reason"
+      },
+      "execution_class": "disabled"
+    },
+    {
+      "name": "firepwn",
+      "repository": "0xbigshaq/firepwn-tool",
+      "organization": "0xbigshaq",
+      "license": "GPL-3.0",
+      "role": "authorized-baas-active-testing-manual",
+      "release": {
+        "tag": "v1.2.0",
+        "release_id": 291750496,
+        "published_at": "2026-03-01T05:59:29Z",
+        "commit": "79a678fa561ef0ca765a4ac3e483454ea1afc5f0",
+        "tag_type": "annotated",
+        "signature_status": "not-verified",
+        "verification_notes": "Ferramenta interativa com operações CRUD/autopwn; execução automática rejeitada."
+      },
+      "sbom_component_ref": "tool:firepwn",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "79a678fa561ef0ca765a4ac3e483454ea1afc5f0",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: manual-only item; executor prohibition and documented confirmation requirements"
+      },
+      "execution_class": "manual"
+    },
+    {
+      "name": "rlsgate",
+      "repository": "GerardoRdz96/rlsgate",
+      "organization": "GerardoRdz96",
+      "license": "MIT",
+      "role": "future-static-rls-review-under-nda",
+      "release": {
+        "tag": "commit-08606c640387",
+        "release_id": 0,
+        "published_at": "",
+        "commit": "08606c640387ef31369e912b3af866b5cd736e6e",
+        "tag_type": "commit",
+        "signature_status": "not-verified",
+        "verification_notes": "Sem release verificável; reservado para etapa futura com repositório autorizado sob NDA."
+      },
+      "sbom_component_ref": "tool:rlsgate",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "08606c640387ef31369e912b3af866b5cd736e6e",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: disabled item; executor prohibition and documented reason"
+      },
+      "execution_class": "disabled"
+    },
+    {
+      "name": "interactsh-server",
+      "repository": "projectdiscovery/interactsh",
+      "organization": "ProjectDiscovery",
+      "license": "MIT",
+      "role": "self-hosted-oast-infrastructure",
+      "release": {
+        "tag": "v1.3.1",
+        "release_id": 295213565,
+        "published_at": "2026-03-10T14:57:37Z",
+        "commit": "810180a230fe2265385ed45695a6635b5026452a",
+        "tag_type": "lightweight",
+        "signature_status": "not-verified",
+        "artifact": "interactsh-server_1.3.1_linux_amd64.zip",
+        "artifact_sha256": "cb59d094df7e8d9ecb0b8d368551e0e9af6ab555dbfc0655e8f9e4b56ec5cb19",
+        "verification_notes": "Somente instância própria protegida por token; serviços públicos permanecem desabilitados."
+      },
+      "dependency_lock": "go.sum",
+      "sbom_component_ref": "tool:interactsh-server",
+      "code_review": {
+        "status": "restricted",
+        "reviewer": "Codex assisted adoption review",
+        "reviewed_at": "2026-08-22T22:30:00Z",
+        "reviewed_commit": "810180a230fe2265385ed45695a6635b5026452a",
+        "reference": "../docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+        "reference_sha256": "sha256:648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+        "scope": "adoption review: separately operated infrastructure; not executable by the scanner runner"
+      },
+      "execution_class": "infrastructure"
+    }
+  ]
+}
