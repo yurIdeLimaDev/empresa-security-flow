@@ -1,6 +1,6 @@
 # Decisões incorporadas
 
-Data: 23 de agosto de 2026.
+Data: 24 de agosto de 2026.
 
 ## Fonte de verdade
 
@@ -124,3 +124,14 @@ jurídica/operacional correspondente.
 5. O ciclo Docker/firewall/proxy/canaries passou em Linux root descartável. A
    repetição no host escolhido virou gate de deploy, porque não é possível
    certificar antecipadamente um host ainda não definido.
+
+## 24 de agosto de 2026 — primeiro caso
+
+- um único perfil Python 3.13 stdlib; múltiplas stacks continuam fora;
+- adaptador manual por patch externo, sem LLM remoto;
+- onboarding genérico usa hashes sentinela para bloquear preflight acidental;
+- age 1.3.1 pinado em `go.mod`, `go.sum` e SBOM;
+- ZIP determinístico; ciphertext não determinístico por segurança;
+- aprovação humana somente no final, vinculada a commit e bundle;
+- laboratório privado, sem dados de terceiros nem rede pública;
+- todo host dedicado continua obrigado a seu próprio drift/preflight.

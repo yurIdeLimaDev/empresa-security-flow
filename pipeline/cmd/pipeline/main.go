@@ -60,6 +60,22 @@ func main() {
 		err = remediationEvaluate(os.Args[2:])
 	case "remediation-finalize":
 		err = remediationFinalize(os.Args[2:])
+	case "remediation-apply-patch":
+		err = app.RunManualPatchAdapter()
+	case "reference-gate":
+		err = referenceGate(ctx, os.Args[2:])
+	case "reference-baseline":
+		err = referenceBaseline(os.Args[2:])
+	case "reference-profile":
+		err = referenceProfile(os.Args[2:])
+	case "onboarding-generate":
+		err = onboardingGenerate(os.Args[2:])
+	case "delivery-package":
+		err = deliveryPackage(ctx, os.Args[2:])
+	case "backup-create":
+		err = backupCreate(ctx, os.Args[2:])
+	case "backup-restore":
+		err = backupRestore(ctx, os.Args[2:])
 	default:
 		usage()
 		os.Exit(2)
@@ -69,6 +85,145 @@ func main() {
 		fmt.Fprintln(os.Stderr, "erro:", err)
 		os.Exit(1)
 	}
+}
+
+func backupCreate(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("backup-create", flag.ContinueOnError)
+	caseRoot := fs.String("case-root", "", "raiz exclusiva de casos")
+	caseDir := fs.String("case-dir", "", "diretório do caso dentro da raiz")
+	output := fs.String("output", "", "arquivo .age fora da raiz de casos")
+	recipient := fs.String("age-recipient", "", "destinatário público age X25519")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *caseRoot == "" || *caseDir == "" || *output == "" || *recipient == "" {
+		return fmt.Errorf("--case-root, --case-dir, --output e --age-recipient são obrigatórios")
+	}
+	receipt, err := app.CreateEncryptedBackup(ctx, *caseRoot, *caseDir, *output, *recipient)
+	if err == nil {
+		fmt.Println(receipt.CiphertextSHA256)
+	}
+	return err
+}
+
+func backupRestore(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("backup-restore", flag.ContinueOnError)
+	backup := fs.String("backup", "", "arquivo .age")
+	identity := fs.String("identity", "", "identidade age mantida fora do host operacional")
+	output := fs.String("output-dir", "", "diretório novo de restauração")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *backup == "" || *identity == "" || *output == "" {
+		return fmt.Errorf("--backup, --identity e --output-dir são obrigatórios")
+	}
+	receipt, err := app.RestoreEncryptedBackup(ctx, *backup, *identity, *output)
+	if err == nil {
+		fmt.Printf("verified=%t entries=%d\n", receipt.Verified, receipt.EntryCount)
+	}
+	return err
+}
+
+func deliveryPackage(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("delivery-package", flag.ContinueOnError)
+	authorization := fs.String("authorization", "", "delivery-authorization.json aprovado")
+	plan := fs.String("plan", "", "plan.json imutável")
+	state := fs.String("state", "", "state.json final")
+	approval := fs.String("approval", "", "aprovação humana final")
+	bundle := fs.String("bundle", "", "bundle BEST saneado")
+	patchRoot := fs.String("patch-root", "", "raiz externa dos patches governados")
+	output := fs.String("output-dir", "", "diretório novo da entrega")
+	recipient := fs.String("age-recipient", "", "destinatário público age X25519")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *authorization == "" || *plan == "" || *state == "" || *approval == "" || *bundle == "" || *patchRoot == "" || *output == "" || *recipient == "" {
+		return fmt.Errorf("todos os parâmetros de delivery-package são obrigatórios")
+	}
+	result, err := app.BuildDeliveryPackage(ctx, *authorization, *plan, *state, *approval, *bundle, *patchRoot, *output, *recipient)
+	if err == nil {
+		fmt.Println(result.EncryptedPath)
+	}
+	return err
+}
+
+func onboardingGenerate(args []string) error {
+	fs := flag.NewFlagSet("onboarding-generate", flag.ContinueOnError)
+	input := fs.String("input", "", "respostas explícitas conforme onboarding-input.schema.json")
+	output := fs.String("output-dir", "", "diretório novo para os rascunhos")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *input == "" || *output == "" {
+		return fmt.Errorf("--input e --output-dir são obrigatórios")
+	}
+	status, err := app.GenerateOnboardingDrafts(*input, *output)
+	if err == nil {
+		fmt.Printf("authorized=%t executable=%t blockers=%d\n", status.Authorized, status.Executable, len(status.Blockers))
+	}
+	return err
+}
+
+func referenceGate(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("reference-gate", flag.ContinueOnError)
+	kind := fs.String("kind", "", "quality, retest ou security-full")
+	repository := fs.String("repository", "", "raiz do worktree candidato")
+	output := fs.String("output", "", "diretório controlado do gate")
+	ticket := fs.String("ticket", "", "ticket do reteste; vazio apenas no gate global")
+	candidateRef := fs.String("candidate-ref", "", "commit candidato")
+	toolLock := fs.String("tool-lock", "", "tools.lock.json aprovado")
+	sbom := fs.String("sbom", "", "SBOM CycloneDX aprovado")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *kind == "" || *repository == "" || *output == "" || *candidateRef == "" || *toolLock == "" || *sbom == "" {
+		return fmt.Errorf("--kind, --repository, --output, --candidate-ref, --tool-lock e --sbom são obrigatórios")
+	}
+	return app.RunPythonReferenceGate(ctx, *kind, *repository, *output, *ticket, *candidateRef, *toolLock, *sbom)
+}
+
+func referenceBaseline(args []string) error {
+	fs := flag.NewFlagSet("reference-baseline", flag.ContinueOnError)
+	repository := fs.String("repository", "", "repositório do laboratório no commit baseline")
+	output := fs.String("output", "", "bundle baseline")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *repository == "" || *output == "" {
+		return fmt.Errorf("--repository e --output são obrigatórios")
+	}
+	return app.BuildPythonReferenceBaseline(*repository, *output)
+}
+
+func referenceProfile(args []string) error {
+	fs := flag.NewFlagSet("reference-profile", flag.ContinueOnError)
+	repository := fs.String("repository", "", "repositório do laboratório")
+	baseline := fs.String("baseline-bundle", "", "bundle baseline canônico")
+	outputRoot := fs.String("output-root", "", "raiz externa de execução")
+	runner := fs.String("runner", "", "binário pipeline pinado")
+	output := fs.String("output", "", "remediation.json gerado")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *repository == "" || *baseline == "" || *outputRoot == "" || *output == "" {
+		return fmt.Errorf("--repository, --baseline-bundle, --output-root e --output são obrigatórios")
+	}
+	if *runner == "" {
+		value, err := os.Executable()
+		if err != nil {
+			return err
+		}
+		*runner = value
+	}
+	cfg, err := app.PythonReferenceProfileConfig(*repository, *baseline, *outputRoot, *runner)
+	if err != nil {
+		return err
+	}
+	if err := app.WriteJSON(*output, cfg); err != nil {
+		return err
+	}
+	_, err = app.ReadRemediationConfig(*output)
+	return err
 }
 
 func remediationPreflight(args []string) error {
@@ -499,5 +654,5 @@ func runtimeCheck(ctx context.Context, args []string) error {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "uso: pipeline <pipeline1|pipeline2|normalize|consolidate|compare|supply-chain|runtime-check|audit-proxy|isolation-smoke|remediation-preflight|remediation-plan|remediation-worktree|remediation-agent|remediation-gates|remediation-evaluate|remediation-finalize|verify|tools> [opções]")
+	fmt.Fprintln(os.Stderr, "uso: pipeline <pipeline1|pipeline2|normalize|consolidate|compare|supply-chain|runtime-check|audit-proxy|isolation-smoke|onboarding-generate|delivery-package|backup-create|backup-restore|remediation-preflight|remediation-plan|remediation-worktree|remediation-agent|remediation-gates|remediation-evaluate|remediation-finalize|remediation-apply-patch|reference-gate|reference-baseline|reference-profile|verify|tools> [opções]")
 }

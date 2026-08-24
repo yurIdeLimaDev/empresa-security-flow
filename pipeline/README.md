@@ -118,10 +118,22 @@ placeholders/IPs, registrar o SOW e executar no host Linux escolhido:
 
 ```bash
 ./scripts/build-runner-linux.sh
-./scripts/deploy-preflight-linux.sh /etc/empresa-security/engagement-policy.json /var/lib/empresa-security/preflight-$(date -u +%Y%m%dT%H%M%SZ)
+./scripts/deploy-preflight-linux.sh /etc/empresa-security/baseline.env /etc/empresa-security/engagement-policy.json /var/lib/empresa-security/preflight-$(date -u +%Y%m%dT%H%M%SZ)
 ```
 
 O ensaio Linux/root controlado está documentado em
 `../validacao/2026-08-22-isolamento-politicas/linux-root-integration/`; o
 fechamento da cadeia está em
 `../validacao/2026-08-22-fechamento-prontidao-operacional/`.
+
+## Comandos do primeiro caso
+
+- `onboarding-generate`: rascunhos por schema, fail-closed;
+- `reference-profile`: perfil Python concreto;
+- `remediation-apply-patch`: adaptador manual governado;
+- `reference-gate`: quality, retest ou security-full;
+- `delivery-package`: HTML, PDF, manifesto, ZIP e age;
+- `backup-create` / `backup-restore`: backup e restauração verificada.
+
+O empacotador roda offline em distroless por digest. Consulte `docs/runbooks/`
+antes da operação.

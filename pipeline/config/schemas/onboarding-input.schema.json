@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "case_id", "engagement_id", "domain", "base_url",
+    "output_root", "target", "max_download_bytes", "tool_lock_path",
+    "public_contact_paths", "public_observation", "external_apis",
+    "authoritative_ns", "dns_resolver_ip", "canary_image", "negative_canary",
+    "emergency_owner", "authorization", "execution_isolation",
+    "enabled_modules", "enabled_tools_p1", "enabled_tools_p2",
+    "tool_policy_p1_source", "tool_policy_p2_source", "tests", "adapter"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "case_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$"},
+    "engagement_id": {"type": "string", "pattern": "^eng_[a-z0-9_]+$"},
+    "domain": {"type": "string", "format": "hostname"},
+    "base_url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+    "output_root": {"type": "string", "minLength": 1},
+    "target": {"$ref": "#/$defs/target"},
+    "max_download_bytes": {"type": "integer", "minimum": 1, "maximum": 20971520},
+    "tool_lock_path": {"type": "string", "minLength": 1},
+    "public_contact_paths": {"type": "array", "minItems": 1, "maxItems": 10, "uniqueItems": true, "items": {"type": "string", "pattern": "^/[^/]"}},
+    "public_observation": {"$ref": "#/$defs/publicObservation"},
+    "external_apis": {"type": "array", "items": {"$ref": "#/$defs/destination"}},
+    "authoritative_ns": {"type": "array", "items": {"$ref": "#/$defs/nameserver"}},
+    "dns_resolver_ip": {"type": "string", "format": "ipv4"},
+    "canary_image": {"type": "string", "pattern": "^[^@\\s]+@sha256:[a-f0-9]{64}$"},
+    "negative_canary": {"$ref": "#/$defs/canary"},
+    "emergency_owner": {"type": "string", "minLength": 1},
+    "authorization": {"$ref": "#/$defs/authorization"},
+    "execution_isolation": {"$ref": "#/$defs/isolation"},
+    "enabled_modules": {"type": "array", "uniqueItems": true, "items": {"enum": ["active-recon", "api-mapping", "authentication", "authorization", "business-logic", "dependencies", "reporting", "baas", "storage", "custom-backend", "race-conditions"]}},
+    "enabled_tools_p1": {"type": "array", "uniqueItems": true, "not": {"contains": {"const": "hibp"}}, "items": {"type": "string", "minLength": 1}},
+    "enabled_tools_p2": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "tool_policy_p1_source": {"type": "string", "minLength": 1},
+    "tool_policy_p2_source": {"type": "string", "minLength": 1},
+    "tests": {"type": "array", "items": {"$ref": "#/$defs/test"}},
+    "adapter": {"$ref": "#/$defs/adapter"}
+  },
+  "$defs": {
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["host", "ip", "port", "rate_per_second", "max_concurrency", "max_requests"],
+      "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "ip": {"type": "string", "format": "ipv4"},
+        "port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "rate_per_second": {"type": "number", "exclusiveMinimum": 0, "maximum": 50},
+        "max_concurrency": {"type": "integer", "minimum": 1, "maximum": 20},
+        "max_requests": {"type": "integer", "minimum": 1, "maximum": 10000}
+      }
+    },
+    "destination": {
+      "type": "object", "additionalProperties": false,
+      "required": ["host", "ip", "port", "purpose"],
+      "properties": {"host": {"type": "string", "format": "hostname"}, "ip": {"type": "string", "format": "ipv4"}, "port": {"type": "integer", "minimum": 1, "maximum": 65535}, "purpose": {"type": "string", "minLength": 1}}
+    },
+    "nameserver": {
+      "type": "object", "additionalProperties": false,
+      "required": ["host", "ip"],
+      "properties": {"host": {"type": "string", "format": "hostname"}, "ip": {"type": "string", "format": "ipv4"}}
+    },
+    "canary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["url", "ip", "port"],
+      "properties": {"url": {"type": "string", "format": "uri", "pattern": "^https?://"}, "ip": {"type": "string", "format": "ipv4"}, "port": {"type": "integer", "minimum": 1, "maximum": 65535}}
+    },
+    "publicObservation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["acknowledged", "acknowledged_at", "acknowledged_by"],
+      "properties": {"acknowledged": {"const": true}, "acknowledged_at": {"type": "string", "format": "date-time"}, "acknowledged_by": {"type": "string", "minLength": 1}}
+    },
+    "authorization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["confirmed", "confirmed_at", "confirmed_by", "document_reference", "sow_path", "sow_sha256", "emergency_contact", "payment_status"],
+      "properties": {
+        "confirmed": {"type": "boolean"}, "confirmed_at": {"type": "string"}, "confirmed_by": {"type": "string"}, "document_reference": {"type": "string"},
+        "sow_path": {"type": "string"}, "sow_sha256": {"type": "string"}, "emergency_contact": {"type": "string"}, "payment_status": {"enum": ["pending", "paid", "refunded"]}
+      }
+    },
+    "isolation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["confirmed"],
+      "properties": {"confirmed": {"type": "boolean"}, "method": {"enum": ["container-egress-policy", "host-firewall", "proxy-enforced"]}, "evidence_path": {"type": "string"}, "evidence_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}}
+    },
+    "test": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "resource", "user", "action", "expected_result", "evidence_path"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "resource": {"type": "string", "minLength": 1}, "user": {"enum": ["test_a", "test_b", "anon"]}, "action": {"enum": ["read", "insert", "update", "delete", "rpc_call"]}, "expected_result": {"enum": ["negado", "somente_proprio_recurso", "publico_por_design"]}, "evidence_path": {"type": "string", "minLength": 1}}
+    },
+    "adapter": {
+      "type": "object", "additionalProperties": false,
+      "required": ["runner_path", "runner_sha256", "repository_path", "baseline_ref", "baseline_bundle_path", "remediation_output_root"],
+      "properties": {"runner_path": {"type": "string", "minLength": 1}, "runner_sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}, "repository_path": {"type": "string", "minLength": 1}, "baseline_ref": {"type": "string", "minLength": 1}, "baseline_bundle_path": {"type": "string", "minLength": 1}, "remediation_output_root": {"type": "string", "minLength": 1}}
+    }
+  }
+}

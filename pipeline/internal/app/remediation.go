@@ -128,20 +128,21 @@ type TicketState struct {
 }
 
 type RemediationAgentRun struct {
-	SchemaVersion    string `json:"schema_version"`
-	CaseID           string `json:"case_id"`
-	TicketID         string `json:"ticket_id"`
-	Attempt          int    `json:"attempt"`
-	StartedAt        string `json:"started_at"`
-	FinishedAt       string `json:"finished_at"`
-	Status           string `json:"status"`
-	ExitCode         int    `json:"exit_code"`
-	ExecutablePath   string `json:"executable_path"`
-	ExecutableSHA256 string `json:"executable_sha256"`
-	CommandSHA256    string `json:"command_sha256"`
-	LogPath          string `json:"log_path"`
-	LogSHA256        string `json:"log_sha256"`
-	CandidateCommit  string `json:"candidate_commit,omitempty"`
+	SchemaVersion    string         `json:"schema_version"`
+	CaseID           string         `json:"case_id"`
+	TicketID         string         `json:"ticket_id"`
+	Attempt          int            `json:"attempt"`
+	StartedAt        string         `json:"started_at"`
+	FinishedAt       string         `json:"finished_at"`
+	Status           string         `json:"status"`
+	ExitCode         int            `json:"exit_code"`
+	ExecutablePath   string         `json:"executable_path"`
+	ExecutableSHA256 string         `json:"executable_sha256"`
+	CommandSHA256    string         `json:"command_sha256"`
+	LogPath          string         `json:"log_path"`
+	LogSHA256        string         `json:"log_sha256"`
+	CandidateCommit  string         `json:"candidate_commit,omitempty"`
+	Artifacts        []GateArtifact `json:"artifacts,omitempty"`
 }
 
 type RemediationWorktree struct {
@@ -769,9 +770,16 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 	defer cancel()
 	cmd := exec.CommandContext(agentCtx, command[0], command[1:]...)
 	cmd.Dir = worktree
+	allowedPathsJSON, err := json.Marshal(ticket.AllowedPaths)
+	if err != nil {
+		return finishFailedAgentRun(runDir, statePath, &state, item, run, started, []byte("não foi possível serializar o escopo do ticket"), cfg)
+	}
 	cmd.Env = remediationEnvironment(cfg.EnvironmentAllowlist, map[string]string{
 		"REMEDIATION_CASE_ID": cfg.CaseID, "REMEDIATION_TICKET_ID": ticket.ID,
 		"REMEDIATION_PROMPT_PATH": promptPath, "REMEDIATION_WORKTREE": worktree,
+		"REMEDIATION_ALLOWED_PATHS_JSON": string(allowedPathsJSON),
+		"REMEDIATION_ATTEMPT_OUTPUT":     runDir,
+		"REMEDIATION_NETWORK_DISABLED":   "true",
 	})
 	buffer := &boundedBuffer{limit: 1 << 20}
 	cmd.Stdout, cmd.Stderr = buffer, buffer
@@ -790,6 +798,14 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 	if run.Status != "passed" {
 		return finishFailedAgentRun(runDir, statePath, &state, item, run, started, buffer.Bytes(), cfg)
 	}
+	adapterResultPath := filepath.Join(runDir, manualAdapterResultName)
+	if _, statErr := os.Stat(adapterResultPath); statErr == nil {
+		if hash, hashErr := HashFile(adapterResultPath); hashErr == nil {
+			run.Artifacts = append(run.Artifacts, GateArtifact{Path: adapterResultPath, SHA256: hash})
+		} else {
+			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\nresultado do adaptador sem integridade")...), cfg)
+		}
+	}
 	status, err := gitOutput(worktree, "status", "--porcelain")
 	if err != nil {
 		return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\n"+err.Error())...), cfg)
@@ -801,8 +817,14 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 		if _, err := gitOutput(worktree, "add", "--all"); err != nil {
 			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\n"+err.Error())...), cfg)
 		}
+		if name, nameErr := gitOutput(worktree, "config", "user.name"); nameErr != nil || strings.TrimSpace(name) == "" {
+			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\nidentidade Git user.name ausente no repositório")...), cfg)
+		}
+		if email, emailErr := gitOutput(worktree, "config", "user.email"); emailErr != nil || strings.TrimSpace(email) == "" {
+			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\nidentidade Git user.email ausente no repositório")...), cfg)
+		}
 		message := "security: remediate " + ticket.ID
-		if _, err := gitOutput(worktree, "-c", "user.name=Empresa Security Remediation", "-c", "user.email=remediation@localhost", "commit", "-m", message); err != nil {
+		if _, err := gitOutput(worktree, "commit", "-m", message); err != nil {
 			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\n"+err.Error())...), cfg)
 		}
 	}
@@ -1827,14 +1849,17 @@ func containedWorkingDirectory(repository, relative string) (string, error) {
 }
 
 func remediationEnvironment(allowlist []string, additions map[string]string) []string {
-	allowed := map[string]struct{}{"PATH": {}, "PATHEXT": {}, "SystemRoot": {}, "SYSTEMROOT": {}, "TEMP": {}, "TMP": {}, "TMPDIR": {}}
+	allowed := map[string]struct{}{}
+	for _, name := range []string{"PATH", "PATHEXT", "SystemRoot", "TEMP", "TMP", "TMPDIR", "COMSPEC", "WINDIR"} {
+		allowed[normalizedEnvironmentName(name)] = struct{}{}
+	}
 	for _, name := range allowlist {
-		allowed[name] = struct{}{}
+		allowed[normalizedEnvironmentName(name)] = struct{}{}
 	}
 	result := []string{}
 	for _, item := range os.Environ() {
 		name := strings.SplitN(item, "=", 2)[0]
-		if _, exists := allowed[name]; exists {
+		if _, exists := allowed[normalizedEnvironmentName(name)]; exists {
 			result = append(result, item)
 		}
 	}
@@ -1843,6 +1868,13 @@ func remediationEnvironment(allowlist []string, additions map[string]string) []s
 	}
 	sort.Strings(result)
 	return result
+}
+
+func normalizedEnvironmentName(name string) string {
+	if os.PathSeparator == '\\' {
+		return strings.ToUpper(name)
+	}
+	return name
 }
 
 type boundedBuffer struct {

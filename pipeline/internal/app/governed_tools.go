@@ -271,6 +271,7 @@ func buildDockerArguments(options GovernedRunOptions, action PlannedAction, lock
 	}
 	args := []string{
 		"run", "--rm", "--pull=never", "--name", containerNameForRun(runID),
+		"--label", "empresa-security.managed=true", "--label", "empresa-security.engagement=" + options.Policies.Engagement.EngagementID,
 		"--label", "empresa-security.run-id=" + runID,
 		"--hostname", containerNameForRun(runID), "--add-host", containerNameForRun(runID) + ":127.0.0.1",
 		"--network", options.Network.NetworkName, "--dns", options.Policies.Engagement.Environment.DNSResolverIP,

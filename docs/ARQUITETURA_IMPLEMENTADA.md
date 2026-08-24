@@ -1,6 +1,6 @@
 # Arquitetura implementada
 
-Estado: 23 de agosto de 2026.
+Estado: 24 de agosto de 2026.
 
 ## Fluxo preservado
 
@@ -194,3 +194,14 @@ serem fornecidas e verificadas.
 O CER-Fácil permanece somente candidato à revisão humana final. Seus ToolRuns
 arquivados foram produzidos antes deste fechamento; é necessário repetir a
 cobertura com o runner governado atual antes de emitir autorização de entrega.
+
+## Extensão do primeiro caso
+
+O onboarding produz políticas e matrizes sem inferir autorização. O perfil
+`python-3.13-stdlib` liga o adaptador manual aos três gates. A entrega deriva
+exclusivamente do bundle BEST autorizado e é determinística antes da
+criptografia. O bloco operacional Linux inclui baseline, drift, preflight,
+preservação, monitor e backup/restauração.
+
+O laboratório usa dados falsos em repositório privado separado. A landing page
+e os casos anteriores não foram alterados nesta iteração.

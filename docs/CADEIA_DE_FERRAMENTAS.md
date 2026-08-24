@@ -1,6 +1,6 @@
 # Controle da cadeia de ferramentas
 
-Estado: fechado e revalidado em 22 de agosto de 2026.
+Estado: fechado e revalidado em 24 de agosto de 2026.
 
 ## Regra de execução
 
@@ -70,7 +70,7 @@ No host Linux selecionado para operação, o gate obrigatório é:
 
 ```bash
 ./scripts/build-runner-linux.sh
-./scripts/deploy-preflight-linux.sh /caminho/engagement-policy.json /evidencia/nova
+./scripts/deploy-preflight-linux.sh /caminho/baseline.env /caminho/engagement-policy.json /evidencia/nova
 ```
 
 Esse último passo não pode ser pré-aprovado genericamente: ele vincula kernel,
@@ -84,3 +84,10 @@ pela política, não segurança do código; SBOM descreve componentes, não elim
 vulnerabilidades. Por isso a confiança vem da combinação de pins, revisão de
 adoção, runtime restrito, evidência e revalidação. Qualquer atualização exige
 novo ciclo.
+
+## Dependências do primeiro caso
+
+`filippo.io/age` 1.3.1 é biblioteca do runner, não download operacional. Está
+pinada em `go.mod`/`go.sum` e no SBOM CycloneDX. O perfil Python reutiliza uma
+imagem já aprovada no lock; o runner confere lock, SBOM, revisão e hash do
+artefato antes de cada gate.

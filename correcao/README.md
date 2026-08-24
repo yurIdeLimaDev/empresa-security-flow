@@ -10,8 +10,8 @@ continua isolada em `landing-page/`; evidências de teste ficam somente em
 - `docs/FLUXO_DE_CORRECAO_SEGURA.md`: arquitetura, gates e limites;
 - `config/remediation.example.json`: política estrita de exemplo;
 - `config/final-approval.example.json`: única decisão humana do fluxo.
-
-Casos de clientes e benchmarks ficam fora do repositório do motor.
+- `casos/2026-08-22-cer-facil/`: primeira correção real em cópia isolada,
+  com fonte Git e patch; o reteste fica em `validacao/`.
 
 Execuções reais não devem gravar artefatos dentro do repositório do cliente.
 `output_root` deve apontar para uma raiz externa, exclusiva e protegida. Os
@@ -30,3 +30,13 @@ cada stack deve fornecer comandos reais e pinados no onboarding.
 
 Leia o [fluxo completo](docs/FLUXO_DE_CORRECAO_SEGURA.md) antes de configurar
 um caso.
+
+## Primeiro perfil executável
+
+`adapters/python-3.13-stdlib/` é o único perfil aprovado nesta iteração. Ele
+usa patch manual por caminho exato e três gates pinados. Rascunhos genéricos do
+onboarding continuam bloqueados até a seleção de um perfil revisado. A revisão
+humana permanece apenas no final; candidato pior que BEST é rejeitado.
+
+O laboratório está em repositório privado separado. Casos de cliente, patches
+operacionais, worktrees e chaves não pertencem a este Git.

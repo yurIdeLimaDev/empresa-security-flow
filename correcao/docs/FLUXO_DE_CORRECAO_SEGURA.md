@@ -1,6 +1,6 @@
 # Fluxo de correção segura
 
-Estado: implementado e validado localmente em 22 de agosto de 2026.
+Estado: implementado e revalidado em laboratório em 24 de agosto de 2026.
 
 ## Decisão sobre o diagrama
 
@@ -161,5 +161,24 @@ pelo projeto. Em vez de inventá-los, o motor agora os trata como entrada de
 onboarding e impede até a criação do plano enquanto executáveis e hashes reais
 não passarem no `remediation-preflight`.
 
-Casos, fontes e resultados de clientes devem permanecer em armazenamento
-separado do repositório do motor, com acesso e retenção próprios.
+## Primeira aplicação em projeto fornecido
+
+O ZIP CER-Fácil foi corrigido em cópia Git isolada e retestado em 22 de agosto
+de 2026. O candidato local resolveu cinco achados, mitigou três e preservou um
+por decisão de escopo, sem novo achado validado. A execução demonstrou a regra
+de manter a melhor versão, mas não emitiu autorização de entrega: os ToolRuns
+arquivados são anteriores ao fechamento atual e precisam ser repetidos pelo
+runner governado antes da revisão humana final. Consulte
+`correcao/casos/2026-08-22-cer-facil/` e
+`validacao/2026-08-22-cer-facil-correcao/`.
+
+## Implementação concreta do primeiro caso
+
+O adaptador recebe um patch externo no caminho exato do ticket. O orquestrador
+valida escopo, aplica em worktree isolada, executa quality, retest e
+security-full, gera bundle canônico e compara com BEST. Promoção exige gates,
+cobertura comparável e ausência de regressão.
+
+O gate global repete a suíte protegida sobre o BEST acumulado. A aprovação
+humana final liga commit e hash do bundle. O pacote só é gerado após finalize;
+divergência de plano, estado, aprovação, commit, bundle ou patch bloqueia.

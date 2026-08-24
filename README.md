@@ -1,6 +1,6 @@
 # Pipeline de geração de leads para revisão de segurança
 
-Estado: implementação e documentação atualizadas em 23 de agosto de 2026.
+Estado: implementação e documentação atualizadas em 24 de agosto de 2026.
 
 ```text
 Lead -> Landing page -> Pipeline 1: superfície pública e baixo impacto
@@ -88,3 +88,13 @@ Documentos principais:
 - [caso corrigido do CER-Fácil](correcao/casos/2026-08-22-cer-facil/README.md)
 - [reteste da correção do CER-Fácil](validacao/2026-08-22-cer-facil-correcao/RESULTADO.md)
 - [validação de isolamento/políticas](validacao/2026-08-22-isolamento-politicas/RESULTADO.md)
+
+## Estado do primeiro caso
+
+Há um perfil executável ensaiado ponta a ponta em laboratório privado. Os
+runbooks estão em `docs/runbooks/`, o perfil em
+`correcao/adapters/python-3.13-stdlib/` e o resultado saneado em
+`validacao/2026-08-24-primeiro-caso-controlado/`.
+
+Antes de caso real, o Linux dedicado precisa passar drift/preflight como root.
+HIBP, OAST público, terceiros, múltiplas stacks e landing page ficaram fora.

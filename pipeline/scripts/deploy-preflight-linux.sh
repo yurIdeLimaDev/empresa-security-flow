@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ "$#" -ne 2 ]; then
-  printf 'usage: %s <engagement-policy.json> <new-evidence-directory>\n' "$0" >&2
+if [ "$#" -ne 3 ]; then
+  printf 'usage: %s <baseline.env> <engagement-policy.json> <new-evidence-directory>\n' "$0" >&2
   exit 2
 fi
 
-policy_input="$1"
-evidence_input="$2"
+baseline_input="$1"
+policy_input="$2"
+evidence_input="$3"
 pipeline_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 runner="$pipeline_root/bin/pipeline-linux-amd64"
 
 [ "$(uname -s)" = Linux ] || { printf 'Linux is required\n' >&2; exit 1; }
 [ "$(id -u)" -eq 0 ] || { printf 'root is required\n' >&2; exit 1; }
 [ -x "$runner" ] || { printf 'build the runner with build-runner-linux.sh first\n' >&2; exit 1; }
+[ -r "$baseline_input" ] || { printf 'host baseline is not readable\n' >&2; exit 1; }
 [ -r "$policy_input" ] || { printf 'engagement policy is not readable\n' >&2; exit 1; }
 
 for executable in docker iptables realpath sha256sum sysctl; do
@@ -27,6 +29,7 @@ if [ -e "$evidence_input" ] && [ -n "$(find "$evidence_input" -mindepth 1 -maxde
   exit 1
 fi
 mkdir -p "$evidence_input/isolation"
+"$pipeline_root/scripts/verify-host-drift-linux.sh" "$baseline_input" "$evidence_input/host-drift"
 readonly policy="$(realpath "$policy_input")"
 readonly evidence="$(realpath "$evidence_input")"
 
@@ -37,6 +40,7 @@ readonly evidence="$(realpath "$evidence_input")"
   printf 'docker_security_options=%s\n' "$(docker info --format '{{json .SecurityOptions}}')"
   printf 'ip_forward=%s\n' "$(sysctl -n net.ipv4.ip_forward)"
   printf 'runner_sha256=%s\n' "$(sha256sum "$runner" | awk '{print $1}')"
+  printf 'baseline_sha256=%s\n' "$(sha256sum "$baseline_input" | awk '{print $1}')"
   printf 'policy_sha256=%s\n' "$(sha256sum "$policy" | awk '{print $1}')"
 } > "$evidence/host-facts.txt"
 

@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "case": "controlled-reference-lab",
+  "baseline_commit": "e1790108d608261e1fc7e0317b94dc5e677201d4",
+  "best_commit": "16ba133b334bbdd371a26e125f0aadfe19716f2c",
+  "best_bundle_sha256": "9660d1134a69939c5e6e6d8deebdf3641bfab87149b7ccd115bde28e72b46db8",
+  "tickets_accepted": 5,
+  "findings_after": 0,
+  "regressions": 0,
+  "lab_tests": {"passed": 8, "failed": 0},
+  "private_ci": "success",
+  "delivery_manifest_sha256": "987381093fb551d39b0ee8f1b60d0e1c993cf91a259ca5e829260a1b77adc435",
+  "delivery_archive_sha256": "54804c32f77056f7aefd4605c7eb0d9da2e605e6d4a304cbd05dc2fa0f84225d",
+  "linux_runner_sha256": "78557c02059a7e7b03a2ed44fccea0cf4fbf4315f8ee5f3fd4741062a1509732",
+  "backup_restore_verified": true,
+  "dedicated_linux_host_preflight": "required_before_deploy"
+}

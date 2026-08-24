@@ -74,6 +74,8 @@ func TestRemediationEndToEndHasOneFinalHumanGate(t *testing.T) {
 		t.Fatal(err)
 	}
 	runGitForTest(t, repository, "init")
+	runGitForTest(t, repository, "config", "user.name", "Test Operator")
+	runGitForTest(t, repository, "config", "user.email", "test@localhost")
 	runGitForTest(t, repository, "config", "user.name", "Remediation Test")
 	runGitForTest(t, repository, "config", "user.email", "remediation@example.invalid")
 	runGitForTest(t, repository, "add", ".")
