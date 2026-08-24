@@ -133,19 +133,22 @@ efeito nas três fases.
 
 ## Consulta Graph RAG
 
-HippoRAG 2 é uma camada interna e opcional de consulta do fluxo. Ele indexa um
-corpus restrito de documentação, configurações, código do motor e evidências
-finais de prontidão/isolamento. Não recebe `correcao/casos/`, binários,
-artefatos operacionais, caches ou a landing page; assim, mantém os dois
-repositórios privados separados e não inclui o caso CER-Fácil.
+HippoRAG 2 é a camada interna de recuperação que o Codex consulta por MCP
+antes de varrer arquivos do fluxo. O Codex produz a resposta; o MCP devolve no
+máximo seis trechos relevantes e suas fontes. Ele indexa corpus restrito de
+documentação, configurações, código do motor e evidências finais de
+prontidão/isolamento. Não recebe `correcao/casos/`, binários, artefatos
+operacionais, caches ou a landing page; assim mantém os dois repositórios
+privados separados e não inclui o caso CER-Fácil.
 
-O corpus possui fingerprint e o comando de consulta recusa índice ausente,
-desatualizado ou produzido por configuração diferente. A indexação usa
-`gpt-5.6-terra` com `reasoning_effort=high` para extração/QA e
-`text-embedding-3-large` para embeddings. HippoRAG não expõe esse esforço
-nativamente; o adaptador local o injeta no Chat Completions. Respostas sempre
-mostram as fontes recuperadas, e os arquivos versionados continuam sendo a
-fonte de verdade e a base de qualquer decisão operacional.
+Não há `OPENAI_API_KEY`, chamada à API ou envio de conteúdo do projeto nessa
+camada. O grafo é extraído deterministicamente de termos e relações textuais,
+e os embeddings são locais por hashing. A qualidade é adequada para localizar
+documentação, políticas e decisões; não é equivalente a OpenIE semântico por
+LLM. O fingerprint é conferido em toda consulta MCP: se o corpus permitido
+mudar, o índice é reconstruído automaticamente antes da resposta. Os arquivos
+versionados continuam sendo a fonte de verdade e a base de qualquer decisão
+operacional.
 
 ## Correção segura
 

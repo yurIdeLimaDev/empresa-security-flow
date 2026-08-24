@@ -37,6 +37,7 @@ def project_root() -> Path:
 def selected_paths(root: Path) -> Iterable[Path]:
     candidates = [
         root / "README.md",
+        root / "AGENTS.md",
         root / "docs",
         root / "pipeline" / "README.md",
         root / "pipeline" / "cmd",
@@ -47,6 +48,7 @@ def selected_paths(root: Path) -> Iterable[Path]:
         root / "pipeline" / "go.sum",
         root / "pipeline" / "tools.lock.json",
         root / "pipeline" / "sbom.cdx.json",
+        root / "pipeline" / "knowledge" / "hipporag" / "README.md",
         root / "correcao" / "README.md",
         root / "correcao" / "config",
         root / "correcao" / "docs",

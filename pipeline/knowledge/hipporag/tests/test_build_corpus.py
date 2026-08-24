@@ -15,6 +15,8 @@ class BuildCorpusTests(unittest.TestCase):
         self.assertEqual(len(documents), len({document.source for document in documents}))
         self.assertTrue(all("correcao/casos/" not in document.source for document in documents))
         self.assertTrue(all("tool-artifacts/" not in document.source for document in documents))
+        self.assertIn("AGENTS.md", {document.source for document in documents})
+        self.assertIn("pipeline/knowledge/hipporag/README.md", {document.source for document in documents})
         self.assertEqual(len(corpus_fingerprint(documents)), 64)
 
 

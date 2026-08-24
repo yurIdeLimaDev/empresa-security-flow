@@ -1,88 +1,72 @@
-# Consulta Graph RAG do fluxo
+# Conhecimento local do projeto para o Codex
 
-Esta integração usa HippoRAG 2 como camada local de consulta sobre o fluxo de
-verificação e correção. Ela não executa scanners, não altera o alvo e não é a
-fonte de verdade: respostas precisam ser conferidas nas fontes recuperadas.
+Esta é a camada de recuperação que o Codex consulta antes de ler arquivos do
+projeto. Ela usa HippoRAG 2 com embeddings por termos e extração de relações
+determinística, ambos locais. Não usa `OPENAI_API_KEY`, não usa a assinatura
+do Codex como chave e não envia conteúdo, consultas ou índices pela rede.
+
+O Codex continua sendo responsável por raciocinar e responder. O MCP devolve
+somente até seis trechos relevantes e suas fontes, poupando o contexto de uma
+varredura desnecessária do repositório.
+
+## Atualização do índice
+
+É automática. Em cada consulta MCP, o servidor calcula o fingerprint do
+corpus permitido. Se qualquer arquivo incluído mudou, o índice anterior é
+descartado e reconstruído antes de responder. Não há ação manual necessária
+no uso normal. `run.ps1 rebuild` existe apenas para diagnóstico.
 
 ## Escopo indexado
 
-O corpus é construído apenas de `README.md`, `docs/`, código e configuração
-textuais de `pipeline/`, documentação/configuração de `correcao/` e as duas
-validações finais de prontidão e isolamento. `correcao/casos/`, binários,
-caches, artefatos operacionais e a landing page ficam fora por desenho. Isso
-mantém o índice do fluxo separado do repositório React e não inclui o caso
-CER-Fácil ou dados potencialmente sensíveis de cliente.
+O corpus inclui `README.md`, `AGENTS.md`, `docs/`, a documentação desta
+integração, código e configuração textuais de `pipeline/`,
+documentação/configuração de `correcao/` e as validações finais de prontidão e
+isolamento. Ele exclui `correcao/casos/`, binários, caches, artefatos
+operacionais e a landing page React. Essa separação evita incluir o caso
+CER-Fácil ou dados potencialmente sensíveis do cliente.
 
-Antes de indexar, o construtor recusa arquivos fora de UTF-8, maiores que 512
-KiB e padrões básicos de segredo. Isso é uma barreira complementar; Gitleaks
-continua sendo o controle de segredo do repositório.
-
-## Controle de fornecedor
-
-HippoRAG é obtido exclusivamente do commit registrado em
-`HIPPORAG_UPSTREAM.json`. O upstream não oferece uma assinatura Git verificável
-para esse commit; por isso a adoção está limitada a uma camada interna de
-consulta. O bootstrap instala somente dependências fixadas por versão e hash
-em `requirements.lock` e instala o código HippoRAG sem resolver dependências
-nem criar ambiente de build separado.
-
-O índice, cache LLM e ambiente Python ficam em `.runtime/` e `data/`, ambos
-ignorados pelo Git. Nunca registre `OPENAI_API_KEY` em arquivo, histórico ou
+O construtor recusa arquivos fora de UTF-8, maiores que 512 KiB e padrões
+básicos de chaves privadas. Gitleaks permanece o controle de segredo do
 repositório.
 
-## Primeira execução
+## Componentes
 
-Abra PowerShell neste diretório e execute:
+- `scripts/project_rag.py`: índice local e recuperação HippoRAG.
+- `scripts/mcp_server.py`: servidor MCP stdio exposto ao Codex como
+  `project_knowledge` com as ferramentas `search` e `status`.
+- `data/`: índice e marcador; ignorados pelo Git.
+- `HIPPORAG_UPSTREAM.json`: commit fixado do upstream.
+
+## Operação manual de diagnóstico
 
 ```powershell
+cd C:\Users\yuris\OneDrive\Documents\ChatGPT\Empresa-secutiry\pipeline\knowledge\hipporag
+
+# Apenas na primeira máquina/clonagem: instala HippoRAG no ambiente isolado.
 .\bootstrap.ps1
-$env:OPENAI_API_KEY = 'sua-chave-da-api'
+
+# Cria ou confirma o índice local.
 .\run.ps1 index
-```
 
-`bootstrap.ps1` usa Python 3.12 local, cria um ambiente isolado e executa uma
-verificação sem rede do adaptador. `index` usa `gpt-5.6-terra` com
-`reasoning_effort=high` para OpenIE e resposta, e
-`text-embedding-3-large` para embeddings. O modelo e o esforço são gravados
-na identidade do índice; uma configuração diferente não reutiliza o índice.
+# Consulta sem o Codex, útil para diagnóstico.
+.\run.ps1 search 'Quais gates impedem uma correção pior de ser promovida?'
 
-Uma assinatura ChatGPT/Codex não substitui uma chave da API OpenAI. A chave
-permanece somente na sessão atual do terminal acima.
-
-## Consultar na prática
-
-```powershell
-.\run.ps1 ask 'Quais gates impedem uma correção pior de ser promovida?'
-.\run.ps1 ask 'Quais ferramentas do Pipeline 1 fazem conexões de rede e quais são seus limites?'
-.\run.ps1 ask 'Onde está a evidência do teste integrado de firewall, Docker, proxy e canaries?'
-```
-
-Faça uma pergunta por vez, específica e verificável. Prefira pedir a relação
-entre objetos do projeto: ferramenta → política → evidência; achado → ticket
-→ gate → entrega; ou decisão → documento → implementação. A saída sempre
-lista as fontes recuperadas. Abra-as e trate a resposta como uma síntese, não
-como autorização operacional nem prova isolada.
-
-Se algum arquivo permitido mudar, a consulta falha em vez de usar contexto
-antigo. Reconstrua explicitamente:
-
-```powershell
-.\run.ps1 rebuild
-```
-
-Para conferir apenas o escopo e o fingerprint do corpus, sem chave e sem API:
-
-```powershell
+# Mostra estado/fingerprint; não chama rede.
 .\run.ps1 corpus
 ```
 
-## Limites práticos
+No uso normal, não execute `search`: pergunte normalmente ao Codex. A
+configuração MCP em `C:\Users\yuris\.codex\config.toml` inicia o servidor e
+o `AGENTS.md` do projeto instrui o agente a pesquisar primeiro o índice.
 
-- A primeira indexação chama a API para extração de entidades/triplas e para
-  embeddings; haverá custo e latência.
-- O comando não envia `correcao/casos/`, binários ou a landing page.
-- HippoRAG 2 não expõe nativamente `reasoning_effort`; o adaptador local o
-  injeta explicitamente no endpoint Chat Completions compatível com Terra.
-- A API não foi chamada nesta máquina porque não há `OPENAI_API_KEY` no
-  ambiente. A preparação, o corpus, o adaptador Terra e uma indexação/retrieval
-  HippoRAG com doubles offline foram verificados sem ela.
+## Limites honestos
+
+- Este não é o perfil HippoRAG com OpenIE gerado por um LLM remoto. Sem uma
+  chave de API, a extração do grafo é lexical e determinística; é adequada para
+  localizar documentação, políticas, decisões, ferramentas e relações de
+  projeto, mas pode não captar sinônimos ou conceitos implícitos tão bem quanto
+  uma indexação com modelo remoto.
+- O servidor nunca substitui fontes: se os trechos forem insuficientes, o
+  Codex deve abrir somente o arquivo-fonte indicado para confirmar.
+- O runtime isolado do HippoRAG continua grande por depender de Torch e
+  Transformers. Ele e o índice não entram no Git.

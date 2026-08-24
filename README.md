@@ -41,8 +41,8 @@ comercial e do onboarding.
 - `correcao/`: contratos, configuração de exemplo e documentação da correção;
 - `landing-page/`: site React, isolado do motor operacional;
 - `validacao/`: somente ensaios, evidências e resultados de validação.
-- `pipeline/knowledge/hipporag/`: consulta local Graph RAG do fluxo
-  operacional; o índice e os caches ficam fora do Git.
+- `pipeline/knowledge/hipporag/`: consulta Graph RAG local exposta ao Codex
+  por MCP; o índice e os caches ficam fora do Git.
 
 ## Estado real de prontidão
 

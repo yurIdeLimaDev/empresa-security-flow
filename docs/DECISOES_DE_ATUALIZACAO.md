@@ -15,14 +15,16 @@ ser retomada.
 2. A origem fica pinada no commit
    `2f52a86dd04e4633703bd2fb3bb6a37683ac3cfb` do repositório canônico
    `OSU-NLP-Group/HippoRAG`; o commit não possui assinatura Git verificável.
-3. O runtime Windows usa Python 3.12, dependências com versão e SHA-256
-   fixados e uma chave OpenAI somente na sessão do terminal.
+3. O runtime Windows usa Python 3.12 e dependências com versão e SHA-256
+   fixados. A consulta não requer chave OpenAI: o Codex chama um servidor MCP
+   local, que executa HippoRAG com extração de relações e embeddings
+   determinísticos, sem rede.
 4. O corpus exclui deliberadamente caso CER-Fácil, `correcao/casos/`, binários,
-   caches, artefatos e a landing page React. Mudança no corpus invalida a
-   consulta até uma reconstrução explícita.
-5. A chamada real à API não foi executada nesta máquina, pois não há
-   `OPENAI_API_KEY` configurada. Corpus, adaptador Terra e indexação/retrieval
-   offline foram validados sem rede.
+   caches, artefatos e a landing page React. O MCP confere o fingerprint em
+   cada consulta e reconstrói o índice automaticamente quando o corpus muda.
+5. O perfil anterior que dependia de Terra/API foi removido do caminho de
+   operação. O MCP oferece somente recuperação; o modelo do Codex formula a
+   resposta com os trechos retornados.
 
 ## Fluxo e ferramentas
 
