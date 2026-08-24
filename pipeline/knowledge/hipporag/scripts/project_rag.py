@@ -9,6 +9,7 @@ locais e auditáveis; não há chamadas de rede ou envio de conteúdo do projeto
 from __future__ import annotations
 
 import argparse
+import atexit
 from contextlib import redirect_stdout
 import hashlib
 import json
@@ -33,6 +34,8 @@ STOPWORDS = frozenset(
     "sao tem uma umas um uns na the and for from into not with this that these those are was were be by or of to in on it".split()
 )
 VECTOR_DIMENSION = 768
+_CACHED_RAG: Any | None = None
+_CACHED_FINGERPRINT: str | None = None
 
 
 def integration_root() -> Path:
@@ -158,6 +161,17 @@ def create_rag():
     return rag, chunk
 
 
+def close_cached_rag() -> None:
+    global _CACHED_RAG, _CACHED_FINGERPRINT
+    if _CACHED_RAG is not None:
+        _CACHED_RAG.close()
+    _CACHED_RAG = None
+    _CACHED_FINGERPRINT = None
+
+
+atexit.register(close_cached_rag)
+
+
 def marker(documents: list[CorpusDocument]) -> dict[str, Any]:
     return {
         "schema_version": 2,
@@ -219,6 +233,7 @@ def ensure_current_index() -> tuple[list[CorpusDocument], bool]:
     documents = build_corpus(project_root())
     rebuilt = not index_is_current(documents)
     if rebuilt:
+        close_cached_rag()
         build_index(documents, rebuild=True)
     return documents, rebuilt
 
@@ -233,27 +248,43 @@ def excerpt(text: str, query: str, limit: int = 1400) -> str:
     return ("…" if start else "") + rendered + ("…" if end < len(text) else "")
 
 
+def source_adjustment(source: str, question: str) -> float:
+    """Evita que a documentação do próprio RAG oculte o conteúdo do projeto."""
+    if source.startswith("pipeline/knowledge/hipporag/"):
+        rag_terms = {"codex", "mcp", "rag", "hipporag", "índice", "indice", "api", "chave", "knowledge"}
+        if not rag_terms.intersection(tokens(question)):
+            return 0.30
+    return 1.0
+
+
 def search(question: str, top_k: int = 4) -> dict[str, Any]:
+    global _CACHED_RAG, _CACHED_FINGERPRINT
     if not question or not question.strip():
         raise ValueError("a pergunta não pode estar vazia")
     top_k = max(1, min(int(top_k), 6))
     documents, rebuilt = ensure_current_index()
+    fingerprint = corpus_fingerprint(documents)
+    if _CACHED_RAG is None or _CACHED_FINGERPRINT != fingerprint:
+        close_cached_rag()
+        with redirect_stdout(sys.stderr):
+            _CACHED_RAG, _ = create_rag()
+        _CACHED_FINGERPRINT = fingerprint
     with redirect_stdout(sys.stderr):
-        rag, _ = create_rag()
-        try:
-            retrieved = rag.retrieve([question], num_to_retrieve=top_k)[0]
-            scores = retrieved.doc_scores.tolist() if retrieved.doc_scores is not None else []
-            snippets = []
-            for position, document in enumerate(retrieved.docs):
-                metadata = retrieved.doc_metadata[position] if position < len(retrieved.doc_metadata) else {}
-                source = metadata.get("source", metadata.get("source_id", "fonte sem metadados"))
-                snippets.append({"source": source, "score": round(float(scores[position]), 5) if position < len(scores) else None, "excerpt": excerpt(str(document), question)})
-        finally:
-            rag.close()
+        rag = _CACHED_RAG
+        retrieved = rag.retrieve([question], num_to_retrieve=max(12, top_k * 3))[0]
+        scores = retrieved.doc_scores.tolist() if retrieved.doc_scores is not None else []
+        candidates = []
+        for position, document in enumerate(retrieved.docs):
+            metadata = retrieved.doc_metadata[position] if position < len(retrieved.doc_metadata) else {}
+            source = metadata.get("source", metadata.get("source_id", "fonte sem metadados"))
+            score = float(scores[position]) if position < len(scores) else 0.0
+            candidates.append((score * source_adjustment(source, question), source, document))
+        candidates.sort(key=lambda item: (-item[0], item[1]))
+        snippets = [{"source": source, "score": round(score, 5), "excerpt": excerpt(str(document), question)} for score, source, document in candidates[:top_k]]
     return {
         "question": question,
         "index_rebuilt": rebuilt,
-        "corpus_fingerprint": corpus_fingerprint(documents),
+        "corpus_fingerprint": fingerprint,
         "network": "none",
         "sources": snippets,
         "instruction": "Responda apenas com base nos trechos. Se estiverem insuficientes, diga isso e abra somente a fonte indicada necessária para confirmar.",
