@@ -2,12 +2,15 @@
 
 Estado: implementação e documentação atualizadas em 24 de agosto de 2026.
 
-```text
-Lead -> Landing page -> Pipeline 1: superfície pública e baixo impacto
-     -> evidência + perfil de stack -> outreach
-     -> contrato + pagamento -> onboarding técnico
-     -> Pipeline 2: módulos autorizados e roteados -> relatório validado
-     -> correção segura -> gate humano final -> entrega
+```mermaid
+flowchart LR
+    lead[Lead] --> landing[Landing React] --> p1[Pipeline 1]
+    p1 --> evidence[Evidência + perfil] --> outreach[Outreach]
+    outreach --> commercial{Contrato + pagamento?}
+    commercial -- sim --> onboarding[Onboarding + políticas] --> p2[Pipeline 2]
+    commercial -- não --> end[Encerrar]
+    p2 --> bundle[Bundle validado] --> remediation[Correção sobre BEST]
+    remediation --> review[Revisão humana final] --> delivery[Entrega]
 ```
 
 O fluxo original foi mantido. O Pipeline 1 não é ignorado nem encurtado quando
@@ -88,6 +91,7 @@ Documentos principais:
 - [caso corrigido do CER-Fácil](correcao/casos/2026-08-22-cer-facil/README.md)
 - [reteste da correção do CER-Fácil](validacao/2026-08-22-cer-facil-correcao/RESULTADO.md)
 - [validação de isolamento/políticas](validacao/2026-08-22-isolamento-politicas/RESULTADO.md)
+- [diagramas Mermaid detalhados](docs/DIAGRAMAS_MERMAID.md)
 
 ## Estado do primeiro caso
 

@@ -4,19 +4,30 @@ Estado: 24 de agosto de 2026.
 
 ## Fluxo preservado
 
-```text
-lead -> landing React -> Pipeline 1 público/baixo impacto
-     -> evidência + stack-profile.json -> outreach
-     -> contrato + pagamento -> onboarding
-     -> políticas front-loaded + isolamento -> Pipeline 2 roteado
-     -> normalização -> relatório validado + hashes
-     -> correção serial sobre BEST -> gate global -> revisão humana final
-     -> entrega vinculada a commit e hashes
+```mermaid
+flowchart LR
+    lead[Lead] --> landing[Landing React] --> p1[Pipeline 1\npúblico e baixo impacto]
+    p1 --> profile[Evidência + stack-profile]
+    profile --> outreach[Outreach]
+    outreach --> commercial{Contrato +\npagamento?}
+    commercial -- sim --> onboarding[Onboarding\npor schema]
+    commercial -- não --> stop[Sem Pipeline 2]
+    onboarding --> policies{Políticas +\nisolamento válidos?}
+    policies -- sim --> p2[Pipeline 2\nroteado]
+    policies -- não --> blocked[Fail-closed]
+    p2 --> bundle[Bundle validado\n+ hashes]
+    bundle --> best[Correção serial\nsobre BEST]
+    best --> global[Gate global]
+    global --> human[Revisão humana final]
+    human --> delivery[Entrega vinculada\na commit + hashes]
 ```
 
 Não existe divisão prévia do Pipeline 1 por categoria e não existe bypass se o
 perfil ficar vazio. A origem do lead é hipótese; o fingerprint produz o perfil,
 e o onboarding confirma/ajusta os módulos do Pipeline 2.
+
+Os diagramas detalhados de isolamento, correção monotônica e entrega estão em
+[`DIAGRAMAS_MERMAID.md`](DIAGRAMAS_MERMAID.md).
 
 ## Núcleo de políticas
 

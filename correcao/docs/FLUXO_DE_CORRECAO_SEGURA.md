@@ -23,24 +23,31 @@ e comportamento entre tickets.
 
 ## Fluxo vigente
 
-```text
-relatório validado
-  -> plano imutável + ticket por achado validado
-  -> worktree isolado sobre BEST
-  -> adaptador de agente pinado corrige somente segurança no ticket
-  -> commit candidato automático
-  -> gates quality + security + retest
-  -> diff de escopo + comparação canônica exata
-       -> pior/incomparável: rejeita, mantém BEST, registra evidência
-          -> retry limitado ou blocked_attempt_limit
-       -> melhor: promove candidato para BEST
-  -> próximo ticket
-  -> gates globais sobre BEST
-  -> uma revisão humana final
-       -> approved: autorização vinculada a commit e hashes
-       -> changes_requested: reabre tickets indicados, dentro dos limites
-       -> rejected: bloqueia entrega
+```mermaid
+flowchart TB
+    bundle[Relatório validado] --> plan[Plano imutável\n+ ticket por finding]
+    plan --> worktree[Worktree isolada\nsobre BEST atual]
+    worktree --> agent[Adaptador pinado\ncorreção somente de segurança]
+    agent --> candidate[Commit candidato]
+    candidate --> gates[Quality + security + retest]
+    gates --> compare{Escopo, cobertura e\npostura comparáveis?}
+    compare -- não --> reject[Rejeitar e manter BEST]
+    compare -- sim --> regression{Achado novo ou\nregressão?}
+    regression -- sim --> reject
+    regression -- não --> promote[Promover para BEST]
+    reject --> retry{Tentativa restante?}
+    retry -- sim --> worktree
+    retry -- não --> next[Próximo ticket\nou bloqueio por limite]
+    promote --> next
+    next --> global[Gates globais sobre BEST]
+    global --> human{Única revisão humana final}
+    human -- approved --> delivery[Autorização vinculada\na commit + hashes]
+    human -- changes_requested --> worktree
+    human -- rejected --> blocked[Sem entrega]
 ```
+
+O diagrama completo, incluindo preflight e backup/entrega, está em
+[`../../docs/DIAGRAMAS_MERMAID.md`](../../docs/DIAGRAMAS_MERMAID.md).
 
 ## Invariantes implementados
 
