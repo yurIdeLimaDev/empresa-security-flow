@@ -1,31 +1,46 @@
-# Builds e caches
+# Dependências e artefatos de build locais
+node_modules/
 pipeline/bin/
-*.test
-*.test.exe
-*.exe
-*.tsbuildinfo
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.venv/
-
-# Runtime de casos
+validacao/normalizador/*.exe
+landing-page/node_modules/
+landing-page/.vinext/
+landing-page/.wrangler/
+landing-page/dist/
+landing-page/.next/
+landing-page/coverage/
 correcao/runtime/
 correcao/worktrees/
-artifacts/
-artefatos/
-resultados-brutos/
-*.har
-*.pcap
+*.tsbuildinfo
 
-# Segredos
+# Segredos e credenciais
 .env
 .env.*
 !.env.example
 *.pem
 *.key
 
-# IDE e sistema
+# Resultados operacionais sensíveis: não registrar no repositório
+artefatos/
+artifacts/
+resultados-brutos/
+*.har
+*.pcap
+
+# Python / testes
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.hypothesis/
+.venv/
+
+# Índice local do HippoRAG: conteúdo derivado e cache de modelos nunca entram no Git.
+pipeline/knowledge/hipporag/.runtime/
+pipeline/knowledge/hipporag/data/*
+!pipeline/knowledge/hipporag/data/.gitkeep
+pipeline/knowledge/hipporag/output/*
+!pipeline/knowledge/hipporag/output/.gitkeep
+
+# Sistema e IDE
 .DS_Store
 Thumbs.db
 .idea/

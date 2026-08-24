@@ -1,6 +1,6 @@
 # Arquitetura implementada
 
-Estado: 22 de agosto de 2026.
+Estado: 23 de agosto de 2026.
 
 ## Fluxo preservado
 
@@ -131,6 +131,22 @@ relatório, comparação e integridade. Alertas nascem como `candidate`. A únic
 promoção automática estreita é Hadrian com setup, ataque e verificação do
 efeito nas três fases.
 
+## Consulta Graph RAG
+
+HippoRAG 2 é uma camada interna e opcional de consulta do fluxo. Ele indexa um
+corpus restrito de documentação, configurações, código do motor e evidências
+finais de prontidão/isolamento. Não recebe `correcao/casos/`, binários,
+artefatos operacionais, caches ou a landing page; assim, mantém os dois
+repositórios privados separados e não inclui o caso CER-Fácil.
+
+O corpus possui fingerprint e o comando de consulta recusa índice ausente,
+desatualizado ou produzido por configuração diferente. A indexação usa
+`gpt-5.6-terra` com `reasoning_effort=high` para extração/QA e
+`text-embedding-3-large` para embeddings. HippoRAG não expõe esse esforço
+nativamente; o adaptador local o injeta no Chat Completions. Respostas sempre
+mostram as fontes recuperadas, e os arquivos versionados continuam sendo a
+fonte de verdade e a base de qualquer decisão operacional.
+
 ## Correção segura
 
 Cada finding validado gera um ticket e um prompt tratado como dado não
@@ -172,6 +188,6 @@ HIBP quando usado, adaptadores da stack e o preflight no host Linux real não
 podem vir preenchidos no template. O motor falha fechado até essas entradas
 serem fornecidas e verificadas.
 
-Casos e resultados de clientes não são armazenados no repositório do motor.
-Cada caso precisa repetir a cobertura com a cadeia vigente antes da revisão
-humana final.
+O CER-Fácil permanece somente candidato à revisão humana final. Seus ToolRuns
+arquivados foram produzidos antes deste fechamento; é necessário repetir a
+cobertura com o runner governado atual antes de emitir autorização de entrega.

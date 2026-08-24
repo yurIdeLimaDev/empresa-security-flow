@@ -1,12 +1,28 @@
 # Decisões incorporadas
 
-Data: 22 de agosto de 2026.
+Data: 23 de agosto de 2026.
 
 ## Fonte de verdade
 
 As decisões e anexos enviados nesta iteração prevalecem sobre versões antigas
 do repositório. A implementação interrompida foi comparada com elas antes de
 ser retomada.
+
+## Consulta Graph RAG
+
+1. HippoRAG 2 foi adotado somente como camada interna de consulta sobre o
+   fluxo de verificação/correção, nunca como fonte de verdade ou autorizador.
+2. A origem fica pinada no commit
+   `2f52a86dd04e4633703bd2fb3bb6a37683ac3cfb` do repositório canônico
+   `OSU-NLP-Group/HippoRAG`; o commit não possui assinatura Git verificável.
+3. O runtime Windows usa Python 3.12, dependências com versão e SHA-256
+   fixados e uma chave OpenAI somente na sessão do terminal.
+4. O corpus exclui deliberadamente caso CER-Fácil, `correcao/casos/`, binários,
+   caches, artefatos e a landing page React. Mudança no corpus invalida a
+   consulta até uma reconstrução explícita.
+5. A chamada real à API não foi executada nesta máquina, pois não há
+   `OPENAI_API_KEY` configurada. Corpus, adaptador Terra e indexação/retrieval
+   offline foram validados sem rede.
 
 ## Fluxo e ferramentas
 

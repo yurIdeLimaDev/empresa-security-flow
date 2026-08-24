@@ -1,0 +1,14 @@
+{
+  "name": "HippoRAG 2",
+  "upstream": "https://github.com/OSU-NLP-Group/HippoRAG.git",
+  "commit": "2f52a86dd04e4633703bd2fb3bb6a37683ac3cfb",
+  "package_version": "2.0.0a5",
+  "reviewed_on": "2026-08-23",
+  "license": "MIT",
+  "review_status": "restricted-internal-query-layer",
+  "notes": [
+    "O commit foi fixado por hash, mas não possui assinatura Git verificável.",
+    "O uso fica limitado a indexar arquivos locais permitidos e consultar a API OpenAI configurada pelo operador.",
+    "O índice não é fonte de verdade operacional; schemas, logs e documentos versionados continuam sendo a fonte de verdade."
+  ]
+}
