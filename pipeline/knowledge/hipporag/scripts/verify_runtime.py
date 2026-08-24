@@ -1,40 +1,46 @@
 #!/usr/bin/env python3
-"""Verificação sem rede da compatibilidade entre a integração e HippoRAG fixado."""
+"""Verificação local, sem chave e sem rede, do runtime HippoRAG fixado."""
 
 from __future__ import annotations
 
-import os
+from contextlib import redirect_stdout
+import sys
 import tempfile
 from pathlib import Path
 
-os.environ.setdefault("OPENAI_API_KEY", "verification-key-not-used-for-network")
-
-from hipporag.llm.openai_gpt import CacheOpenAI
+from hipporag import HippoRAG
 from hipporag.utils.config_utils import BaseConfig
+from hipporag.utils.misc_utils import Chunk
 
-from project_rag import EMBEDDING_MODEL, MODEL, terra_llm_class
+from project_rag import BACKEND, INDEX_IDENTITY, LocalGraphExtractor, LocalTokenHashEmbedding
 
 
 def main() -> int:
     with tempfile.TemporaryDirectory() as directory:
         config = BaseConfig(
-            llm_name=MODEL,
-            embedding_model_name=EMBEDDING_MODEL,
-            embedding_provider="openai",
-            temperature=None,
+            llm_name=BACKEND,
+            embedding_model_name=BACKEND,
+            save_dir=str(Path(directory) / "index"),
+            preprocess_chunk_max_token_size=None,
+            retrieval_top_k=1,
+            qa_top_k=1,
         )
-        adapter = terra_llm_class(CacheOpenAI)(
-            cache_dir=str(Path(directory) / "cache"),
-            global_config=config,
-            reasoning_effort="high",
-        )
-        try:
-            params = adapter.llm_config.generate_params
-            assert params["model"] == MODEL
-            assert params["reasoning_effort"] == "high"
-            assert "temperature" not in params
-        finally:
-            adapter.close()
+        embedding = LocalTokenHashEmbedding()
+        extractor = LocalGraphExtractor()
+        with redirect_stdout(sys.stderr):
+            rag = HippoRAG(
+                global_config=config,
+                embedding_model=embedding,
+                extraction_llm=extractor,
+                qa_llm=extractor,
+                index_identity=INDEX_IDENTITY,
+            )
+            try:
+                rag.index([Chunk("Pipeline 1 produz evidência pública.", source_id="smoke.md")])
+                result = rag.retrieve(["Qual pipeline produz evidência?"], num_to_retrieve=1)[0]
+                assert len(result.docs) == 1
+            finally:
+                rag.close()
     print("runtime verification passed")
     return 0
 
