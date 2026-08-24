@@ -20,8 +20,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-import numpy as np
-
 from build_corpus import CorpusDocument, build_corpus, corpus_fingerprint, project_root
 
 UPSTREAM_COMMIT = "2f52a86dd04e4633703bd2fb3bb6a37683ac3cfb"
@@ -75,6 +73,10 @@ class LocalTokenHashEmbedding:
         self.dimension = dimension
 
     def batch_encode(self, texts: list[str] | str, **_kwargs: Any) -> np.ndarray:
+        # Corpus/status do CI não precisam do runtime vetorial. Importe NumPy
+        # somente quando o índice/consulta realmente cria embeddings.
+        import numpy as np
+
         if isinstance(texts, str):
             texts = [texts]
         vectors: list[np.ndarray] = []
