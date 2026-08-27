@@ -47,6 +47,29 @@ func TestPipeline1PlanHasNoNetwork(t *testing.T) {
 	}
 }
 
+func TestCheckPolicyExplicitlySkipsDataCollectionTools(t *testing.T) {
+	if err := validateJSONSchemaFile("tool-policy.schema.json", testRepoPath("config/examples/tool-policy-check.json")); err != nil {
+		t.Fatalf("política Check inválida: %v", err)
+	}
+	policy := ToolPolicyFile{Tools: map[string]ToolPolicyEntry{
+		"subfinder": {Mode: "automatic", Pipeline: 1},
+		"amass":     {Mode: "automatic", Pipeline: 1},
+		"httpx":     {Mode: "automatic", Pipeline: 1},
+		"testssl":   {Mode: "automatic", Pipeline: 1},
+		"jsluice":   {Mode: "automatic", Pipeline: 1},
+		"dnsreaper": {Mode: "automatic", Pipeline: 1},
+	}}
+	manifest := Manifest{Actions: pipeline1Plan(LeadConfig{Domain: "example.com", BaseURL: "https://example.com", RequestsPerSecond: 1}, t.TempDir())}
+	applyPipeline1ToolPolicy(&manifest, policy)
+	for _, action := range manifest.Actions {
+		if action.PolicyTool == "hibp" || action.Tool == "gitleaks" || action.Tool == "trufflehog" {
+			if action.State != "skipped" {
+				t.Fatalf("%s deveria estar desabilitada no Check, recebeu %s", action.Tool, action.State)
+			}
+		}
+	}
+}
+
 func TestPipeline1ExecuteRequiresFrontLoadedPolicies(t *testing.T) {
 	cfg := LeadConfig{CaseID: "LEAD-TEST", Domain: "example.com", BaseURL: "https://example.com", OutputRoot: t.TempDir()}
 	if err := RunPipeline1(context.Background(), cfg, true); err == nil {

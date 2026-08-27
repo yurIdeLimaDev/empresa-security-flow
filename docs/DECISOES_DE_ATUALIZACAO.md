@@ -1,6 +1,6 @@
 # Decisões incorporadas
 
-Data: 24 de agosto de 2026.
+Data: 26 de agosto de 2026.
 
 ## Fonte de verdade
 
@@ -88,6 +88,25 @@ A modelagem completa de LGPD/base legal e métricas comerciais continua adiada
 por decisão do projeto. Isso não torna a automação HIBP juridicamente neutra:
 o código está pronto, mas uso real de e-mail deve aguardar a decisão
 jurídica/operacional correspondente.
+
+## 26 de agosto de 2026: landing e conversão
+
+1. A entrada da landing passou a ser o domínio do próprio solicitante.
+2. O site executa somente uma prévia verdadeira e limitada do Pipeline 1. O
+   runner integral continua obrigatório e ainda não foi ligado à requisição web.
+3. A oferta aparece somente depois do resultado e descreve correção, limites e
+   prazo conforme os sinais observados.
+4. O preço de lançamento ficou em R$ 4.750 por projeto, 5% abaixo da referência
+   brasileira pública de R$ 5.000. O piso sustentável calculado antes da
+   proposta continua soberano.
+5. Foi escolhido projeto único, não assinatura, até existir histórico de
+   recorrência, margem e capacidade de entrega.
+6. Conta Google, Apple, e-mail e pagamento permanecem cascas inativas. O site
+   não simula uma operação que ainda não possui credenciais, provedor e backend.
+7. O caminho sem conta será compra como convidado. A comunicação não promete
+   anonimato financeiro.
+8. A identidade visual adotou a foca escolhida, sem pedra, sem vermelho na
+   ilustração e com fundo realmente transparente.
 
 ## Decisões da correção
 

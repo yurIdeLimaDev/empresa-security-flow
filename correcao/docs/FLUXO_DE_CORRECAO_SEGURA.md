@@ -175,9 +175,9 @@ de 2026. O candidato local resolveu cinco achados, mitigou três e preservou um
 por decisão de escopo, sem novo achado validado. A execução demonstrou a regra
 de manter a melhor versão, mas não emitiu autorização de entrega: os ToolRuns
 arquivados são anteriores ao fechamento atual e precisam ser repetidos pelo
-runner governado antes da revisão humana final. Consulte
-`correcao/casos/2026-08-22-cer-facil/` e
-`validacao/2026-08-22-cer-facil-correcao/`.
+runner governado antes da revisão humana final. A fonte e o reteste detalhado
+permanecem somente no workspace privado de casos e são deliberadamente
+excluídos deste repositório.
 
 ## Implementação concreta do primeiro caso
 

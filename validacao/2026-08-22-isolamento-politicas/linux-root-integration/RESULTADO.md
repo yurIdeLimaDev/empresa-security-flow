@@ -16,8 +16,8 @@ Status: aprovado em infraestrutura descartável e controlada.
   `scope_decision=allowed_pinned`;
 - teardown removeu os containers, as redes e as chains do ensaio.
 
-A evidência final preservada é `case-success/`; tentativas exploratórias foram
-descartadas.
+A evidência final é `case-success/`. O diretório `case/` contém tentativas
+exploratórias anteriores e não é evidência de aprovação.
 
 Correções descobertas pelo ensaio:
 

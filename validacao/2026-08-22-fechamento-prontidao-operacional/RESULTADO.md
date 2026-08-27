@@ -58,5 +58,5 @@ entradas do onboarding, e agora falham fechados antes do plano.
 O ensaio Linux root valida o desenho, não um servidor futuro ainda não
 selecionado. Por isso o código está pronto para receber um caso, mas a entrega
 real só pode ser autorizada depois que políticas/adaptadores reais e o host
-escolhido passarem seus preflights. Todo caso precisa usar a cadeia atual antes
-da revisão humana final.
+escolhido passarem seus preflights. O caso CER-Fácil deve ser reexecutado com a
+cadeia atual antes da revisão humana final.

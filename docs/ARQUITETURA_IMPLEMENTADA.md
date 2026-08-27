@@ -6,12 +6,12 @@ Estado: 24 de agosto de 2026.
 
 ```mermaid
 flowchart LR
-    lead[Lead] --> landing[Landing React] --> p1[Pipeline 1\npúblico e baixo impacto]
+    lead[Lead] --> landing[Landing React] --> p05[Pipeline 0.5\nweb gratuito]
+    p05 --> commercial{Contrato +\npagamento?}
+    commercial -- sim --> p1[Pipeline 1 integral\nambiente governado]
+    commercial -- não --> stop[Encerrar sem persistência]
     p1 --> profile[Evidência + stack-profile]
-    profile --> outreach[Outreach]
-    outreach --> commercial{Contrato +\npagamento?}
-    commercial -- sim --> onboarding[Onboarding\npor schema]
-    commercial -- não --> stop[Sem Pipeline 2]
+    profile --> onboarding[Onboarding\npor schema]
     onboarding --> policies{Políticas +\nisolamento válidos?}
     policies -- sim --> p2[Pipeline 2\nroteado]
     policies -- não --> blocked[Fail-closed]
@@ -22,9 +22,25 @@ flowchart LR
     human --> delivery[Entrega vinculada\na commit + hashes]
 ```
 
-Não existe divisão prévia do Pipeline 1 por categoria e não existe bypass se o
+O Pipeline 0.5 não é uma categoria ou versão esvaziada do Pipeline 1. Não
+existe bypass do Pipeline 1 integral depois da contratação se o
 perfil ficar vazio. A origem do lead é hipótese; o fingerprint produz o perfil,
 e o onboarding confirma/ajusta os módulos do Pipeline 2.
+
+## Pipeline 0.5 web
+
+O Worker da landing executa uma leitura síncrona, efêmera e de baixo impacto.
+Ela cobre DNS público, HTTP/HTTPS, oito cabeçalhos, CSP, atributos agregados de
+cookies, SPF/DMARC/MX/DNSSEC/CAA, security.txt, Certificate Transparency
+limitada e fingerprint textual de até dois scripts do mesmo host. Cada corpo é
+limitado por streaming; redirects não são seguidos; resoluções privadas e
+reservadas são recusadas; o orçamento total é de 46 subrequisições externas.
+
+O resultado apresenta no máximo oito observações com evidência resumida,
+significado e limitação. Não há score, autenticação, execução de JavaScript do
+alvo, portas, exploração, mutação ou persistência em D1. O Pipeline 1 e o
+scheduler do Check ficam inacessíveis em produção enquanto
+`CHECK_PUBLIC_ENABLED` não for explicitamente habilitado em um deploy futuro.
 
 Os diagramas detalhados de isolamento, correção monotônica e entrega estão em
 [`DIAGRAMAS_MERMAID.md`](DIAGRAMAS_MERMAID.md).

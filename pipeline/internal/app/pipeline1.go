@@ -66,6 +66,7 @@ func RunPipeline1(ctx context.Context, cfg LeadConfig, execute bool) error {
 		ConfigSHA256: HashJSON(cfg),
 	}
 	manifest.Actions = pipeline1Plan(cfg, dir)
+	applyPipeline1ToolPolicy(&manifest, policies.Tools)
 	if err := WriteJSON(filepath.Join(dir, "manifest.json"), manifest); err != nil {
 		return err
 	}
@@ -230,6 +231,28 @@ func RunPipeline1(ctx context.Context, cfg LeadConfig, execute bool) error {
 		return err
 	}
 	return writeChecksums(dir)
+}
+
+// applyPipeline1ToolPolicy turns product-specific omissions into explicit
+// skips before any runner action is attempted. The default commercial policy
+// still enables its original tools; Vexkeep Check intentionally has a smaller
+// allowlist and must not fail open into HIBP, TruffleHog or Gitleaks.
+func applyPipeline1ToolPolicy(manifest *Manifest, policy ToolPolicyFile) {
+	for index := range manifest.Actions {
+		action := &manifest.Actions[index]
+		if action.Tool == "native" || action.State == "skipped" || action.State == "manual" {
+			continue
+		}
+		key := action.PolicyTool
+		if key == "" {
+			key = action.Tool
+		}
+		entry, exists := policy.Tools[key]
+		if !exists || entry.Mode != "automatic" || entry.Pipeline != 1 {
+			action.State = "skipped"
+			action.Reason = "não habilitado pela política específica deste produto"
+		}
+	}
 }
 
 func pipeline1Plan(cfg LeadConfig, dir string) []PlannedAction {

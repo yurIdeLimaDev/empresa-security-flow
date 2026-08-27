@@ -9,12 +9,12 @@ automáticas nem criam bypass para autorização, supply chain ou revisão final
 ```mermaid
 flowchart LR
     lead[Lead] --> landing[Landing page React]
-    landing --> p1[Pipeline 1\nSuperfície pública e baixo impacto]
+    landing --> p05[Pipeline 0.5 web\ngratuito e efêmero]
+    p05 --> commercial{Contrato e\n pagamento confirmados?}
+    commercial -- não --> stopCommercial[Encerrar sem persistência]
+    commercial -- sim --> p1[Pipeline 1 integral\nambiente governado]
     p1 --> evidence[Evidência saneada\n+ stack profile]
-    evidence --> outreach[Outreach baseado em achado real]
-    outreach --> commercial{Contrato e\n pagamento confirmados?}
-    commercial -- não --> stopCommercial[Encerrar sem Pipeline 2]
-    commercial -- sim --> onboarding[Onboarding técnico\npor schema]
+    evidence --> onboarding[Onboarding técnico\npor schema]
     onboarding --> policy{Escopo, autorização,\npolíticas e isolamento válidos?}
     policy -- não --> blocked[Fail-closed\nsem execução ativa]
     policy -- sim --> p2[Pipeline 2\nMódulos autorizados e roteados]
@@ -28,9 +28,10 @@ flowchart LR
     finalReview -- rejeitado --> closed[Encerrar sem entrega]
 ```
 
-Regras visíveis no diagrama: Pipeline 1 sempre ocorre antes do onboarding; um
-perfil de stack vazio não pula o fluxo. Pipeline 2 só começa após contrato,
-pagamento e entradas técnicas válidas.
+Regras visíveis no diagrama: o Pipeline 0.5 não substitui o Pipeline 1;
+Pipeline 1 sempre ocorre depois da contratação e antes do onboarding; um perfil
+de stack vazio não pula o fluxo. Pipeline 2 só começa após entradas técnicas
+válidas.
 
 ## 2. Execução governada e isolamento por engajamento
 

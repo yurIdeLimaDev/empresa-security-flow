@@ -1,17 +1,38 @@
 # Pipeline de geração de leads
 
-Estado vigente em 22 de agosto de 2026.
+Estado vigente em 26 de agosto de 2026.
 
 ```text
-Lead -> Landing page -> Pipeline 1: superfície pública e baixo impacto
-     -> evidência + perfil de stack JSON -> outreach
-     -> contrato + pagamento -> onboarding técnico
+Lead -> Landing page -> Pipeline 0.5 web gratuito
+     -> resultado efêmero -> proposta
+     -> contrato + pagamento -> Pipeline 1 integral
+     -> evidência + perfil de stack JSON -> onboarding técnico
      -> Pipeline 2: módulos autorizados e roteados -> relatório final
 ```
 
 O Pipeline 1 não pode ser esvaziado ou convertido diretamente no Pipeline 2.
 Mesmo sem tecnologia/achado conclusivo, sua saída registra o que foi observado,
 as limitações e o perfil `unknown`. A especialização ocorre depois.
+
+## Entrada pela landing: Pipeline 0.5
+
+`vexkeep.com` permite informar um domínio e receber na tela uma observação real
+da superfície pública. O Worker consulta DNS, HTTP/HTTPS, oito cabeçalhos,
+CSP, atributos de cookies sem valores, SPF/DMARC/MX/DNSSEC/CAA, security.txt,
+uma amostra limitada de Certificate Transparency e até dois bundles JavaScript
+do mesmo host para fingerprint textual. Corpos são limitados e o JavaScript do
+alvo nunca é executado.
+
+Essa resposta é o **Pipeline 0.5 web**, não o Pipeline 1. Ela não substitui o
+runner integral com ferramentas em container, isolamento Linux, normalização e
+evidência governada. Não há login, porta, formulário, credencial, exploração,
+mutação ou persistência do domínio/resultado. O orçamento máximo é de 46
+subrequisições externas e até oito observações. O site não inicia Pipeline 1
+nem Pipeline 2.
+
+O preço, prazo e limites comerciais aparecem somente depois da prévia. A
+implementação e a documentação da interface pública são mantidas separadamente
+no repositório privado da landing.
 
 ## Pipeline 1 — superfície pública e baixo impacto
 
@@ -79,9 +100,10 @@ controle. Não é passivo estrito: há conexões HTTP/TLS/DNS de baixo impacto.
 
 ## Transição comercial
 
-Outreach -> contrato + pagamento -> onboarding. O Pipeline 2 exige pagamento,
-SOW, contato de emergência, políticas reais, contas/matriz quando aplicável e
-autorização. Um achado no Pipeline 1 nunca concede essa autorização.
+Pipeline 0.5 -> proposta -> contrato + pagamento -> Pipeline 1 integral. O
+Pipeline 2 exige ainda SOW, contato de emergência, políticas reais,
+contas/matriz quando aplicável e autorização. Uma observação do Pipeline 0.5 ou
+um achado no Pipeline 1 nunca concede essa autorização.
 
 ## Pipeline 2 — engajamento ativo autorizado
 
