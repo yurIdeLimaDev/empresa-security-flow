@@ -1,8 +1,16 @@
 # Vexkeep — fluxo governado de verificação e correção
 
-Repositório privado do motor técnico da Vexkeep. A landing comercial, os
-documentos de negócio, fontes de clientes e resultados brutos não fazem parte
-deste repositório.
+Repositório privado do motor técnico da Vexkeep. A landing comercial, o plano
+de negócios, fontes de clientes e resultados brutos não fazem parte deste
+repositório. Quatro modelos jurídicos não preenchidos em `negocio/juridico/`
+são insumos do ensaio sintético; não representam documentos aprovados ou
+assinados.
+
+Estado de 22/09/2026: o motor inclui geração de propostas de patch por contrato
+independente de fornecedor, gates separados, entrega vinculada a hash e ensaio
+sintético do primeiro cliente. Não há provedor de IA ativado nem host de produção
+aprovado. Consulte o [estado do fluxo](docs/ESTADO_FLUXO.md) para limites e
+pendências concretos.
 
 ```mermaid
 flowchart LR
@@ -40,6 +48,9 @@ flowchart LR
 - correção por ticket em worktree isolada, gates finitos e retenção da melhor
   postura de segurança;
 - uma revisão humana final vinculada aos hashes entregues.
+- geração automática até a revisão final, com transporte externo desativado
+  até existir um provedor aprovado e autorização específica;
+- patch cumulativo derivado do diff da melhor versão, conferido na entrega.
 
 ## Validação mínima
 
@@ -49,6 +60,7 @@ Na pasta `pipeline/`:
 go vet ./...
 go test -race -count=1 ./...
 go run ./cmd/pipeline supply-chain --lock tools.lock.json --sbom sbom.cdx.json --strict
+python3 scripts/check_docs.py --profile flow
 ```
 
 O host de execução precisa passar `deploy-preflight-linux.sh` como root antes

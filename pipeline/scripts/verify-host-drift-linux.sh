@@ -10,12 +10,9 @@ baseline="$1"
 evidence="$2"
 [ "$(uname -s)" = Linux ] || { printf 'Linux is required\n' >&2; exit 1; }
 [ "$(id -u)" -eq 0 ] || { printf 'root is required\n' >&2; exit 1; }
-[ -r "$baseline" ] || { printf 'baseline is not readable\n' >&2; exit 1; }
-if [ -e "$evidence" ] && [ -n "$(find "$evidence" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]; then
-  printf 'evidence directory must be new or empty\n' >&2
-  exit 1
-fi
-mkdir -p "$evidence"
+source "$(dirname "${BASH_SOURCE[0]}")/host-inputs-linux.sh"
+host_baseline_check "$baseline"
+host_new_evidence "$evidence"
 
 value() {
   local key="$1" result
@@ -50,9 +47,13 @@ docker image inspect "$reference_image" --format '{{.Id}}' >/dev/null
 
 for path in "$case_root" "$backup_root"; do
   [ -d "$path" ] || { printf 'dedicated root missing\n' >&2; exit 1; }
+  [ "$(realpath -- "$path")" = "$(realpath -ms -- "$path")" ] || { printf 'dedicated root contains symlink\n' >&2; exit 1; }
   [ "$(stat -c '%U:%G' "$path")" = "$operator:$operator" ] || { printf 'dedicated root ownership drift\n' >&2; exit 1; }
   [ "$(stat -c '%a' "$path")" = 700 ] || { printf 'dedicated root mode drift\n' >&2; exit 1; }
 done
+case_canonical="$(realpath -- "$case_root")"
+backup_canonical="$(realpath -- "$backup_root")"
+[[ "$case_canonical/" != "$backup_canonical/"* && "$backup_canonical/" != "$case_canonical/"* ]] || { printf 'case and backup roots must be disjoint\n' >&2; exit 1; }
 
 sshd_effective="$(sshd -T)"
 grep -qx 'passwordauthentication no' <<<"$sshd_effective" || { printf 'SSH password authentication must be disabled\n' >&2; exit 1; }

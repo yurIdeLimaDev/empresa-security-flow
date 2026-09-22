@@ -17,11 +17,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
 
       - name: Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
         with:
-          go-version-file: pipeline/go.mod
+          go-version: '1.26.5'
           cache-dependency-path: pipeline/go.sum
 
       - name: Secret scan
@@ -40,13 +42,25 @@ jobs:
           python3 knowledge/hipporag/scripts/project_rag.py corpus
 
       - name: Tests
-        run: go test ./... -count=1
+        run: go test ./... -count=1 -timeout=10m
 
       - name: Race detector
-        run: go test -race ./... -count=1
+        run: go test -race ./... -count=1 -timeout=10m
+
+      - name: Documentation and host acceptance checks
+        run: |
+          python3 -m unittest discover -s scripts/tests -p 'test_*.py' -v
+          python3 scripts/check_docs.py --profile flow
+          for script in scripts/*linux.sh; do bash -n "$script"; done
+
+      - name: Synthetic MVP acceptance
+        run: python3 scripts/mvp_acceptance.py --output /tmp/vexkeep-mvp-acceptance
 
       - name: Vet
         run: go vet ./...
+
+      - name: Locked Go dependencies
+        run: go mod verify
 
       - name: Build
         run: go build -trimpath ./cmd/pipeline

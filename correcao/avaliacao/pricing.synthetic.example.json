@@ -1,0 +1,10 @@
+{
+  "provider_model": "SYNTHETIC-NOT-A-PROVIDER",
+  "currency": "TEST",
+  "source": "synthetic arithmetic fixture, not a market quote",
+  "as_of": "2026-09-13",
+  "input_per_million": 1,
+  "output_per_million": 2,
+  "assumed_input_tokens_per_call": 1000,
+  "assumed_output_tokens_per_call": 500
+}

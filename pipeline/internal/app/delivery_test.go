@@ -45,6 +45,11 @@ func TestDeliveryPackageIsBoundAndDeterministic(t *testing.T) {
 	}
 	approvalHash, _ := HashFile(approvalPath)
 	authorization := DeliveryAuthorization{SchemaVersion: RemediationSchemaVersion, CaseID: caseID, Status: "approved_for_delivery", GeneratedAt: "2026-08-23T00:00:00Z", Commit: commit, BundleSHA256: bundleHash, PlanSHA256: planHash, StateSHA256: stateHash, ApprovalSHA256: approvalHash, HumanReviewStage: "final", SecurityNonRegression: "passed"}
+	patchData := []byte("synthetic approved patch\n")
+	authorization.PatchSHA256 = bytesSHA256(patchData)
+	if err := os.WriteFile(filepath.Join(root, "approved-security.patch"), patchData, 0o600); err != nil {
+		t.Fatal(err)
+	}
 	authorizationPath := filepath.Join(root, "authorization.json")
 	if err := WriteJSON(authorizationPath, authorization); err != nil {
 		t.Fatal(err)
@@ -60,11 +65,11 @@ func TestDeliveryPackageIsBoundAndDeterministic(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	first, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, filepath.Dir(patchRoot), filepath.Join(root, "out-1"), identity.Recipient().String())
+	first, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, "", filepath.Join(root, "out-1"), identity.Recipient().String())
 	if err != nil {
 		t.Fatal(err)
 	}
-	second, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, filepath.Dir(patchRoot), filepath.Join(root, "out-2"), identity.Recipient().String())
+	second, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, "", filepath.Join(root, "out-2"), identity.Recipient().String())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -97,6 +102,15 @@ func TestDeliveryPackageIsBoundAndDeterministic(t *testing.T) {
 	archive.Close()
 	if !bytes.Equal(buffer, decrypted) {
 		t.Fatal("conteúdo age descriptografado diverge do arquivo determinístico")
+	}
+	if _, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, filepath.Dir(patchRoot), filepath.Join(root, "external"), identity.Recipient().String()); err == nil {
+		t.Fatal("external patches accepted")
+	}
+	if err := os.WriteFile(filepath.Join(root, "approved-security.patch"), []byte("substituted patch"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := BuildDeliveryPackage(context.Background(), authorizationPath, planPath, statePath, approvalPath, bundlePath, "", filepath.Join(root, "tampered"), identity.Recipient().String()); err == nil {
+		t.Fatal("tampered approved patch accepted")
 	}
 }
 

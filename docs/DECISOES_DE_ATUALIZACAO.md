@@ -1,6 +1,27 @@
 # Decisões incorporadas
 
-Data: 26 de agosto de 2026.
+Consolidação: 13/09/2026. As seções datadas preservam decisões históricas;
+quando houver evolução, vale o estado abaixo e o [estado atual](ESTADO_FLUXO.md).
+
+## Decisões vigentes consolidadas
+
+- Geração independente de fornecedor implementada, desativada até escolha e
+  homologação; testes usam simulador/replay, sem outro modelo de IA.
+- Finalização gera patch cumulativo de BEST e o vincula à autorização por hash;
+  o empacotamento não recebe mais patches externos.
+- Oito prioridades locais validadas, incluindo gates, POC, CI, ensaio fictício
+  e preparação de aceitação do host. Não significam release ou aceite externo.
+- Google/Apple possuem backend implementado; credenciais e homologação faltam.
+  Compra, assinatura e conta por senha não estão ativadas.
+- Minutas jurídicas/procedimentos já existem; revisão profissional e dados
+  reais continuam pendentes. O adiamento de agosto não descreve mais a
+  preparação documental atual.
+- A foca vigente na landing é vermelha, transparente e sem pedra; a decisão
+  visual anterior foi substituída pela escolha posterior do proprietário.
+- Check recorrente continua pausado. Nomes de pipelines são internos.
+- O MCP consultado pode apontar outra cópia: trechos antigos exigem confirmação
+  direta nos arquivos, não mudança de modelo.
+
 
 ## Fonte de verdade
 
@@ -82,14 +103,15 @@ ser retomada.
   `pnpm install --frozen-lockfile`, não npm.
 - Taxas fracionárias nunca são truncadas silenciosamente.
 
-## Fora desta iteração
+## Escopo adiado na iteração de agosto
 
-A modelagem completa de LGPD/base legal e métricas comerciais continua adiada
-por decisão do projeto. Isso não torna a automação HIBP juridicamente neutra:
+A modelagem completa de LGPD/base legal e métricas comerciais foi adiada
+naquela iteração. Desde 11/09 existem minutas e procedimentos, ainda sem
+aprovação profissional e operação real. Isso não torna a automação HIBP juridicamente neutra:
 o código está pronto, mas uso real de e-mail deve aguardar a decisão
 jurídica/operacional correspondente.
 
-## 26 de agosto de 2026: landing e conversão
+## Registro histórico de 26 de agosto de 2026: landing e conversão
 
 1. A entrada da landing passou a ser o domínio do próprio solicitante.
 2. O site executa somente uma prévia verdadeira e limitada do Pipeline 1. O
@@ -101,12 +123,13 @@ jurídica/operacional correspondente.
    proposta continua soberano.
 5. Foi escolhido projeto único, não assinatura, até existir histórico de
    recorrência, margem e capacidade de entrega.
-6. Conta Google, Apple, e-mail e pagamento permanecem cascas inativas. O site
-   não simula uma operação que ainda não possui credenciais, provedor e backend.
+6. Na decisão original, conta Google, Apple, e-mail e pagamento eram cascas.
+   Posteriormente Google/Apple receberam backend; credenciais/homologação,
+   pagamento e conta por senha continuam pendentes. Não simular ativação real.
 7. O caminho sem conta será compra como convidado. A comunicação não promete
    anonimato financeiro.
-8. A identidade visual adotou a foca escolhida, sem pedra, sem vermelho na
-   ilustração e com fundo realmente transparente.
+8. A primeira escolha visual sem vermelho foi substituída pela foca vermelha
+   escolhida posteriormente, sem pedra e com fundo realmente transparente.
 
 ## Decisões da correção
 

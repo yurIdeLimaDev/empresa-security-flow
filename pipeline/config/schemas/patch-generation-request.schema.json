@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vexkeep provider-neutral patch proposal request v1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "request_id", "base_commit", "ticket_id", "attempt", "provider", "model", "reasoning_effort", "instructions", "finding_fingerprint", "finding_title_untrusted", "finding_description_untrusted", "remediation_hint_untrusted", "acceptance_criteria", "allowed_paths", "max_files_changed", "max_changed_lines", "previous_outcome", "files_untrusted"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "request_id": {"type": "string", "pattern": "^[a-f0-9]{48}$"},
+    "base_commit": {"type": "string", "pattern": "^[a-f0-9]{40,64}$"},
+    "ticket_id": {"type": "string", "pattern": "^REM-[A-Za-z0-9]+$"},
+    "attempt": {"type": "integer", "minimum": 1, "maximum": 5},
+    "provider": {"type": "string", "minLength": 1, "maxLength": 128},
+    "model": {"type": "string", "minLength": 1, "maxLength": 128},
+    "reasoning_effort": {"type": "string", "minLength": 1, "maxLength": 128},
+    "instructions": {"type": "string", "minLength": 1},
+    "finding_fingerprint": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+    "finding_title_untrusted": {"type": "string"},
+    "finding_description_untrusted": {"type": "string"},
+    "remediation_hint_untrusted": {"type": "string"},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+    "allowed_paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "max_files_changed": {"type": "integer", "minimum": 1},
+    "max_changed_lines": {"type": "integer", "minimum": 1},
+    "previous_outcome": {"type": "string"},
+    "files_untrusted": {
+      "type": "array", "minItems": 1, "maxItems": 32,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "sha256", "content"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1, "maxLength": 300},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "content": {"type": "string"}
+        }
+      }
+    }
+  }
+}

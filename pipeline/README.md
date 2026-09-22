@@ -1,7 +1,19 @@
 # Runner dos Pipelines 1 e 2
 
+Estado local em 13/09/2026: [consolidação](../docs/ESTADO_FLUXO.md).
+Novos ensaios em `scripts/mvp_acceptance.py`; aceite de evidências do host em
+`scripts/host_acceptance.py`. A entrega recebe `approved-security.patch` gerado
+na finalização e ligado por hash à autorização; omitir `--patch-root` no
+comando `delivery-package`. Patches do adaptador manual continuam sendo insumos
+da correção, nunca fonte direta do pacote final.
+
 O runner é escrito em Go. Planejamento não gera tráfego. Execução real exige
 Linux root, Docker e todas as políticas/supply chain aprovadas.
+
+Validação local e comandos reproduzíveis de CI:
+[README do motor](../README.md). A checagem de conteúdo
+antes do gateway complementa a autorização de envio; não escolhe fornecedor,
+não anonimiza código e não substitui revisão de fontes.
 
 ## Modelo de decisão
 
@@ -131,9 +143,23 @@ fechamento da cadeia está em
 - `onboarding-generate`: rascunhos por schema, fail-closed;
 - `reference-profile`: perfil Python concreto;
 - `remediation-apply-patch`: adaptador manual governado;
+- `remediation-run`: geração por gateway configurado, tentativas, gates e
+  comparação sobre BEST até a revisão humana final; não aprova nem entrega;
 - `reference-gate`: quality, retest ou security-full;
 - `delivery-package`: HTML, PDF, manifesto, ZIP e age;
 - `backup-create` / `backup-restore`: backup e restauração verificada.
 
-O empacotador roda offline em distroless por digest. Consulte `docs/runbooks/`
-antes da operação.
+O empacotador roda offline em distroless por digest. Consulte o
+[runbook de revisão e entrega](../docs/runbooks/ENTREGA_E_REVISAO.md)
+antes da operação, incluindo entradas do renderer e migração das autorizações
+antigas para o patch cumulativo vinculado por hash.
+
+## Geração independente de fornecedor — 11/09/2026
+
+O modo `agent.command=["builtin:patch-proposal"]` usa o próprio runner pinado e
+`agent.generation`. O gateway/modelo permanecem indefinidos e desativados no
+exemplo. Nenhum fornecedor é chamado nos testes; o simulador existe somente
+na suíte de testes, nunca como fallback de produção.
+
+Configuração, protocolo, ativação futura e limitações estão em
+[GERACAO_PATCHES_SEM_PROVEDOR.md](../correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md).

@@ -1,0 +1,28 @@
+{
+  "suite_sha256": "05d1721f02aa709dd8d806dbd72f66e77c5c44fc88a2165a8539e49620e36d13",
+  "mode": "offline_response_replay_not_live_ai",
+  "positive_cases": 2,
+  "negative_cases": 5,
+  "correction_acceptance": 1.0,
+  "unsafe_acceptances": 0,
+  "expectations_passed": true,
+  "human_gate_preserved": true,
+  "bounded": true,
+  "calls": 12,
+  "cost_estimate": {
+    "per_call": 0.002,
+    "suite": 0.024,
+    "assumptions": {
+      "provider_model": "SYNTHETIC-NOT-A-PROVIDER",
+      "currency": "TEST",
+      "source": "synthetic arithmetic fixture, not a market quote",
+      "as_of": "2026-09-13",
+      "input_per_million": 1,
+      "output_per_million": 2,
+      "assumed_input_tokens_per_call": 1000,
+      "assumed_output_tokens_per_call": 500
+    }
+  },
+  "cost_note": "Scenario estimate from declared token/rate assumptions, not measured billing; excludes taxes, infra and caching.",
+  "scope": "one synthetic control; not general vulnerability-fixing ability"
+}

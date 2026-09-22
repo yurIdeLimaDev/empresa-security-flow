@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-13",
+  "kind": "local_file_snapshot",
+  "scope": "Selected implementation, documentation and canonical evidence files for the local priority batch. Hashes cover the complete current files, including preserved preexisting content; this is not a claim of authorship of every line.",
+  "algorithm": "SHA-256",
+  "file_count": 60,
+  "signature": false,
+  "git_commit": false,
+  "production_approval": false,
+  "excludes": "Self-hash, private customer cases, caches, credentials and earlier validation iterations.",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "e52860da4beb2260345065dfc666adb644c72dda7d8a57051c220b2b8da7b3e7"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "a6a6e6f96000e53b567e71c669629ecb7b66f040b4e114390e44a4213b0a1ca9"
+    },
+    {
+      "path": ".github/workflows/deploy-landing.yml",
+      "sha256": "aacd43d24e1638fcb13d4f3e1cd57556d14d9527e955db977436b97323219800"
+    },
+    {
+      "path": "correcao/avaliacao/pricing.synthetic.example.json",
+      "sha256": "039690c4781abb154ec9c23032a25d0a38d3aaf991e4d5266689a816db2c9881"
+    },
+    {
+      "path": "correcao/avaliacao/README.md",
+      "sha256": "a9472fac3a4db7374a4de2f4793c68726a79337f18300ca76f97581359fc537f"
+    },
+    {
+      "path": "correcao/avaliacao/response.example.json",
+      "sha256": "210e4f4e635d8069a7398bfd3d20a47a6e48728a86dc71b0310876b89476fd7e"
+    },
+    {
+      "path": "correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md",
+      "sha256": "691ddeb03374056df3965300611cdf9901d15f7eb4fc0ddba52b2a69190b37a7"
+    },
+    {
+      "path": "correcao/README.md",
+      "sha256": "fc87e2adc51f4a2854e37da6c7d62886f491387802141f9a676a65d764ea34da"
+    },
+    {
+      "path": "deploy/linux/ACEITACAO.md",
+      "sha256": "bd75e7a8f7473f200ee6d448d4d692e6d9513d1bfeaba99290008d25617c843e"
+    },
+    {
+      "path": "deploy/linux/README.md",
+      "sha256": "3af0779cd8c4915df5f9ae3866ee261ce787f6124465590a3c71b5845b18bda8"
+    },
+    {
+      "path": "docs/ARQUITETURA_IMPLEMENTADA.md",
+      "sha256": "54a3c156a4204b9226fd726c38a6ac4cdeba54b0602fa45e0b7f9011ede60d0b"
+    },
+    {
+      "path": "docs/ESTADO_ATUAL.md",
+      "sha256": "d67fa0fd015cdc64af35212328155d96561dbae01ca0332bddc9a4f121d8576b"
+    },
+    {
+      "path": "docs/LANDING_COMERCIAL_E_OPERACAO_PUBLICA.md",
+      "sha256": "e2ce570156951a464cc944992cabe7fdf83f6d3a6a6c03869f7ff9234bb7262e"
+    },
+    {
+      "path": "docs/PIPELINE_0_5_WEB.md",
+      "sha256": "423b9bd608cc063fa8d65d86bb4d79cb8c3682819d66abe52e80c55ed862d497"
+    },
+    {
+      "path": "docs/PIPELINE_DE_GERACAO_DE_LEADS.md",
+      "sha256": "ccb5b96de92cd8337006880aae8b4002bb6364860f9d2a038c11b57523a6fe9d"
+    },
+    {
+      "path": "docs/PLANO_CORRECAO_VEXKEEP_REVISADO_2026-08-26.md",
+      "sha256": "32ed3cbc89f052275a1955de09b01c81c41e4e3a5a260247a94f35017ac12807"
+    },
+    {
+      "path": "docs/PLANO_DE_NEGOCIOS_MVP_PRIMEIROS_CLIENTES.md",
+      "sha256": "8480f93582492fd3aac30cf03dee5f5b4ca77e9f057bc94bc997e48777141e72"
+    },
+    {
+      "path": "docs/ROADMAP_TECNOLOGIA_NEGOCIOS_2026-09-11.md",
+      "sha256": "a07c04d13d82f72763ba570c68b90f8c1c36a9ae23e3ddb7dca5174b29e6cadb"
+    },
+    {
+      "path": "docs/VALIDACAO_LOCAL_MVP.md",
+      "sha256": "da42fd1eae8e63a6278e59f0a940164be2b15b47df014d0691d035a1bffada47"
+    },
+    {
+      "path": "landing-page/.github/workflows/ci.yml",
+      "sha256": "e93b35c7d2ce855b32bdf5306184d37cb892054bb3dff289337045ce3e1417e2"
+    },
+    {
+      "path": "landing-page/DEPLOYMENT.md",
+      "sha256": "ab57c3dea716a63a6bff3d838d547f4f1c17c8a4b1eacb8fa134f640aefbd739"
+    },
+    {
+      "path": "landing-page/package-lock.json",
+      "sha256": "33276037a649af186d4cd0062bdab06e64272dcaf91a64d6f27da1dd0324a28b"
+    },
+    {
+      "path": "landing-page/package.json",
+      "sha256": "80eef95e2b231fe256f2ec4f4ccc11ae1837d33ac0605d3ba6c5cad38d2737d1"
+    },
+    {
+      "path": "landing-page/README.md",
+      "sha256": "192043838d977c03a7d8c3a0f822fcd9ab5cf6700bd555a5239f35402a18993e"
+    },
+    {
+      "path": "landing-page/tests/worker-api.test.mjs",
+      "sha256": "9d99d823eae3959367c49426510fe350e3f33652121d6e8119d71044afa52c90"
+    },
+    {
+      "path": "landing-page/worker/runtime-template.mjs",
+      "sha256": "c70e59e58100cf0262bec67b769336ad381ab9e97e1ca0fd82d004a2d91b8694"
+    },
+    {
+      "path": "negocio/README.md",
+      "sha256": "8f97042dad2ac807de7512d95b32123e330e1d7d33d2059c46c5185da7a9d621"
+    },
+    {
+      "path": "pipeline/cmd/pipeline/main.go",
+      "sha256": "a2dbf231ff559bd0fd722611c55de5bcf92ac962ec6e791dee099f543fd0fb8b"
+    },
+    {
+      "path": "pipeline/internal/app/delivery_patch.go",
+      "sha256": "29734a3e2512c627cde31858ea0749833993a765c7a24cb0d62bde30fc4662d4"
+    },
+    {
+      "path": "pipeline/internal/app/delivery_test.go",
+      "sha256": "b8e1a112e19e0f61a5a2d64e4244f3408c89b2ef9b2d77ea8bfb482c0a6e7a83"
+    },
+    {
+      "path": "pipeline/internal/app/delivery.go",
+      "sha256": "f0b927d7074c3166be872ff8754a1fc05f0499c89e166faaae7ed7fcc3b6ce71"
+    },
+    {
+      "path": "pipeline/internal/app/isolation.go",
+      "sha256": "70d8d9f6ccc63d3ccd640976a11643b8f4c892bc2a5bf768e855b964b4ed192b"
+    },
+    {
+      "path": "pipeline/internal/app/mvp_poc_test.go",
+      "sha256": "9dad7852c755326134ddaddcb1f36daffdc1a0e7b0eb4820a563d6f46e5d80ed"
+    },
+    {
+      "path": "pipeline/internal/app/mvp_rehearsal_test.go",
+      "sha256": "9a63ff87000f947abe979d2eee7f9982e464a4d255c8c8f158ded38cdeda06c3"
+    },
+    {
+      "path": "pipeline/internal/app/mvp_schemas_test.go",
+      "sha256": "517765b72713562dd6d1366e9e5b9aad0d71f38adea63f48d092cc2de376ae43"
+    },
+    {
+      "path": "pipeline/internal/app/onboarding_test.go",
+      "sha256": "c29eac204c464df882ea2e439eb2d1c1a580018148fbb2657789fa8ce7f5636d"
+    },
+    {
+      "path": "pipeline/internal/app/patch_generation_test.go",
+      "sha256": "f5c3464922428bb34c8e9c5f00de1abb2b0326c0d96b4753ce2b9e42bd39771f"
+    },
+    {
+      "path": "pipeline/internal/app/remediation.go",
+      "sha256": "2ad307ffbba9522172f05088c2e4849af70d12d639d9ffd49b3c6288a1b0cc6a"
+    },
+    {
+      "path": "pipeline/README.md",
+      "sha256": "7605540c55a93dc92c7ab04977b01979605a29546a816d8efac0eafe1a8ebc7a"
+    },
+    {
+      "path": "pipeline/scripts/check_docs.py",
+      "sha256": "62d22a05d32f310749a5c7c91eb0b8a6798e077285448e49abc385cef27bf3df"
+    },
+    {
+      "path": "pipeline/scripts/collect_local_checks.py",
+      "sha256": "98f57bc330d5ea1fa1f247996d4854bfe97e85a32ea9ec521ca0cd70780ca871"
+    },
+    {
+      "path": "pipeline/scripts/deploy-preflight-linux.sh",
+      "sha256": "e9663c22231eb293a2653f1b391aefd10a6a8e66f7319ccf894cc8f2ba4648c9"
+    },
+    {
+      "path": "pipeline/scripts/host_acceptance.py",
+      "sha256": "8110fc91c31ed58e60103c830ada50cd6a911850d42c1ef5456b0fe1f29530eb"
+    },
+    {
+      "path": "pipeline/scripts/host-inputs-linux.sh",
+      "sha256": "96f533ad302ce783d067dd42bb744a17bfddbcfb91c1366ff637c6e695a278fa"
+    },
+    {
+      "path": "pipeline/scripts/mvp_acceptance.py",
+      "sha256": "13ab922e0f95a1d2e90955147814f7dfad03249a530f125ca3629cb138e804a5"
+    },
+    {
+      "path": "pipeline/scripts/render-delivery-linux.sh",
+      "sha256": "57572128018f1fdebca80271e6f09247a7aea3f7122dfee1fd40dde6b31bead7"
+    },
+    {
+      "path": "pipeline/scripts/tests/test_check_docs.py",
+      "sha256": "5d1f52ee215e56518727ce3bc295c086f55c2c40cec530daf42ba7997379aaed"
+    },
+    {
+      "path": "pipeline/scripts/tests/test_host_acceptance.py",
+      "sha256": "d700220a4cb9b5d612e78615fdf9ef439b4230a7a77750a6b199966aad5ba4b0"
+    },
+    {
+      "path": "pipeline/scripts/tests/test_mvp_acceptance.py",
+      "sha256": "850ab741044308157b9a650dafe0ca9e54fb2ee8e953a11e8906bbdee01b15eb"
+    },
+    {
+      "path": "pipeline/scripts/verify-host-drift-linux.sh",
+      "sha256": "3fa8f4fd451ad233279e59d61188f835de947c09c9891f0a70d6a48d7cfb4dab"
+    },
+    {
+      "path": "README.md",
+      "sha256": "14b0d7ee9138b7a9ae161b5927ca920c1bb1a1dc204db224ed1fcf68bd2ff689"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/aceite-versionado/customer-rehearsal.json",
+      "sha256": "c1b114b33c996f4ddb38447c72407d6bc2e2c03caa6ca459ae45233210645404"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/aceite-versionado/gate-matrix.json",
+      "sha256": "7e0db110bc57cfd664fa20d190e517d89f94bb877f7b5d1fa2d430d05a30c2dd"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/aceite-versionado/poc-summary.json",
+      "sha256": "03cf44ba0a8a39067a7ddc33ec6fa7c693875bd901a18a4ad93ed35cefb90726"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/aceite-versionado/poc.json",
+      "sha256": "d8a2d316f7aae433f2ba4403108a153b284ded0763d8ef00f8d0e8db1dfcb018"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/checagem-final/checks.json",
+      "sha256": "5db9691b41588c4ea74adf5d4d7de92203aa1ecbff6bcfe350c11b1931b385b9"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/checagem-final/documents.json",
+      "sha256": "c9f232b9157023de41e58901408d6c1658f46ca1b59df2e3ea79f4911dff6b5f"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/checagem-final/landing-sbom.cdx.json",
+      "sha256": "10c0db65e20cc5b81322f66aeb8a32703783b9b46e1323fd7bfa9d882038213e"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/checagem-final/npm-audit.json",
+      "sha256": "9242462f6116d5894ef4ad829a6f1024bcde6d27cc8973df3da828ebe3cb4d86"
+    },
+    {
+      "path": "validacao/2026-09-13-lote-completo/RESULTADO.md",
+      "sha256": "722506af6b8f85215d718f6f57591416ce2f517cd5b1f4491d56b9699d5483c7"
+    }
+  ]
+}

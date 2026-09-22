@@ -8,7 +8,8 @@ import (
 	"testing"
 )
 
-func TestOnboardingDraftsStayBlockedWithoutAuthorization(t *testing.T) {
+func syntheticOnboardingInput(t *testing.T) OnboardingInput {
+	t.Helper()
 	runner, err := filepath.Abs(os.Args[0])
 	if err != nil {
 		t.Fatal(err)
@@ -17,7 +18,7 @@ func TestOnboardingDraftsStayBlockedWithoutAuthorization(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	input := OnboardingInput{
+	return OnboardingInput{
 		SchemaVersion: OnboardingSchemaVersion, CaseID: "LAB-ONBOARD-001", EngagementID: "eng_lab_onboard_001",
 		Domain: "lab.invalid", BaseURL: "http://lab.invalid:8080", OutputRoot: filepath.Join(t.TempDir(), "pipeline-output"),
 		Target:           NetworkTarget{Host: "lab.invalid", IP: "127.0.0.1", Port: 8080, RatePerSecond: 1, MaxConcurrency: 1, MaxRequests: 20},
@@ -31,6 +32,10 @@ func TestOnboardingDraftsStayBlockedWithoutAuthorization(t *testing.T) {
 		ToolPolicyP1Source: testRepoPath("config/examples/tool-policy-p1.json"), ToolPolicyP2Source: testRepoPath("config/examples/tool-policy-p2.json"), Tests: []MatrixTest{},
 		Adapter: OnboardingAdapterInput{RunnerPath: runner, RunnerSHA256: runnerHash, RepositoryPath: t.TempDir(), BaselineRef: "0123456789abcdef0123456789abcdef01234567", BaselineBundlePath: filepath.Join(t.TempDir(), "baseline.json"), RemediationOutputRoot: t.TempDir()},
 	}
+}
+
+func TestOnboardingDraftsStayBlockedWithoutAuthorization(t *testing.T) {
+	input := syntheticOnboardingInput(t)
 	inputPath := filepath.Join(t.TempDir(), "onboarding.json")
 	if err := WriteJSON(inputPath, input); err != nil {
 		t.Fatal(err)
@@ -67,4 +72,21 @@ func TestOnboardingDraftsStayBlockedWithoutAuthorization(t *testing.T) {
 			t.Fatalf("%s inválido: %v", item.file, err)
 		}
 	}
+	t.Run("payment alone never grants authorization", func(t *testing.T) {
+		input.Authorization.PaymentStatus = "paid"
+		if err := WriteJSON(inputPath, input); err != nil {
+			t.Fatal(err)
+		}
+		paidOutput := filepath.Join(t.TempDir(), "paid-drafts")
+		paid, err := GenerateOnboardingDrafts(inputPath, paidOutput)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if paid.Authorized || paid.Executable || len(paid.Blockers) == 0 {
+			t.Fatal("payment alone granted execution")
+		}
+		if _, err := os.Stat(filepath.Join(paidOutput, "engagement-policy-p2.json")); !os.IsNotExist(err) {
+			t.Fatal("payment alone generated an active policy")
+		}
+	})
 }

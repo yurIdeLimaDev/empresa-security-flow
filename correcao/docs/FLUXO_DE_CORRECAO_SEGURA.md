@@ -1,6 +1,8 @@
 # Fluxo de correção segura
 
-Estado: implementado e revalidado em laboratório em 24 de agosto de 2026.
+Estado consolidado em 13/09/2026: motor de agosto, geração de 11/09 e
+vinculação do patch cumulativo/ensaios locais de 13/09. Geração por IA real ainda
+desativada. Detalhes em [GERACAO_PATCHES_SEM_PROVEDOR.md](GERACAO_PATCHES_SEM_PROVEDOR.md).
 
 ## Decisão sobre o diagrama
 
@@ -25,25 +27,28 @@ e comportamento entre tickets.
 
 ```mermaid
 flowchart TB
-    bundle[Relatório validado] --> plan[Plano imutável\n+ ticket por finding]
-    plan --> worktree[Worktree isolada\nsobre BEST atual]
-    worktree --> agent[Adaptador pinado\ncorreção somente de segurança]
-    agent --> candidate[Commit candidato]
-    candidate --> gates[Quality + security + retest]
-    gates --> compare{Escopo, cobertura e\npostura comparáveis?}
-    compare -- não --> reject[Rejeitar e manter BEST]
-    compare -- sim --> regression{Achado novo ou\nregressão?}
-    regression -- sim --> reject
-    regression -- não --> promote[Promover para BEST]
-    reject --> retry{Tentativa restante?}
-    retry -- sim --> worktree
-    retry -- não --> next[Próximo ticket\nou bloqueio por limite]
-    promote --> next
-    next --> global[Gates globais sobre BEST]
-    global --> human{Única revisão humana final}
-    human -- approved --> delivery[Autorização vinculada\na commit + hashes]
-    human -- changes_requested --> worktree
-    human -- rejected --> blocked[Sem entrega]
+    bundle["Bundle validado"] --> preflight{"Configuração, adaptador e gates válidos?"}
+    preflight -- não --> blocked["Bloquear sem entrega"]
+    preflight -- sim --> plan["Plano imutável e lock"]
+    plan --> ticket{"Ticket elegível e limites disponíveis?"}
+    ticket -- sim --> worktree["Worktree a partir de BEST"]
+    worktree --> proposal["Proposta JSON validada<br/>ou adaptador manual explícito"]
+    proposal --> gates["Diff permitido + quality + retest + security-full"]
+    gates --> compare{"Cobertura comparável, alvo resolvido<br/>e nenhuma regressão?"}
+    compare -- não --> reject["Rejeitar e manter BEST"]
+    compare -- sim --> promote["Promover BEST"]
+    reject --> ticket
+    promote --> ticket
+    ticket -- não --> complete{"Tickets em estados admitidos<br/>e orçamento global disponível?"}
+    complete -- não --> blocked
+    complete -- sim --> global{"Gates globais aprovados?"}
+    global -- não --> blocked
+    global -- sim --> human{"Revisão humana final"}
+    human -- aprovado --> canonical["Diff baseline até BEST<br/>approved-security.patch + hash"]
+    canonical --> delivery["Validar vínculos e criptografar pacote"]
+    human -- alterações --> reopen["Tickets explícitos, limites preservados"]
+    reopen --> ticket
+    human -- rejeitado --> blocked
 ```
 
 O diagrama completo, incluindo preflight e backup/entrega, está em
@@ -58,8 +63,9 @@ O diagrama completo, incluindo preflight e backup/entrega, está em
   torna a conferir o mesmo hash;
 - um lock exclusivo impede duas alterações concorrentes de `state.json`;
 - cada tentativa parte do commit `BestRef` atual em worktree Git relacionado;
-- o agente roda por argv direto, com executável pinado, timeout, ambiente
-  reduzido, prompt externo ao worktree e log limitado; a CLI cria o commit;
+- o adaptador legado roda por argv direto, executável pinado, timeout e
+  ambiente reduzido; o modo novo recebe propostas JSON via gateway, sem shell
+  para o modelo. Nos dois caminhos, a CLI cria o commit e verifica o diff;
 - o candidato precisa descender de `BestRef` e ser o `HEAD` do worktree
   preparado para o ticket;
 - arquivos fora da allowlist, caminhos protegidos, remoção de testes,
@@ -96,8 +102,8 @@ necessidade direta para corrigir o achado deve ser rejeitada.
 
 O arquivo `remediation.json` deve conter pelo menos:
 
-- `agent`: adaptador do provedor escolhido, pinado por SHA-256 e sem poder de
-  promoção;
+- `agent`: `builtin:patch-proposal` com hash do runner e configuração explícita
+  de geração, ou adaptador manual pinado; nenhum deles tem poder de promoção;
 - `quality`: build, lint, typecheck e testes do projeto;
 - `security`: execução completa dos verificadores governados e produção de
   `candidate-bundle.json`;
@@ -113,7 +119,12 @@ O exemplo contém nomes de adaptadores e caminhos fictícios; deve ser substitu�
 pelos comandos reais do ambiente e pelo SHA-256 de cada adaptador. Não instale
 dependências durante o gate.
 
-## Uso
+## Uso manual explícito e diagnóstico
+
+A sequência abaixo é o caminho individual/manual, não uma exigência de
+intervenção por ticket no modo automático. Após configurar e homologar o
+gateway, use `remediation-run` conforme o guia de geração; ele para na revisão
+final. Não há fallback manual silencioso.
 
 ```powershell
 cd pipeline
@@ -139,7 +150,7 @@ go build -o bin/pipeline.exe ./cmd/pipeline
 
 # 6. Após todos os tickets, rode gates/evaluate com --phase global/--global.
 # 7. O humano revisa somente a melhor versão global e registra approval.json.
-.\bin\pipeline.exe remediation-finalize --config ..\correcao\config\remediation.json --plan C:\runtime\CASE-001\remediation\plan.json --approval C:\runtime\approval.json --output C:\runtime\delivery-authorization.json
+.\bin\pipeline.exe remediation-finalize --config ..\correcao\config\remediation.json --plan C:\runtime\CASE-001\remediation\plan.json --approval C:\runtime\approval.json --output C:\runtime\FINALIZACAO-NOVA\delivery-authorization.json
 ```
 
 ## Base técnica
@@ -161,8 +172,10 @@ e limites encerram tentativas. A cadeia de scanners também foi fechada: 20
 entradas automáticas estão aprovadas para seus wrappers, por digest e com
 liveness; oito ficam restritas.
 
-O adaptador do provedor de IA e os gates do arquivo de exemplo continuam sendo
-contratos deliberadamente inválidos. Não existe um comando universal correto
+Os adaptadores/gates do arquivo genérico de exemplo continuam sendo
+deliberadamente inválidos. A geração agora tem protocolo e aplicação próprios,
+mas seu gateway, fornecedor/modelo/esforço e credencial continuam indefinidos.
+Não existe um comando universal correto
 para build/test/reteste de todas as stacks, nem um provedor de IA escolhido
 pelo projeto. Em vez de inventá-los, o motor agora os trata como entrada de
 onboarding e impede até a criação do plano enquanto executáveis e hashes reais
@@ -175,13 +188,15 @@ de 2026. O candidato local resolveu cinco achados, mitigou três e preservou um
 por decisão de escopo, sem novo achado validado. A execução demonstrou a regra
 de manter a melhor versão, mas não emitiu autorização de entrega: os ToolRuns
 arquivados são anteriores ao fechamento atual e precisam ser repetidos pelo
-runner governado antes da revisão humana final. A fonte e o reteste detalhado
-permanecem somente no workspace privado de casos e são deliberadamente
-excluídos deste repositório.
+runner governado antes da revisão humana final. Consulte
+`correcao/casos/2026-08-22-cer-facil/` e
+`validacao/2026-08-22-cer-facil-correcao/`.
 
 ## Implementação concreta do primeiro caso
 
-O adaptador recebe um patch externo no caminho exato do ticket. O orquestrador
+No perfil Python manual original, o adaptador recebe um patch externo no
+caminho exato do ticket. No novo modo de geração, o runner recebe propostas de
+conteúdo pelo protocolo versionado e produz o patch. O orquestrador
 valida escopo, aplica em worktree isolada, executa quality, retest e
 security-full, gera bundle canônico e compara com BEST. Promoção exige gates,
 cobertura comparável e ausência de regressão.
@@ -189,3 +204,17 @@ cobertura comparável e ausência de regressão.
 O gate global repete a suíte protegida sobre o BEST acumulado. A aprovação
 humana final liga commit e hash do bundle. O pacote só é gerado após finalize;
 divergência de plano, estado, aprovação, commit, bundle ou patch bloqueia.
+
+## Entrega vigente e validação
+
+Na aprovação final, `remediation-finalize` gera `approved-security.patch`
+ao lado da autorização e grava seu SHA-256. O diff é cumulativo, do baseline
+até BEST, e o renderer recebe esse arquivo pronto, sem precisar de Git.
+`delivery-package` recusa `--patch-root` e hashes divergentes. O diretório de
+finalização deve ser novo; autorizações antigas exigem nova finalização com
+a revisão aplicável, não preenchimento manual de hash.
+
+O [kit sintético](../avaliacao/README.md) testa positivos, rejeições e limites;
+o [ensaio integrado](../../validacao/2026-09-13-lote-completo/RESULTADO.md)
+inclui revisão simulada, pacote cifrado e restore. Não é homologação de IA,
+scanners de cliente, assinatura ou host real.

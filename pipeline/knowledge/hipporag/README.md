@@ -14,7 +14,14 @@ varredura desnecessária do repositório.
 É automática. Em cada consulta MCP, o servidor calcula o fingerprint do
 corpus permitido. Se qualquer arquivo incluído mudou, o índice anterior é
 descartado e reconstruído antes de responder. Não há ação manual necessária
-no uso normal. `run.ps1 rebuild` existe apenas para diagnóstico.
+no uso normal, desde que o MCP esteja ligado à mesma cópia/corpus consultado.
+`run.ps1 rebuild` existe apenas para diagnóstico.
+
+Em 13/09, o MCP conectado retornou versões de agosto, enquanto esta worktree
+já continha a revisão local atual. Não assumir que o rebuild de um corpus
+atualiza outro checkout. Confirme caminhos/fingerprint do servidor antes de
+alterar sua configuração. O corpus local não inclui a landing; confirme-a nos
+arquivos relevantes. Nenhuma API de modelo precisa ser ativada para isso.
 
 ## Escopo indexado
 

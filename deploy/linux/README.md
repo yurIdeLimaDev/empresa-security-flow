@@ -1,5 +1,9 @@
 # Baseline Linux
 
+[Pacote de aceitação e restore](ACEITACAO.md), preparado em 13/09/2026.
+Scripts agora recusam baseline sem root/0600 e evidência reutilizada ou por
+symlink. Isso não atesta a configuração de um host que ainda não foi testado.
+
 Material de deploy reproduzível para um host dedicado. Copie
 `baseline.env.example` para fora do Git, preencha os valores reais, restrinja a
 0600 e execute os scripts como root.

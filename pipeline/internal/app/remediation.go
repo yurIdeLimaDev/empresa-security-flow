@@ -45,10 +45,11 @@ type RemediationGate struct {
 }
 
 type RemediationAgent struct {
-	Command          []string `json:"command"`
-	ExecutableSHA256 string   `json:"executable_sha256"`
-	TimeoutSeconds   int      `json:"timeout_seconds"`
-	AutoCommit       bool     `json:"auto_commit"`
+	Command          []string               `json:"command"`
+	ExecutableSHA256 string                 `json:"executable_sha256"`
+	TimeoutSeconds   int                    `json:"timeout_seconds"`
+	AutoCommit       bool                   `json:"auto_commit"`
+	Generation       *PatchGenerationConfig `json:"generation,omitempty"`
 }
 
 type FindingRemediationOverride struct {
@@ -78,6 +79,8 @@ type RemediationConfig struct {
 	Agent                 RemediationAgent             `json:"agent"`
 	Gates                 []RemediationGate            `json:"gates"`
 	FindingOverrides      []FindingRemediationOverride `json:"finding_overrides"`
+	generationTransport   patchTransport
+	automationToken       string
 }
 
 type RemediationTicket struct {
@@ -125,6 +128,7 @@ type TicketState struct {
 	PreparedWorktree     string `json:"prepared_worktree,omitempty"`
 	PreparedAt           string `json:"prepared_at,omitempty"`
 	PreparedCandidateRef string `json:"prepared_candidate_ref,omitempty"`
+	LastFeedback         string `json:"last_feedback,omitempty"`
 }
 
 type RemediationAgentRun struct {
@@ -277,6 +281,7 @@ type DeliveryAuthorization struct {
 	ApprovalSHA256        string `json:"approval_sha256"`
 	HumanReviewStage      string `json:"human_review_stage"`
 	SecurityNonRegression string `json:"security_non_regression"`
+	PatchSHA256           string `json:"patch_sha256,omitempty"`
 }
 
 type RemediationAdapterReadiness struct {
@@ -334,7 +339,11 @@ func CheckRemediationReadiness(configPath string, cfg RemediationConfig) (Remedi
 		ConfigPath: configAbs, ConfigSourceSHA256: configSourceHash, ConfigSHA256: HashJSON(cfg),
 		RepositoryPath: repository, Approved: true, Checks: []RemediationAdapterReadiness{},
 	}
-	report.Checks = append(report.Checks, checkRemediationAdapter(repository, "agent", "security-fix-agent", cfg.Agent.Command, cfg.Agent.ExecutableSHA256, ""))
+	if cfg.Agent.Generation != nil {
+		report.Checks = append(report.Checks, checkPatchGenerationReadiness(repository, cfg))
+	} else {
+		report.Checks = append(report.Checks, checkRemediationAdapter(repository, "agent", "security-fix-agent", cfg.Agent.Command, cfg.Agent.ExecutableSHA256, ""))
+	}
 	for _, gate := range cfg.Gates {
 		report.Checks = append(report.Checks, checkRemediationAdapter(repository, "gate", gate.ID, gate.Command, gate.ExecutableSHA256, gate.WorkingDirectory))
 	}
@@ -396,6 +405,11 @@ func checkRemediationAdapter(repository, kind, id string, command []string, expe
 }
 
 func validateRemediationConfig(cfg RemediationConfig) error {
+	if cfg.Agent.Generation != nil {
+		if err := validatePatchGenerationConfig(cfg, false); err != nil {
+			return err
+		}
+	}
 	if !cfg.SecurityChangesOnly || cfg.HumanReviewStage != "final" {
 		return fmt.Errorf("correção exige security_changes_only=true e revisão humana somente em final")
 	}
@@ -637,7 +651,7 @@ func PrepareRemediationWorktree(cfg RemediationConfig, planPath, ticketID string
 	if plan.CaseID != cfg.CaseID || plan.GateProfileSHA256 != remediationGateProfile(cfg) || plan.ConfigSHA256 != HashJSON(cfg) {
 		return "", fmt.Errorf("configuração diverge do plano imutável")
 	}
-	releaseLock, err := acquireRemediationLock(dir)
+	releaseLock, err := acquireRemediationOperation(dir, cfg)
 	if err != nil {
 		return "", err
 	}
@@ -711,7 +725,7 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 	if plan.CaseID != cfg.CaseID || plan.GateProfileSHA256 != remediationGateProfile(cfg) || plan.ConfigSHA256 != HashJSON(cfg) {
 		return "", fmt.Errorf("configuração diverge do plano imutável")
 	}
-	releaseLock, err := acquireRemediationLock(dir)
+	releaseLock, err := acquireRemediationOperation(dir, cfg)
 	if err != nil {
 		return "", err
 	}
@@ -740,6 +754,9 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 	if err != nil || before != item.PreparedBaseRef {
 		return "", fmt.Errorf("worktree preparado diverge de BEST")
 	}
+	if status, statusErr := gitOutput(worktree, "status", "--porcelain"); statusErr != nil || strings.TrimSpace(status) != "" {
+		return "", fmt.Errorf("worktree precisa estar limpo antes da geração")
+	}
 	promptPath := filepath.Join(dir, ticket.PromptPath)
 	command := expandGateCommand(cfg.Agent.Command, map[string]string{
 		"{repository}": worktree, "{prompt}": promptPath, "{ticket_id}": ticket.ID, "{case_id}": cfg.CaseID,
@@ -754,7 +771,12 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 		Attempt: item.Attempts + 1, StartedAt: started.Format(time.RFC3339Nano), Status: "error", ExitCode: -1,
 		CommandSHA256: HashJSON(cfg.Agent.Command),
 	}
-	executablePath, err := exec.LookPath(command[0])
+	var executablePath string
+	if cfg.Agent.Generation != nil {
+		executablePath, err = os.Executable()
+	} else {
+		executablePath, err = exec.LookPath(command[0])
+	}
 	if err == nil {
 		executablePath, err = filepath.Abs(executablePath)
 	}
@@ -783,7 +805,22 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 	})
 	buffer := &boundedBuffer{limit: 1 << 20}
 	cmd.Stdout, cmd.Stderr = buffer, buffer
-	runErr := cmd.Run()
+	var runErr error
+	if cfg.Agent.Generation != nil {
+		// Crash recovery must not silently issue the same paid generation twice.
+		item.Status = "generating"
+		state.Revision++
+		state.UpdatedAt = now()
+		if err := writeJSONAtomic(statePath, state); err != nil {
+			return "", err
+		}
+		run.Artifacts, runErr = generateRemediationPatch(agentCtx, cfg, plan, ticket, worktree, before, item.Attempts+1, runDir, item.LastFeedback)
+		if runErr != nil {
+			_, _ = buffer.Write([]byte(runErr.Error()))
+		}
+	} else {
+		runErr = cmd.Run()
+	}
 	if agentCtx.Err() == context.DeadlineExceeded {
 		run.Status = "timeout"
 	} else if runErr == nil {
@@ -794,6 +831,9 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 		run.ExitCode = exitErr.ExitCode()
 	} else {
 		run.Status = "error"
+	}
+	if isPatchGatewayUncertain(runErr) {
+		run.Status = "provider-uncertain"
 	}
 	if run.Status != "passed" {
 		return finishFailedAgentRun(runDir, statePath, &state, item, run, started, buffer.Bytes(), cfg)
@@ -816,6 +856,11 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 		}
 		if _, err := gitOutput(worktree, "add", "--all"); err != nil {
 			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\n"+err.Error())...), cfg)
+		}
+		// Inspect the staged proposal before committing or executing project gates.
+		diff, diffErr := remediationDiff(worktree, before, "--cached", ticket.AllowedPaths, cfg.ChangePolicy, cfg.ChangePolicy.AllowDependencyChange && ticket.AllowDependencyChanges)
+		if diffErr != nil || len(diffReasons(diff, true)) != 0 {
+			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, []byte("diff candidato recusado antes dos gates"), cfg)
 		}
 		if name, nameErr := gitOutput(worktree, "config", "user.name"); nameErr != nil || strings.TrimSpace(name) == "" {
 			return finishFailedAgentRun(runDir, statePath, &state, item, run, started, append(buffer.Bytes(), []byte("\nidentidade Git user.name ausente no repositório")...), cfg)
@@ -853,6 +898,9 @@ func RunRemediationAgent(ctx context.Context, cfg RemediationConfig, planPath, t
 }
 
 func finishFailedAgentRun(runDir, statePath string, state *RemediationState, item *TicketState, run RemediationAgentRun, started time.Time, output []byte, cfg RemediationConfig) (string, error) {
+	if run.Status == "passed" {
+		run.Status = "rejected"
+	}
 	finishAgentRun(&run, started, runDir, output)
 	runPath := filepath.Join(runDir, "agent-run.json")
 	if err := WriteJSON(runPath, run); err != nil {
@@ -860,11 +908,14 @@ func finishFailedAgentRun(runDir, statePath string, state *RemediationState, ite
 	}
 	item.Attempts++
 	state.TotalAttempts++
+	item.LastFeedback = "generator/proposal rejected: " + run.Status + "; no candidate was accepted; preserve unrelated behavior and the supplied scope"
 	item.PreparedBaseRef = ""
 	item.PreparedWorktree = ""
 	item.PreparedAt = ""
 	item.PreparedCandidateRef = ""
-	if item.Attempts >= cfg.Limits.MaxAttemptsPerTicket || state.TotalAttempts >= cfg.Limits.MaxTotalAttempts {
+	if run.Status == "provider-uncertain" {
+		item.Status = "blocked_provider_uncertain"
+	} else if item.Attempts >= cfg.Limits.MaxAttemptsPerTicket || state.TotalAttempts >= cfg.Limits.MaxTotalAttempts {
 		item.Status = "blocked_attempt_limit"
 	} else {
 		item.Status = "retry"
@@ -894,6 +945,11 @@ func RunRemediationGates(ctx context.Context, cfg RemediationConfig, planPath, t
 	if plan.CaseID != cfg.CaseID || plan.GateProfileSHA256 != remediationGateProfile(cfg) || plan.ConfigSHA256 != HashJSON(cfg) {
 		return "", fmt.Errorf("configuração diverge do plano imutável")
 	}
+	releaseLock, err := acquireRemediationOperation(dir, cfg)
+	if err != nil {
+		return "", err
+	}
+	defer releaseLock()
 	if phase != "candidate" && phase != "global" {
 		return "", fmt.Errorf("phase deve ser candidate ou global")
 	}
@@ -958,7 +1014,7 @@ func EvaluateRemediationCandidate(cfg RemediationConfig, planPath, ticketID, can
 	if plan.CaseID != cfg.CaseID || plan.GateProfileSHA256 != remediationGateProfile(cfg) || plan.ConfigSHA256 != HashJSON(cfg) {
 		return "", fmt.Errorf("configuração diverge do plano imutável")
 	}
-	releaseLock, err := acquireRemediationLock(dir)
+	releaseLock, err := acquireRemediationOperation(dir, cfg)
 	if err != nil {
 		return "", err
 	}
@@ -1124,12 +1180,16 @@ func EvaluateRemediationCandidate(cfg RemediationConfig, planPath, ticketID, can
 		attempt = item.Attempts
 		if decision == "promote" {
 			item.Status = "accepted"
+			item.LastFeedback = ""
 			item.AcceptedRef = candidateCommit
 			state.FinalApprovalStatus = "pending"
 		} else if item.Attempts >= cfg.Limits.MaxAttemptsPerTicket {
 			item.Status = "blocked_attempt_limit"
 		} else {
 			item.Status = "retry"
+		}
+		if decision != "promote" {
+			item.LastFeedback = safePromptText(strings.Join(reasons, "; "), 1500)
 		}
 	}
 	evaluationID := stableID("evaluation", cfg.CaseID+"|"+ticketID+"|"+candidateCommit+"|"+strconv.Itoa(attempt)+"|"+decision)
@@ -1198,7 +1258,7 @@ func FinalizeRemediation(configPath string, cfg RemediationConfig, planPath, app
 	if plan.CaseID != cfg.CaseID {
 		return fmt.Errorf("plano pertence a outro caso")
 	}
-	releaseLock, err := acquireRemediationLock(dir)
+	releaseLock, err := acquireRemediationOperation(dir, cfg)
 	if err != nil {
 		return err
 	}
@@ -1263,7 +1323,26 @@ func FinalizeRemediation(configPath string, cfg RemediationConfig, planPath, app
 		return fmt.Errorf("configuração mudou após a criação do plano")
 	}
 	status := "delivery_blocked_" + approval.Decision
+	patchHash := ""
 	if approval.Decision == "approved" {
+		patch, patchErr := approvedDeliveryPatch(context.Background(), plan, state)
+		if patchErr != nil {
+			return patchErr
+		}
+		patchHash = bytesSHA256(patch)
+		patchPath := filepath.Join(filepath.Dir(outputPath), "approved-security.patch")
+		if err := os.MkdirAll(filepath.Dir(outputPath), 0o700); err != nil {
+			return err
+		}
+		file, err := os.OpenFile(patchPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600)
+		if err != nil {
+			return fmt.Errorf("a aprovação exige destino novo para preservar o patch aprovado: %w", err)
+		}
+		_, writeErr := file.Write(patch)
+		closeErr := file.Close()
+		if writeErr != nil || closeErr != nil {
+			return fmt.Errorf("não foi possível preservar o patch aprovado")
+		}
 		status = "approved_for_delivery"
 	}
 	reviewedNonRegression := state.GlobalGatePassed
@@ -1293,6 +1372,7 @@ func FinalizeRemediation(configPath string, cfg RemediationConfig, planPath, app
 		Commit: state.BestRef, BundleSHA256: state.BestBundleSHA256, PlanSHA256: planHash,
 		StateSHA256: stateHash, ApprovalSHA256: approvalHash, HumanReviewStage: "final",
 		SecurityNonRegression: choose(reviewedNonRegression, "passed", "not-passed"),
+		PatchSHA256:           patchHash,
 	}
 	if err := WriteJSON(outputPath, authorization); err != nil {
 		return err

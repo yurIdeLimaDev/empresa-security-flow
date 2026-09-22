@@ -1,0 +1,3 @@
+{
+  "candidate_source": "package sample\nconst secure = true\nconst behavior = \"original\"\n"
+}

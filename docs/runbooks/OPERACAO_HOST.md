@@ -14,3 +14,15 @@
    antes da preservação.
 
 O ensaio em Docker Linux não substitui o preflight do host dedicado escolhido.
+
+## Aceitação e recuperação vigentes
+
+Baseline deve ser arquivo regular root/0600, sem symlinks no caminho. Raízes
+de casos e backup precisam ser separadas, não aninhadas. Evidências exigem
+novo destino e diretório pai existente; não reutilizar saída anterior.
+
+Siga o [pacote de aceitação](../../deploy/linux/ACEITACAO.md): copiar backup
+cifrado off-host, baixá-lo e restaurar onde a identidade privada é custodiada.
+O coletor verifica integridade, idade, pins e recibos; não provisiona o host nem
+aprova cliente. Falha de teardown/proxy invalida o fechamento do preflight.
+O lote de 13/09 testou esses controles localmente, não num host definitivo.

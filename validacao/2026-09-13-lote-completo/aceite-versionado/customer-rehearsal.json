@@ -1,0 +1,21 @@
+{
+  "real_ai": false,
+  "real_payments": false,
+  "real_scanners": false,
+  "real_signatures": false,
+  "schema_version": 1,
+  "simulation_only": true,
+  "status": "passed",
+  "steps": [
+    "proposal_contract_sow_authorization_samples_bound",
+    "simulated_payment_does_not_authorize",
+    "authorized_scope_schema_and_sow_hash_checked",
+    "verification_plan_no_scanner_execution",
+    "synthetic_verification_bundle_validated",
+    "generated_patch_independent_gates_best",
+    "missing_and_stale_review_blocked",
+    "simulated_final_review_bound_to_best",
+    "canonical_patch_and_encrypted_delivery",
+    "encrypted_backup_restore_verified"
+  ]
+}

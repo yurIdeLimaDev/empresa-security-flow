@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "documents": 56,
+  "errors": [],
+  "checks": [
+    "utf8",
+    "heading",
+    "inline_local_link_paths"
+  ],
+  "legal_approval": false
+}

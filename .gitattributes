@@ -1,1 +1,3 @@
 *.patch text eol=lf -whitespace
+*.sh text eol=lf
+negocio/juridico/*.md text -whitespace

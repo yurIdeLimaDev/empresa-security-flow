@@ -1,25 +1,31 @@
 # Arquitetura implementada
 
-Estado: 24 de agosto de 2026.
+Estado: base de agosto, com geração de patches em 11/09 e fechamento local em
+13/09/2026. Consulte o [estado consolidado](ESTADO_FLUXO.md), inclusive a nova
+vinculação do patch cumulativo à autorização final.
+O [roteiro do motor](../README.md) reúne comandos e limites das verificações;
+o deploy definitivo continua pendente.
 
 ## Fluxo preservado
 
 ```mermaid
-flowchart LR
-    lead[Lead] --> landing[Landing React] --> p05[Pipeline 0.5\nweb gratuito]
-    p05 --> commercial{Contrato +\npagamento?}
-    commercial -- sim --> p1[Pipeline 1 integral\nambiente governado]
-    commercial -- não --> stop[Encerrar sem persistência]
-    p1 --> profile[Evidência + stack-profile]
-    profile --> onboarding[Onboarding\npor schema]
-    onboarding --> policies{Políticas +\nisolamento válidos?}
-    policies -- sim --> p2[Pipeline 2\nroteado]
-    policies -- não --> blocked[Fail-closed]
-    p2 --> bundle[Bundle validado\n+ hashes]
-    bundle --> best[Correção serial\nsobre BEST]
-    best --> global[Gate global]
-    global --> human[Revisão humana final]
-    human --> delivery[Entrega vinculada\na commit + hashes]
+flowchart TB
+    lead["Lead"] --> web["Landing React: prévia pública efêmera"]
+    web --> offer["Proposta"]
+    offer --> gate{"Contrato, SOW, autorização, pagamento<br/>e políticas de execução conferidos?"}
+    gate -- não --> blocked["Não iniciar serviço contratado"]
+    gate -- sim --> p1["Pipeline 1 integral obrigatório"]
+    p1 --> profile["Evidência e perfil"] --> onboard["Onboarding técnico"]
+    onboard --> p2gate{"Módulos autorizados e isolamento válidos?"}
+    p2gate -- não --> blocked
+    p2gate -- sim --> p2["Pipeline 2"]
+    p2 --> bundle["Bundle validado"] --> repair["Correção limitada sobre BEST"]
+    repair --> global{"Gates globais aprovados?"}
+    global -- não --> hold["Sem entrega, preservar BEST"]
+    global -- sim --> review{"Revisão humana final aprovada?"}
+    review -- não --> hold
+    review -- sim --> patch["Finalização: patch cumulativo e hash"]
+    patch --> delivery["Conferir vínculos e criptografar entrega"]
 ```
 
 O Pipeline 0.5 não é uma categoria ou versão esvaziada do Pipeline 1. Não
@@ -37,10 +43,12 @@ limitado por streaming; redirects não são seguidos; resoluções privadas e
 reservadas são recusadas; o orçamento total é de 46 subrequisições externas.
 
 O resultado apresenta no máximo oito observações com evidência resumida,
-significado e limitação. Não há score, autenticação, execução de JavaScript do
-alvo, portas, exploração, mutação ou persistência em D1. O Pipeline 1 e o
-scheduler do Check ficam inacessíveis em produção enquanto
-`CHECK_PUBLIC_ENABLED` não for explicitamente habilitado em um deploy futuro.
+significado e limitação. Na prévia não há score, autenticação no alvo, execução de JavaScript do
+alvo, teste de portas, exploração, mutação ou persistência do domínio/resultado.
+O login social da plataforma é um subsistema separado, com sessões em D1.
+Os endpoints públicos e o scheduler do Check ficam desabilitados por padrão
+por `CHECK_PUBLIC_ENABLED`. Ativar essa flag não autoriza por si só o runner
+P1/P2, nem conclui a integração com o host governado.
 
 Os diagramas detalhados de isolamento, correção monotônica e entrega estão em
 [`DIAGRAMAS_MERMAID.md`](DIAGRAMAS_MERMAID.md).
@@ -56,8 +64,11 @@ O runner valida seis schemas estritos:
 - `test-matrix.schema.json`: recursos e identidades autorizados;
 - `execution-log.schema.json`: trilha emitida pelo executor.
 
-Os contratos de correção acrescentam `remediation-config.schema.json`,
-`remediation-readiness.schema.json` e `remediation-approval.schema.json`. Todo objeto aninhado usa
+Os demais contratos acrescentam `onboarding-input.schema.json`,
+`scenarios.schema.json`, `remediation-config.schema.json`,
+`remediation-readiness.schema.json`, `remediation-approval.schema.json`,
+`patch-generation-request.schema.json` e `patch-generation-response.schema.json`:
+13 schemas no conjunto atual. Todo objeto aninhado usa
 `additionalProperties: false`. Flags perigosas são
 obrigatórias, e `claim_resource`, `auto_register_accounts` e
 `apply_changes` são `const: false`.
@@ -180,9 +191,10 @@ operacional.
 ## Correção segura
 
 Cada finding validado gera um ticket e um prompt tratado como dado não
-confiável. A CLI cria um Git worktree por tentativa sobre `BestRef`, executa um
-adaptador de agente pinado por SHA-256 com timeout/ambiente reduzido e cria o
-commit candidato. O agente não decide promoção. O avaliador verifica
+confiável. A CLI cria um Git worktree por tentativa sobre `BestRef`. O caminho
+legado executa adaptador pinado por SHA-256; o novo `builtin:patch-proposal`
+recebe propostas JSON de um gateway e não dá shell/filesystem ao modelo. A CLI
+valida as alterações e cria o commit candidato. O agente não decide promoção. O avaliador verifica
 ancestralidade/HEAD, allowlist de caminhos, arquivos protegidos, remoção de
 testes, dependências, binários e limites do diff.
 
@@ -204,9 +216,16 @@ Só então ocorre a única revisão humana. `approved` autoriza entrega;
 `changes_requested` reabre tickets explícitos dentro dos limites; `rejected`
 bloqueia o caso. A decisão é vinculada ao commit e SHA-256 do bundle.
 
+Atualização de 11/09/2026: `remediation-run` automatiza as tentativas do novo
+modo e para em `awaiting_final_review`, sem criar aprovação ou entrega. O
+protocolo é independente de fornecedor; provedor/modelo/effort e credencial
+permanecem indefinidos por decisão do usuário. O ensaio usa gerador simulado,
+não comprova a qualidade de uma IA real. Configuração, controles e pendências:
+[geração de patches](../correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md).
+
 ## Prontidão
 
-As pendências internas foram fechadas: 20 ferramentas automáticas foram
+O fechamento histórico da cadeia registrou 20 ferramentas automáticas que foram
 aprovadas para os wrappers exatos, receberam runtime por digest e passaram no
 liveness; oito foram restringidas; não há `pending`. O ciclo Linux root de
 firewall/proxy/canaries passou, o runner e quatro artefatos próprios têm receita
@@ -230,5 +249,20 @@ exclusivamente do bundle BEST autorizado e é determinística antes da
 criptografia. O bloco operacional Linux inclui baseline, drift, preflight,
 preservação, monitor e backup/restauração.
 
-O laboratório usa dados falsos em repositório privado separado. A landing page
-e os casos anteriores não foram alterados nesta iteração.
+O laboratório de referência usa dados falsos em repositório privado separado.
+O lote local de 13/09 reforçou a landing, os testes e a entrega; não alterou
+casos de clientes nem publicou a versão. O novo ensaio integrado é sintético.
+
+## Consolidação de 13/09 e limites de confiança
+
+A finalização deriva `approved-security.patch` do diff baseline → BEST,
+insere `patch_sha256` na autorização e não aceita substituir o patch por um
+arquivo externo. O empacotador valida os vínculos antes da criptografia.
+O hash não substitui a decisão humana nem uma assinatura contratual.
+
+O coletor local passou em 21 verificações; a POC usa sete cenários e o ensaio
+fictício chega ao restore. Detalhes e limites estão no
+[relatório](../validacao/2026-09-13-lote-completo/RESULTADO.md).
+A aceitação Linux foi preparada, não executada no host definitivo.
+O GraphRAG conectado retornou trechos antigos nesta conferência; reconstrução
+automática vale para o corpus configurado, não para qualquer worktree aberta.

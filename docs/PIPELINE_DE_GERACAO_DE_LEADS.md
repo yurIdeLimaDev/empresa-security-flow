@@ -1,13 +1,18 @@
 # Pipeline de geração de leads
 
-Estado vigente em 26 de agosto de 2026.
+Fluxo de produto estabelecido em agosto; consolidação local em 13/09/2026:
+[estado atual](ESTADO_FLUXO.md). Evidências de Linux citadas abaixo são
+históricas e não aprovam o host definitivo.
 
 ```text
 Lead -> Landing page -> Pipeline 0.5 web gratuito
      -> resultado efêmero -> proposta
-     -> contrato + pagamento -> Pipeline 1 integral
+     -> contrato + SOW + autorização + pagamento
+     -> políticas/isolamento válidos -> Pipeline 1 integral
      -> evidência + perfil de stack JSON -> onboarding técnico
-     -> Pipeline 2: módulos autorizados e roteados -> relatório final
+     -> Pipeline 2: módulos autorizados e roteados -> bundle validado
+     -> correção elegível + gates globais -> revisão humana final
+     -> patch cumulativo vinculado à autorização -> entrega criptografada
 ```
 
 O Pipeline 1 não pode ser esvaziado ou convertido diretamente no Pipeline 2.
@@ -31,8 +36,8 @@ subrequisições externas e até oito observações. O site não inicia Pipeline
 nem Pipeline 2.
 
 O preço, prazo e limites comerciais aparecem somente depois da prévia. A
-implementação e a documentação da interface pública são mantidas separadamente
-no repositório privado da landing.
+descrição completa está em
+na documentação comercial local, mantida fora deste repositório técnico.
 
 ## Pipeline 1 — superfície pública e baixo impacto
 
@@ -100,7 +105,8 @@ controle. Não é passivo estrito: há conexões HTTP/TLS/DNS de baixo impacto.
 
 ## Transição comercial
 
-Pipeline 0.5 -> proposta -> contrato + pagamento -> Pipeline 1 integral. O
+Prévia pública -> proposta -> contrato/SOW + autorização + pagamento ->
+políticas/isolamento aprovados -> Pipeline 1 integral. O
 Pipeline 2 exige ainda SOW, contato de emergência, políticas reais,
 contas/matriz quando aplicável e autorização. Uma observação do Pipeline 0.5 ou
 um achado no Pipeline 1 nunca concede essa autorização.
@@ -181,6 +187,12 @@ canaries e adaptadores reais. O host escolhido precisa passar por
 executáveis para impedir que dados de exemplo sejam confundidos com
 autorização.
 
-LGPD/base legal ampla e métricas comerciais continuam fora desta iteração por
-decisão do projeto; isso não elimina a necessidade de resolvê-las antes da
-operação que as exigir.
+O pacote jurídico completo é mantido fora deste repositório técnico; quatro
+minutas não preenchidas entram apenas no ensaio sintético.
+Não foram homologados contratação, pagamento ou papéis jurídicos reais.
+Métricas comerciais continuam distintas das métricas técnicas do kit sintético.
+
+A correção e a entrega seguem os [diagramas vigentes](DIAGRAMAS_MERMAID.md).
+Os gates comerciais incluem conferência operacional; o runner não verifica
+assinatura digital nem recebimento bancário apenas a partir de um hash.
+A prévia não abre um caso pago e não concede autorização técnica.

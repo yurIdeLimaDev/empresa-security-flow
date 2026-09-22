@@ -54,6 +54,8 @@ func main() {
 		err = remediationWorktree(os.Args[2:])
 	case "remediation-agent":
 		err = remediationAgent(ctx, os.Args[2:])
+	case "remediation-run":
+		err = remediationRun(ctx, os.Args[2:])
 	case "remediation-gates":
 		err = remediationGates(ctx, os.Args[2:])
 	case "remediation-evaluate":
@@ -131,14 +133,14 @@ func deliveryPackage(ctx context.Context, args []string) error {
 	state := fs.String("state", "", "state.json final")
 	approval := fs.String("approval", "", "aprovação humana final")
 	bundle := fs.String("bundle", "", "bundle BEST saneado")
-	patchRoot := fs.String("patch-root", "", "raiz externa dos patches governados")
+	patchRoot := fs.String("patch-root", "", "obsoleto: omitir; entrega deriva o diff dos commits aprovados")
 	output := fs.String("output-dir", "", "diretório novo da entrega")
 	recipient := fs.String("age-recipient", "", "destinatário público age X25519")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
-	if *authorization == "" || *plan == "" || *state == "" || *approval == "" || *bundle == "" || *patchRoot == "" || *output == "" || *recipient == "" {
-		return fmt.Errorf("todos os parâmetros de delivery-package são obrigatórios")
+	if *authorization == "" || *plan == "" || *state == "" || *approval == "" || *bundle == "" || *output == "" || *recipient == "" {
+		return fmt.Errorf("authorization, plan, state, approval, bundle, output-dir e age-recipient são obrigatórios")
 	}
 	result, err := app.BuildDeliveryPackage(ctx, *authorization, *plan, *state, *approval, *bundle, *patchRoot, *output, *recipient)
 	if err == nil {
@@ -317,6 +319,27 @@ func remediationAgent(ctx context.Context, args []string) error {
 	runPath, err := app.RunRemediationAgent(ctx, cfg, *planPath, *ticketID)
 	if runPath != "" {
 		fmt.Println(runPath)
+	}
+	return err
+}
+
+func remediationRun(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("remediation-run", flag.ContinueOnError)
+	configPath := fs.String("config", "", "política JSON com geração de patches")
+	planPath := fs.String("plan", "", "plano existente; omita somente ao iniciar um novo caso")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if *configPath == "" {
+		return fmt.Errorf("--config é obrigatório")
+	}
+	cfg, err := app.ReadRemediationConfig(*configPath)
+	if err != nil {
+		return err
+	}
+	path, err := app.RunRemediationAutomation(ctx, *configPath, cfg, *planPath)
+	if path != "" {
+		fmt.Println(path)
 	}
 	return err
 }
@@ -654,5 +677,5 @@ func runtimeCheck(ctx context.Context, args []string) error {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "uso: pipeline <pipeline1|pipeline2|normalize|consolidate|compare|supply-chain|runtime-check|audit-proxy|isolation-smoke|onboarding-generate|delivery-package|backup-create|backup-restore|remediation-preflight|remediation-plan|remediation-worktree|remediation-agent|remediation-gates|remediation-evaluate|remediation-finalize|remediation-apply-patch|reference-gate|reference-baseline|reference-profile|verify|tools> [opções]")
+	fmt.Fprintln(os.Stderr, "uso: pipeline <pipeline1|pipeline2|normalize|consolidate|compare|supply-chain|runtime-check|audit-proxy|isolation-smoke|onboarding-generate|delivery-package|backup-create|backup-restore|remediation-preflight|remediation-plan|remediation-worktree|remediation-agent|remediation-run|remediation-gates|remediation-evaluate|remediation-finalize|remediation-apply-patch|reference-gate|reference-baseline|reference-profile|verify|tools> [opções]")
 }

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "date": "2026-09-11",
+  "scope": "Provider-neutral patch generation; no real AI provider",
+  "files": [
+    {
+      "path": "pipeline/internal/app/patch_generation.go",
+      "sha256": "e2d9ce15a7674d1a98c891d2a7a86023d52e292979f1b83bbee331567fc2e0a5"
+    },
+    {
+      "path": "pipeline/internal/app/remediation_automation.go",
+      "sha256": "7f6ed98f670eb24bb9adf40f3d374df9b5b10e4d23d7a842e3958b2065e78b7e"
+    },
+    {
+      "path": "pipeline/internal/app/patch_generation_test.go",
+      "sha256": "5efceba1ac4e0ef86d19e5993b4b5d19c6e19e6717b7b07e692e107485ca1616"
+    },
+    {
+      "path": "pipeline/internal/app/remediation.go",
+      "sha256": "ccc779f1645424aaaa77d199805e650173525631939d09b8d1387b931b22bdd4"
+    },
+    {
+      "path": "pipeline/cmd/pipeline/main.go",
+      "sha256": "b1ccdc10d78456566bac2ec593ef2623d018e96f0ab27713c6a4565e4e3d9009"
+    },
+    {
+      "path": "pipeline/config/schemas/remediation-config.schema.json",
+      "sha256": "5cb04fae261d399f8762e3893de2d400ab6701adc1c923071267e095c2273827"
+    },
+    {
+      "path": "pipeline/config/schemas/patch-generation-request.schema.json",
+      "sha256": "b689604d1fef37ac1f7c5bd66ddf3c5a4014b1f753049acb53ee0fb36d355551"
+    },
+    {
+      "path": "pipeline/config/schemas/patch-generation-response.schema.json",
+      "sha256": "ad0c3f1411d346f9a81dbf3b4bb309a72a15c8e5457b3f79db0bff5293059791"
+    },
+    {
+      "path": "pipeline/go.mod",
+      "sha256": "42a7e349c9ec8def73e694cb171072f84ff8ff23fd52390354529fb978534143"
+    },
+    {
+      "path": "pipeline/go.sum",
+      "sha256": "ab6a3d128ab2ded91a522ed8f051766536262aa1cc5783156017b4cf67b6a365"
+    }
+  ]
+}

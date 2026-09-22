@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vexkeep provider-neutral patch proposal response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "request_sha256", "base_commit", "provider", "model", "reasoning_effort", "status", "replacements"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "request_id": {"type": "string", "pattern": "^[a-f0-9]{48}$"},
+    "request_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "base_commit": {"type": "string", "pattern": "^[a-f0-9]{40,64}$"},
+    "provider": {"type": "string", "minLength": 1, "maxLength": 128},
+    "model": {"type": "string", "minLength": 1, "maxLength": 128},
+    "reasoning_effort": {"type": "string", "minLength": 1, "maxLength": 128},
+    "status": {"enum": ["patch", "blocked", "no_change"]},
+    "replacements": {
+      "type": "array", "maxItems": 32,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["path", "before_sha256", "content"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1, "maxLength": 300},
+          "before_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "content": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "allOf": [{"if": {"properties": {"status": {"const": "patch"}}}, "then": {"properties": {"replacements": {"minItems": 1}}}, "else": {"properties": {"replacements": {"maxItems": 0}}}}]
+}

@@ -14,6 +14,8 @@ runner="$pipeline_root/bin/pipeline-linux-amd64"
 
 [ "$(uname -s)" = Linux ] || { printf 'Linux is required\n' >&2; exit 1; }
 [ "$(id -u)" -eq 0 ] || { printf 'root is required\n' >&2; exit 1; }
+source "$pipeline_root/scripts/host-inputs-linux.sh"
+host_baseline_check "$baseline_input"
 [ -x "$runner" ] || { printf 'build the runner with build-runner-linux.sh first\n' >&2; exit 1; }
 [ -r "$baseline_input" ] || { printf 'host baseline is not readable\n' >&2; exit 1; }
 [ -r "$policy_input" ] || { printf 'engagement policy is not readable\n' >&2; exit 1; }
@@ -24,12 +26,9 @@ done
 docker version >/dev/null
 iptables -w -S DOCKER-USER >/dev/null
 
-if [ -e "$evidence_input" ] && [ -n "$(find "$evidence_input" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]; then
-  printf 'evidence directory must be new or empty\n' >&2
-  exit 1
-fi
-mkdir -p "$evidence_input/isolation"
-"$pipeline_root/scripts/verify-host-drift-linux.sh" "$baseline_input" "$evidence_input/host-drift"
+host_new_evidence "$evidence_input"
+mkdir -m 700 -- "$evidence_input/isolation"
+bash "$pipeline_root/scripts/verify-host-drift-linux.sh" "$baseline_input" "$evidence_input/host-drift"
 readonly policy="$(realpath "$policy_input")"
 readonly evidence="$(realpath "$evidence_input")"
 

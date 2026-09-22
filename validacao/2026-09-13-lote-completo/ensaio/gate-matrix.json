@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-13T04:07:33.591690+00:00",
+  "status": "passed",
+  "gates": {
+    "incomplete_ai_configuration": {
+      "passed": true,
+      "tests": [
+        "TestMVPMissingGeneratorInputsBlockBeforeNetwork",
+        "TestPatchGenerationDisabledFailsBeforeWorktreeOrNetwork"
+      ]
+    },
+    "authorization": {
+      "passed": true,
+      "tests": [
+        "TestOnboardingDraftsStayBlockedWithoutAuthorization",
+        "TestMVPFirstCustomerRehearsal"
+      ]
+    },
+    "context_allowlist": {
+      "passed": true,
+      "tests": [
+        "TestPatchConfigRejectsUnsafeSettings",
+        "TestPatchSourceRejectsUntrackedSymlinkAndOversize"
+      ]
+    },
+    "credential_disclosure": {
+      "passed": true,
+      "tests": [
+        "TestPatchDisclosureBlocksBeforeTransport",
+        "TestPatchAutomationBlocksCredentialDisclosure"
+      ]
+    },
+    "final_review_and_delivery": {
+      "passed": true,
+      "tests": [
+        "TestPatchAutomationReachesOnlyFinalHumanReview",
+        "TestMVPFirstCustomerRehearsal",
+        "TestDeliveryPackageIsBoundAndDeterministic"
+      ]
+    },
+    "non_regression_and_bounds": {
+      "passed": true,
+      "tests": [
+        "TestPatchAutomationRejectsResponsesAndKeepsBEST",
+        "TestMVPSyntheticPatchEvaluation"
+      ]
+    }
+  },
+  "tests": {
+    "TestDeliveryPackageIsBoundAndDeterministic": "pass",
+    "TestDeliveryRejectsHashMismatch": "pass",
+    "TestMVPSyntheticPatchEvaluation/minimal_fix": "pass",
+    "TestMVPSyntheticPatchEvaluation/fix_with_comment": "pass",
+    "TestMVPSyntheticPatchEvaluation/no_fix": "pass",
+    "TestMVPSyntheticPatchEvaluation/behavior_regression": "pass",
+    "TestMVPSyntheticPatchEvaluation/comment_forgery": "pass",
+    "TestMVPSyntheticPatchEvaluation/verifier_edit": "pass",
+    "TestMVPSyntheticPatchEvaluation/wrong_model": "pass",
+    "TestMVPSyntheticPatchEvaluation": "pass",
+    "TestMVPFirstCustomerRehearsal": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/endpoint": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/provider": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/model": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/effort": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/credential": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/authorization": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork/context": "pass",
+    "TestMVPMissingGeneratorInputsBlockBeforeNetwork": "pass",
+    "TestOnboardingDraftsStayBlockedWithoutAuthorization/payment_alone_never_grants_authorization": "pass",
+    "TestOnboardingDraftsStayBlockedWithoutAuthorization": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/api_token": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/fine_grained": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/aws_key": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/own_credential": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/private_key": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/dsn": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/github_token": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/jwt": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/basic": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/password": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/client_secret": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport/authorization": "pass",
+    "TestPatchDisclosureBlocksBeforeTransport": "pass",
+    "TestPatchAutomationBlocksCredentialDisclosure/source": "pass",
+    "TestPatchAutomationBlocksCredentialDisclosure/finding": "pass",
+    "TestPatchAutomationBlocksCredentialDisclosure": "pass",
+    "TestPatchIndependentGateHelper": "pass",
+    "TestPatchAutomationReachesOnlyFinalHumanReview": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/wrong_provider": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/traversal": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/binary": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/duplicate_edit": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/wrong_model": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/wrong_effort": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/protected_verifier": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/no_code": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/behavior_regression": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/line_budget": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/stale_request": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST/stale_source": "pass",
+    "TestPatchAutomationRejectsResponsesAndKeepsBEST": "pass",
+    "TestPatchGenerationDisabledFailsBeforeWorktreeOrNetwork": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/dependency_context": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/HTTP": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/credential_shared_with_gates": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/protected_context": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/dot_context": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/wildcard_context": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/embedded_credential": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/query_credential": "pass",
+    "TestPatchConfigRejectsUnsafeSettings/transfer_not_approved": "pass",
+    "TestPatchConfigRejectsUnsafeSettings": "pass",
+    "TestPatchResponseStrictJSON": "pass",
+    "TestPatchGatewayRejectsRedirectAndDoesNotLeakToken": "pass",
+    "TestPatchGatewayBoundsAndCancellation": "pass",
+    "TestPatchAutomationGlobalFailureNeverAuthorizes": "pass",
+    "TestPatchAutomationLockBlocksManualOperations": "pass",
+    "TestPatchSourceRejectsUntrackedSymlinkAndOversize": "pass",
+    "TestPatchAutomationRetriesWithoutHumanAndReservesGlobalBudget": "pass",
+    "TestPatchAutomationDoesNotReplayUnknownGeneration": "pass",
+    "TestPatchGenerationChecksSourceAgainAfterResponse": "pass",
+    "TestPatchAutomationDoesNotRetryUncertainGateway": "pass"
+  },
+  "remote_services": false,
+  "production_approval": false
+}

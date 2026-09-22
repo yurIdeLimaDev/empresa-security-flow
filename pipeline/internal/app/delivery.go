@@ -51,6 +51,9 @@ type DeliveryPackageResult struct {
 
 func BuildDeliveryPackage(ctx context.Context, authorizationPath, planPath, statePath, approvalPath, bundlePath, patchRoot, outputDir, recipientText string) (DeliveryPackageResult, error) {
 	result := DeliveryPackageResult{SchemaVersion: DeliverySchemaVersion, Recipient: recipientText, ContainerRequired: "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab"}
+	if patchRoot != "" {
+		return result, fmt.Errorf("patch-root não é aceito na entrega: os patches são derivados do baseline e BEST aprovados; omita esse parâmetro")
+	}
 	var authorization DeliveryAuthorization
 	if err := ReadJSON(authorizationPath, &authorization); err != nil {
 		return result, err
@@ -82,7 +85,7 @@ func BuildDeliveryPackage(ctx context.Context, authorizationPath, planPath, stat
 	if authorization.CaseID != plan.CaseID || authorization.CaseID != state.CaseID || authorization.CaseID != approval.CaseID {
 		return result, fmt.Errorf("artefatos pertencem a casos diferentes")
 	}
-	if state.BestRef != authorization.Commit || approval.ReviewedCommit != authorization.Commit || approval.Decision != "approved" || !state.GlobalGatePassed {
+	if state.BestRef != authorization.Commit || approval.ReviewedCommit != authorization.Commit || approval.Decision != "approved" || !state.GlobalGatePassed || state.FinalApprovalStatus != "approved" || authorization.HumanReviewStage != "final" {
 		return result, fmt.Errorf("commit da entrega não corresponde ao BEST aprovado")
 	}
 	checks := []struct{ path, expected, name string }{{planPath, authorization.PlanSHA256, "plan"}, {statePath, authorization.StateSHA256, "state"}, {approvalPath, authorization.ApprovalSHA256, "approval"}, {bundlePath, authorization.BundleSHA256, "bundle"}}
@@ -94,6 +97,15 @@ func BuildDeliveryPackage(ctx context.Context, authorizationPath, planPath, stat
 	}
 	if !strings.EqualFold(state.BestBundleSHA256, authorization.BundleSHA256) || !strings.EqualFold(approval.ReviewedBundleSHA256, authorization.BundleSHA256) {
 		return result, fmt.Errorf("bundle não corresponde ao BEST/revisão")
+	}
+	patchPath := filepath.Join(filepath.Dir(authorizationPath), "approved-security.patch")
+	patchInfo, err := os.Lstat(patchPath)
+	if err != nil || !patchInfo.Mode().IsRegular() || patchInfo.Size() >= 16<<20 || !validSHA256Hex(authorization.PatchSHA256) {
+		return result, fmt.Errorf("patch canônico aprovado ausente ou inválido; refaça a finalização em diretório novo")
+	}
+	patch, err := os.ReadFile(patchPath)
+	if err != nil || bytesSHA256(patch) != authorization.PatchSHA256 {
+		return result, fmt.Errorf("patch diverge da autorização final")
 	}
 	recipient, err := age.ParseX25519Recipient(strings.TrimSpace(recipientText))
 	if err != nil {
@@ -129,8 +141,10 @@ func BuildDeliveryPackage(ctx context.Context, authorizationPath, planPath, stat
 			return result, err
 		}
 	}
-	if err := copyApprovedPatches(patchRoot, authorization.CaseID, plan, filepath.Join(packageDir, "patches")); err != nil {
-		return result, err
+	if len(patch) > 0 {
+		if err := os.WriteFile(filepath.Join(packageDir, "patches", "security.patch"), patch, 0o600); err != nil {
+			return result, err
+		}
 	}
 	manifest := DeliveryManifest{SchemaVersion: DeliverySchemaVersion, CaseID: authorization.CaseID, Commit: authorization.Commit, BundleSHA256: authorization.BundleSHA256, PlanSHA256: authorization.PlanSHA256, ApprovalSHA256: authorization.ApprovalSHA256, NonRegression: authorization.SecurityNonRegression, Entries: []DeliveryManifestEntry{}}
 	files, err := packageFiles(packageDir, map[string]bool{"manifest.json": true, "SHA256SUMS": true})
@@ -189,46 +203,6 @@ func BuildDeliveryPackage(ctx context.Context, authorizationPath, planPath, stat
 		return result, err
 	}
 	return result, nil
-}
-
-func copyApprovedPatches(root, caseID string, plan RemediationPlan, destination string) error {
-	root, err := secureExistingDirectory(root)
-	if err != nil {
-		return err
-	}
-	caseRoot := filepath.Join(root, caseID)
-	caseRoot, err = secureExistingDirectory(caseRoot)
-	if err != nil || !pathWithin(root, caseRoot) {
-		return fmt.Errorf("diretório de patches do caso inválido")
-	}
-	expected := map[string]bool{}
-	for _, ticket := range plan.Tickets {
-		if ticket.RequiresCodeChange {
-			expected[ticket.ID+".patch"] = true
-		}
-	}
-	entries, err := os.ReadDir(caseRoot)
-	if err != nil {
-		return err
-	}
-	for _, entry := range entries {
-		if entry.IsDir() || entry.Type()&os.ModeSymlink != 0 || !expected[entry.Name()] {
-			return fmt.Errorf("patch inesperado no caso: %s", entry.Name())
-		}
-		delete(expected, entry.Name())
-		if err := copyFileExact(filepath.Join(caseRoot, entry.Name()), filepath.Join(destination, entry.Name())); err != nil {
-			return err
-		}
-	}
-	if len(expected) != 0 {
-		missing := make([]string, 0, len(expected))
-		for name := range expected {
-			missing = append(missing, name)
-		}
-		sort.Strings(missing)
-		return fmt.Errorf("patches aprovados ausentes: %s", strings.Join(missing, ", "))
-	}
-	return nil
 }
 
 func renderDeliveryHTML(authorization DeliveryAuthorization, plan RemediationPlan, bundle NormalizedBundle) []byte {

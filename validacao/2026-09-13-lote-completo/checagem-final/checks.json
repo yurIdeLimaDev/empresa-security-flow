@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-13T04:27:22.677301+00:00",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "go_mod_verify",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "go_vet",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "go_tests_race",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "supply_chain_sbom",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "python_tests",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "documentation",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "corpus_tests",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "corpus_build",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_build-runner-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_deploy-preflight-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_host-inputs-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_monitor-host-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_rebuild-runtime-artifacts.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_render-delivery-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_stop-case-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "syntax_verify-host-drift-linux.sh",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "landing_lint",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "landing_types",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "landing_build_tests",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "npm_audit_all",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "check": "npm_sbom",
+      "status": "passed",
+      "exit_code": 0
+    }
+  ],
+  "raw_logs_saved": false,
+  "production_approval": false
+}

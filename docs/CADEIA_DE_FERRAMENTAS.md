@@ -1,6 +1,9 @@
 # Controle da cadeia de ferramentas
 
-Estado: fechado e revalidado em 24 de agosto de 2026.
+Adoção e liveness históricos: 24/08/2026. Integridade local/SBOM conferidos
+no lote de 13/09/2026: [evidência](../validacao/2026-09-13-lote-completo/RESULTADO.md).
+Não houve nova execução de todas as imagens ou nova auditoria de seus códigos;
+20 automáticas e oito restritas permanecem no inventário aprovado.
 
 ## Regra de execução
 

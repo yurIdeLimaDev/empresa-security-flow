@@ -13,3 +13,16 @@
 
 HIBP, OAST público, dados pessoais e alvos de terceiros estão fora do primeiro
 caso. A ausência de uma entrada encerra a preparação como bloqueada.
+
+## Contratação e geração
+
+Contrato, SOW e autorização devem ser conferidos antes do serviço contratado;
+pagamento e login sozinhos não autorizam execução. O checklist jurídico não
+é verificação criptográfica de assinatura. O runner recebe entradas explícitas.
+
+No modo de geração, ainda faltam gateway, provedor/modelo/effort, credencial,
+autorização de transferência e perfil real de verificadores. A allowlist de
+contexto é definida no onboarding, não pelo agente. Configuração incompleta
+bloqueia; não substituir pelo simulador do kit. Veja os
+[diagramas](../DIAGRAMAS_MERMAID.md) e o
+[kit sintético](../../correcao/avaliacao/README.md).

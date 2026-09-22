@@ -58,7 +58,7 @@ func ValidateIsolationPolicy(policy EngagementPolicy) error {
 // and canary controls used by execution, then sends one HTTP request through
 // the audit proxy from a container on the dedicated engagement network.
 // It is intentionally for operator-controlled Linux/root test infrastructure.
-func RunIsolationSmoke(ctx context.Context, policy EngagementPolicy, caseDirectory string, maxRequests int, rps float64) (IsolationSmokeResult, error) {
+func RunIsolationSmoke(ctx context.Context, policy EngagementPolicy, caseDirectory string, maxRequests int, rps float64) (smoke IsolationSmokeResult, runErr error) {
 	if err := ValidateIsolationPolicy(policy); err != nil {
 		return IsolationSmokeResult{}, err
 	}
@@ -77,13 +77,21 @@ func RunIsolationSmoke(ctx context.Context, policy EngagementPolicy, caseDirecto
 	if err := SetupAndTestIsolation(ctx, state, caseDirectory); err != nil {
 		return IsolationSmokeResult{}, err
 	}
-	defer func() { _ = TeardownIsolation(context.Background(), state) }()
+	defer func() {
+		if err := TeardownIsolation(context.Background(), state); err != nil {
+			runErr = fmt.Errorf("smoke não aprovado: teardown falhou: %w", err)
+		}
+	}()
 
 	proxy, err := StartEngagementAuditProxy(ctx, &state, policy, maxRequests, rps)
 	if err != nil {
 		return IsolationSmokeResult{}, fmt.Errorf("proxy de auditoria: %w", err)
 	}
-	defer func() { _ = proxy.Close(context.Background()) }()
+	defer func() {
+		if err := proxy.Close(context.Background()); err != nil {
+			runErr = fmt.Errorf("smoke não aprovado: fechamento do proxy falhou: %w", err)
+		}
+	}()
 	if err := proxyCanaryRequest(ctx, state, policy); err != nil {
 		return IsolationSmokeResult{}, err
 	}

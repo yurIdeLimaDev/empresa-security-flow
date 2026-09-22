@@ -1,5 +1,11 @@
 # Especificação técnica — primeiro caso controlado
 
+Nota consolidada em 13/09/2026: o escopo manual deste documento é o registro do primeiro
+caso de agosto. Por decisão posterior, foi implementada a camada de geração
+independente de fornecedor e execução até revisão final. Provedor/modelo
+seguem indefinidos; consulte
+[a extensão vigente](../correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md).
+
 ## Objetivo
 
 Tornar o motor executável para uma única stack de referência e um laboratório
@@ -181,3 +187,11 @@ testes Python e CI privada passaram. A evidência saneada está em
 Condição de deploy: repetir o preflight como root no Linux dedicado escolhido.
 O ensaio em contêiner validou runner, empacotamento e restauração, mas não
 substitui a inspeção de SSH, updates e firewall desse host.
+
+## Evolução posterior do contrato de entrega
+
+Esta especificação preserva o primeiro perfil manual. O `patch-root` daquele
+adaptador é entrada de proposta, não entrada do empacotador. Desde 13/09,
+a entrega usa `approved-security.patch` derivado de baseline até BEST, com
+hash na autorização final. Consulte o [estado atual](ESTADO_FLUXO.md) para
+uso vigente; não executar instrução histórica de entrega externa.

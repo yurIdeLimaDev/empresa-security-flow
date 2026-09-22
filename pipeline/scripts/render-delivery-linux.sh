@@ -13,10 +13,9 @@ pipeline_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [ -x "$runner" ] || { printf 'runner is not executable\n' >&2; exit 1; }
 [ -r "$runner.sha256" ] || { printf 'runner checksum file is required\n' >&2; exit 1; }
 (cd "$(dirname "$runner")" && sha256sum -c "$(basename "$runner").sha256")
-for file in delivery-authorization.json plan.json state.json approval.json bundle.json recipient.txt; do
+for file in delivery-authorization.json approved-security.patch plan.json state.json approval.json bundle.json recipient.txt; do
   [ -r "$job/$file" ] || { printf 'missing delivery input: %s\n' "$file" >&2; exit 1; }
 done
-[ -d "$job/patches" ] || { printf 'missing patches directory\n' >&2; exit 1; }
 mkdir -p "$job/output"
 [ -z "$(find "$job/output" -mindepth 1 -maxdepth 1 -print -quit)" ] || { printf 'output must be empty\n' >&2; exit 1; }
 recipient="$(tr -d '\r\n' < "$job/recipient.txt")"
@@ -32,4 +31,4 @@ docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges=t
   /pipeline delivery-package \
     --authorization /job/delivery-authorization.json --plan /job/plan.json \
     --state /job/state.json --approval /job/approval.json --bundle /job/bundle.json \
-    --patch-root /job/patches --output-dir /job/output --age-recipient "$recipient"
+    --output-dir /job/output --age-recipient "$recipient"

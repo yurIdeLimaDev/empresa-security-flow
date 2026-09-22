@@ -1,0 +1,15 @@
+{
+  "suite_sha256": "cac63d49735e16942137f1ff3231bbef0aaae1b262f6280b65c4c4044c779875",
+  "mode": "programmed_fixture_not_ai",
+  "positive_cases": 2,
+  "negative_cases": 5,
+  "correction_acceptance": 1.0,
+  "unsafe_acceptances": 0,
+  "expectations_passed": true,
+  "human_gate_preserved": true,
+  "bounded": true,
+  "calls": 12,
+  "cost_estimate": null,
+  "cost_note": "No provider selected or invoked. Unknown price is not zero.",
+  "scope": "one synthetic control; not general vulnerability-fixing ability"
+}
