@@ -1,3 +1,8 @@
 *.patch text eol=lf -whitespace
 *.sh text eol=lf
 negocio/juridico/*.md text -whitespace
+*.pdf binary
+docs/PLANO_CORRECAO_VEXKEEP_REVISADO_2026-08-26.md text -whitespace
+docs/PLANO_DE_NEGOCIOS_MVP_PRIMEIROS_CLIENTES.md text -whitespace
+validacao/2026-08-26-pipeline-0-5-web/RESULTADO.md text -whitespace
+validacao/2026-08-26-vexkeep-check-staging/RESULTADO.md text -whitespace

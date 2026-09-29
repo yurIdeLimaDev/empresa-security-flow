@@ -1,7 +1,7 @@
 # Correção automatizada de segurança
 
 Atualização local de 13/09/2026: [kit sintético de avaliação](avaliacao/README.md)
-e [estado do fluxo](../docs/ESTADO_FLUXO.md). A entrega deriva o diff cumulativo
+e [estado central](../docs/ESTADO_ATUAL.md). A entrega deriva o diff cumulativo
 baseline → BEST na finalização e o verifica por hash ao empacotar; patches
 fornecidos externamente não entram diretamente na entrega.
 

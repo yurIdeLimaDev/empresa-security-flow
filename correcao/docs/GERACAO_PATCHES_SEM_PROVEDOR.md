@@ -193,7 +193,7 @@ consulta automática. Conferir o registro do gateway antes de decidir a recupera
 ## Fontes técnicas consultadas
 
 Complemento de 13/09/2026: [kit de avaliação offline](../avaliacao/README.md)
-com métricas, comparação e matriz de gates; [estado atual](../../docs/ESTADO_FLUXO.md)
+com métricas, comparação e matriz de gates; [estado atual](../../docs/ESTADO_ATUAL.md)
 com a mudança do contrato de entrega. Isso não seleciona provedor nem aprova
 qualidade de uma IA real.
 

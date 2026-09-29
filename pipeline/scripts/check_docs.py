@@ -114,7 +114,7 @@ def main() -> int:
     # runtime evidence, hidden sync repositories or generated corpora.
     directories = ("docs", "docs/runbooks", "correcao/docs", "correcao/avaliacao", "deploy/linux")
     if args.profile == "all":
-        directories += ("negocio",)
+        directories += ("negocio", "negocio/oferta")
     for directory in directories:
         folder = root / directory
         if folder.is_symlink():
@@ -123,7 +123,7 @@ def main() -> int:
         paths.extend(sorted(folder.glob("*.md")))
     # The engine may also be published separately from the landing repository.
     if (root / "landing-page").is_dir():
-        paths.extend(root / name for name in ("landing-page/README.md", "landing-page/DEPLOYMENT.md"))
+        paths.extend(root / name for name in ("landing-page/README.md", "landing-page/DEPLOYMENT.md", "landing-page/PORTAL_CLIENTE.md"))
     paths = sorted(set(paths))
     errors = [error for path in paths for error in check_document(root, path)]
     print(json.dumps({"status": "failed" if errors else "passed", "documents": len(paths),

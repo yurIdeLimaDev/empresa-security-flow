@@ -1,6 +1,42 @@
 # Diagramas Mermaid do fluxo vigente
 
-Atualização documental: 13/09/2026. Fontes: [estado atual](ESTADO_FLUXO.md),
+## Oferta e portal: publicação de 26/09/2026
+
+```mermaid
+flowchart LR
+    preview[Prévia gratuita] --> proposal{Modalidade na proposta}
+    proposal --> once[Avulsa: até 3 pedidos]
+    proposal --> monthly[Mensal: 2 pedidos por ciclo]
+    proposal --> annual[Anual: 12 ciclos de 2 pedidos]
+    once --> gates[Contrato + autorização + pagamento + acessos]
+    monthly --> gates
+    annual --> gates
+    gates --> execution[Verificação e correção governadas]
+    execution --> human[Revisão humana final]
+    human --> delivery[Pacote criptografado por canal seguro]
+    execution -. publicação operada .-> metadata[Metadados por proprietário no D1]
+    delivery -. recibo e hash .-> metadata
+    metadata --> portal[Conta autenticada: etapas, prazo, correções]
+```
+
+Oferta não significa checkout ativo. Portal é projeção de leitura e não libera
+execução. Integração automática, cobrança e saldo de franquia ainda pendentes.
+Check continua pausado. Migrações e portal publicados. Ledger interno não libera
+execução; criação de ciclos/renovação e conciliação continuam não integradas.
+
+```mermaid
+flowchart LR
+    input[Endereço e confirmação] --> attempts[Cota atômica de tentativas]
+    attempts --> captcha[Turnstile de uso único]
+    captcha --> admission[D1: IP, hostname, global e 4 leases]
+    admission --> dns[Validação de A e AAAA]
+    dns --> fetch[Fetch manual: zero redirects]
+    fetch --> result[Resultado limitado ou indeterminado]
+    budget[30 segundos e 46 requisições no máximo] -. cancela .-> fetch
+    gap[Pendência: IP da conexão ainda não fixado] -. risco residual .-> fetch
+```
+
+Base dos diagramas do motor: 13/09/2026; oferta e portal atualizados em 26/09/2026. Fontes: [estado atual](ESTADO_ATUAL.md),
 [arquitetura](ARQUITETURA_IMPLEMENTADA.md) e
 [geração de patches](../correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md).
 

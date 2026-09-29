@@ -193,5 +193,5 @@ substitui a inspeção de SSH, updates e firewall desse host.
 Esta especificação preserva o primeiro perfil manual. O `patch-root` daquele
 adaptador é entrada de proposta, não entrada do empacotador. Desde 13/09,
 a entrega usa `approved-security.patch` derivado de baseline até BEST, com
-hash na autorização final. Consulte o [estado atual](ESTADO_FLUXO.md) para
+hash na autorização final. Consulte o [estado atual](ESTADO_ATUAL.md) para
 uso vigente; não executar instrução histórica de entrega externa.

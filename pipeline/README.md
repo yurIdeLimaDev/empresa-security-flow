@@ -1,6 +1,6 @@
 # Runner dos Pipelines 1 e 2
 
-Estado local em 13/09/2026: [consolidação](../docs/ESTADO_FLUXO.md).
+Estado local em 13/09/2026: [consolidação](../docs/ESTADO_ATUAL.md).
 Novos ensaios em `scripts/mvp_acceptance.py`; aceite de evidências do host em
 `scripts/host_acceptance.py`. A entrega recebe `approved-security.patch` gerado
 na finalização e ligado por hash à autorização; omitir `--patch-root` no
@@ -11,7 +11,7 @@ O runner é escrito em Go. Planejamento não gera tráfego. Execução real exig
 Linux root, Docker e todas as políticas/supply chain aprovadas.
 
 Validação local e comandos reproduzíveis de CI:
-[README do motor](../README.md). A checagem de conteúdo
+[VALIDACAO_LOCAL_MVP.md](../docs/VALIDACAO_LOCAL_MVP.md). A checagem de conteúdo
 antes do gateway complementa a autorização de envio; não escolhe fornecedor,
 não anonimiza código e não substitui revisão de fontes.
 

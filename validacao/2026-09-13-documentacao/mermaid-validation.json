@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "parser": "mermaid@11.17.2",
+  "diagrams": 10,
+  "results": [
+    {
+      "source": "correcao/docs/FLUXO_DE_CORRECAO_SEGURA.md",
+      "number": 1,
+      "status": "passed"
+    },
+    {
+      "source": "docs/ARQUITETURA_IMPLEMENTADA.md",
+      "number": 1,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 1,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 2,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 3,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 4,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 5,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 6,
+      "status": "passed"
+    },
+    {
+      "source": "docs/DIAGRAMAS_MERMAID.md",
+      "number": 7,
+      "status": "passed"
+    },
+    {
+      "source": "README.md",
+      "number": 1,
+      "status": "passed"
+    }
+  ],
+  "visual_rendering_verified": false,
+  "model_calls": 0
+}

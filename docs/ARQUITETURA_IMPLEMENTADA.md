@@ -1,10 +1,10 @@
 # Arquitetura implementada
 
 Estado: base de agosto, com geração de patches em 11/09 e fechamento local em
-13/09/2026. Consulte o [estado consolidado](ESTADO_FLUXO.md), inclusive a nova
+13/09/2026. Consulte o [estado consolidado](ESTADO_ATUAL.md), inclusive a nova
 vinculação do patch cumulativo à autorização final.
-O [roteiro do motor](../README.md) reúne comandos e limites das verificações;
-o deploy definitivo continua pendente.
+O [roteiro local](VALIDACAO_LOCAL_MVP.md) reúne comandos e limites das
+verificações repetidas nesta atualização; o deploy definitivo continua pendente.
 
 ## Fluxo preservado
 

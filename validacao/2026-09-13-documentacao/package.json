@@ -1,0 +1,8 @@
+{
+  "name": "vexkeep-documentation-validation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "check": "node check-diagrams.mjs" },
+  "dependencies": { "mermaid": "11.17.2", "jsdom": "26.1.0" }
+}

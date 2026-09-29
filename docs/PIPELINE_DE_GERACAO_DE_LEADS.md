@@ -1,7 +1,7 @@
 # Pipeline de geração de leads
 
 Fluxo de produto estabelecido em agosto; consolidação local em 13/09/2026:
-[estado atual](ESTADO_FLUXO.md). Evidências de Linux citadas abaixo são
+[estado atual](ESTADO_ATUAL.md). Evidências de Linux citadas abaixo são
 históricas e não aprovam o host definitivo.
 
 ```text
@@ -37,7 +37,7 @@ nem Pipeline 2.
 
 O preço, prazo e limites comerciais aparecem somente depois da prévia. A
 descrição completa está em
-na documentação comercial local, mantida fora deste repositório técnico.
+[`LANDING_COMERCIAL_E_OPERACAO_PUBLICA.md`](LANDING_COMERCIAL_E_OPERACAO_PUBLICA.md).
 
 ## Pipeline 1 — superfície pública e baixo impacto
 
@@ -187,8 +187,7 @@ canaries e adaptadores reais. O host escolhido precisa passar por
 executáveis para impedir que dados de exemplo sejam confundidos com
 autorização.
 
-O pacote jurídico completo é mantido fora deste repositório técnico; quatro
-minutas não preenchidas entram apenas no ensaio sintético.
+Os modelos jurídicos posteriores estão em [negocio/juridico](../negocio/juridico/README.md).
 Não foram homologados contratação, pagamento ou papéis jurídicos reais.
 Métricas comerciais continuam distintas das métricas técnicas do kit sintético.
 

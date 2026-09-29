@@ -45,8 +45,8 @@ manifesto. O ZIP é determinístico; a criptografia age não é.
 
 Conferir hashes e destinatário, transferir o pacote cifrado pelo canal
 contratado e registrar recebimento. Hash local não comprova recebimento/aceite.
-O aceite comercial é separado da revisão técnica. Seu modelo de aceite é
-mantido fora deste repositório técnico.
+O aceite comercial é separado da revisão técnica:
+[modelo de aceite](../../negocio/juridico/09_TERMO_ACEITE_ENTREGA.md).
 
 Aplicar retenção e encerramento contratados. Backup exige restore verificado:
 [aceitação e recuperação](../../deploy/linux/ACEITACAO.md).

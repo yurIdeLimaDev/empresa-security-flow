@@ -1,7 +1,7 @@
 # Decisões incorporadas
 
 Consolidação: 13/09/2026. As seções datadas preservam decisões históricas;
-quando houver evolução, vale o estado abaixo e o [estado atual](ESTADO_FLUXO.md).
+quando houver evolução, vale o estado abaixo e o [estado atual](ESTADO_ATUAL.md).
 
 ## Decisões vigentes consolidadas
 

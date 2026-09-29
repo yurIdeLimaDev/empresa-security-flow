@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "date": "2026-09-11",
+  "scope": "Small local MVP hardening; no production or legal authorization",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "efdde30c89d6ff30cc918c672b0c485522eda882c334d3ea891f3e15b2efc204"
+    },
+    {
+      "path": ".github/workflows/deploy-landing.yml",
+      "sha256": "12ae1510a28a03a7aac672602e806fb4907c67a06086f63980e3145fdb211318"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "694d530b8813082bcd66ca6dd8ce44825487bff7642613685c8e1b39fe29d3b3"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8f0db2b731e8763b18b99a6c61ed34251dedc22ab708c18af0a3e897490e1ed4"
+    },
+    {
+      "path": "pipeline/README.md",
+      "sha256": "772dfe43f5bf0049065c07ba2b24200ba6c4190966789e521a5bbd51ece3f2b6"
+    },
+    {
+      "path": "pipeline/internal/app/patch_generation.go",
+      "sha256": "32df297e33769a7d706deac5a5968afc85334538654dcff7395bc66599c36b01"
+    },
+    {
+      "path": "pipeline/internal/app/patch_disclosure.go",
+      "sha256": "6ccd1f78c26ebd88e1633155a5631b687b5321812b812436801fac6650741cad"
+    },
+    {
+      "path": "pipeline/internal/app/patch_disclosure_test.go",
+      "sha256": "7f1b839e48f33e8a24a8eb254cfa38085798f74741993adb1daf0bf93b24ed22"
+    },
+    {
+      "path": "pipeline/internal/app/onboarding_test.go",
+      "sha256": "06825f7001b60949b8533da95e6b2f1e4ecb86871869c807dd8afb819f1b9ff9"
+    },
+    {
+      "path": "pipeline/scripts/check_docs.py",
+      "sha256": "c6bbd56962f6fb1bf760335f7c1e27b7567a68014784ab53a19e4715f1fbff8b"
+    },
+    {
+      "path": "pipeline/scripts/tests/test_check_docs.py",
+      "sha256": "898200c83bf8a8cf5818f6d85d75f217bbbee8848bcdd595e3da4dfc4d27fd65"
+    },
+    {
+      "path": "landing-page/.gitignore",
+      "sha256": "db6f10817592afc1b8053ce40cf1b172b472c071f18c20a58a5852e3f421d887"
+    },
+    {
+      "path": "landing-page/.github/workflows/ci.yml",
+      "sha256": "b214c0e396c3550e1891aac6ef2a8404c203b1c48bf0f48277532bef22dce497"
+    },
+    {
+      "path": "landing-page/.node-version",
+      "sha256": "55075b5ec4e8b31936cbbc282b8829116d1fd48f2f2f1856dee592a6650700ce"
+    },
+    {
+      "path": "landing-page/README.md",
+      "sha256": "472512fc58afb3531925f74c571310ac7656a492a1ca783d5999243fd1fb4292"
+    },
+    {
+      "path": "docs/ARQUITETURA_IMPLEMENTADA.md",
+      "sha256": "d5b75006c1619b28881c000be0a1c0c51d2bb09f568d352d722cf7a844d0f676"
+    },
+    {
+      "path": "docs/ROADMAP_TECNOLOGIA_NEGOCIOS_2026-09-11.md",
+      "sha256": "ac85156100ec4eff3889c60e2d703a3aeb2b411002977db8618105f0b92e3dab"
+    },
+    {
+      "path": "docs/VALIDACAO_LOCAL_MVP.md",
+      "sha256": "9c09af3ff2134b040f54e0d64869899c360741cd39635e98e834e0ea4c19ac8c"
+    },
+    {
+      "path": "correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md",
+      "sha256": "cde9c739395705bc17cc6dd12d544b064ff8cb356a4fea05f6013a89ce4f43bb"
+    },
+    {
+      "path": "negocio/README.md",
+      "sha256": "709cec9c4e62f6a3ab6b8d227b7e0fadb95929968c0038d51120705338ebf602"
+    },
+    {
+      "path": "negocio/GUIA_DE_EXECUCAO_DO_TITULAR_PARA_MVP.md",
+      "sha256": "c7ce7659188672dce4e8b6c8b70063e74462b7ef5d49f4def9ff363174a4b123"
+    },
+    {
+      "path": "negocio/juridico/14_CHECKLIST_GATE_JURIDICO.md",
+      "sha256": "c0f1fbfe00935d79ac405b2796fd4e743eb180a53b7d8f366032d51b8e29d5e0"
+    },
+    {
+      "path": "negocio/juridico/16_ASSINATURA_E_CONTRATACAO_DIGITAL.md",
+      "sha256": "f0c64b07ffaa815ac8e1a9e5435aec44b89c9c9332a079b194eae55889fb4f3d"
+    },
+    {
+      "path": "negocio/juridico/18_FECHAMENTO_PONTO_3.md",
+      "sha256": "4aa32008eabdbc3d3c140261dbf145a843e681ce2411b04f55ab82804e510e21"
+    },
+    {
+      "path": "validacao/2026-09-11-geracao-patches/RESULTADO.md",
+      "sha256": "20836658baa3400a153df9d1bcb13e94b9d9ffc6c417b3b77ef9dc93a5c44440"
+    },
+    {
+      "path": "validacao/2026-09-11-fechamento-local/RESULTADO.md",
+      "sha256": "828eb22d177a2f16e114bdf773727fa045bad9de935901408ac3b800b52f7456"
+    }
+  ]
+}

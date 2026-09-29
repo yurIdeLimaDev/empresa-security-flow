@@ -1,0 +1,341 @@
+{
+  "status": "passed",
+  "documents": 66,
+  "diagrams": 10,
+  "errors": [],
+  "files": [
+    {
+      "path": "correcao/adapters/python-3.13-stdlib/HASHES.md",
+      "sha256": "b4ba8698bb9104848a00906242ea036fd613175494cbc6f11c503bafd7d90131",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "correcao/adapters/python-3.13-stdlib/README.md",
+      "sha256": "704af75447d8fc458742a514e1874964ee94cb50311b48f276919ecbbeb52435",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "correcao/avaliacao/README.md",
+      "sha256": "a9472fac3a4db7374a4de2f4793c68726a79337f18300ca76f97581359fc537f",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "correcao/docs/FLUXO_DE_CORRECAO_SEGURA.md",
+      "sha256": "157cd5926cd7d721e498d0b875f54ba4e69bd9f1d8691123795a298daf12ad4b",
+      "mermaid_blocks": 1
+    },
+    {
+      "path": "correcao/docs/GERACAO_PATCHES_SEM_PROVEDOR.md",
+      "sha256": "f672a6792f07afddc2298f61cf0d8009d6d074721409eec62df3d5cf686b2baa",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "correcao/README.md",
+      "sha256": "fc87e2adc51f4a2854e37da6c7d62886f491387802141f9a676a65d764ea34da",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "deploy/linux/ACEITACAO.md",
+      "sha256": "bd75e7a8f7473f200ee6d448d4d692e6d9513d1bfeaba99290008d25617c843e",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "deploy/linux/README.md",
+      "sha256": "3af0779cd8c4915df5f9ae3866ee261ce787f6124465590a3c71b5845b18bda8",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/ARQUITETURA_IMPLEMENTADA.md",
+      "sha256": "8111a3402be795879ea54f981b0866b73d0a1f5650c41138e36f7dbd2c7eb8ef",
+      "mermaid_blocks": 1
+    },
+    {
+      "path": "docs/CADEIA_DE_FERRAMENTAS.md",
+      "sha256": "cd5d12be2868828aa55965a23464f6bcb6cbb9d4af0c1db9be7e6d0e18e152d9",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/DECISOES_DE_ATUALIZACAO.md",
+      "sha256": "51d9d1e8cb384d7178fa146dddc3f9dd8f8eb0afc3a89fa31bd673a95667f14c",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/DEPENDENCIA_AGE_E_PERFIL_PYTHON_2026-08-24.md",
+      "sha256": "6b78f68f5eeed7b0cfac47d8bc3f8afe6f153720a7606b04bcefb4bc497741d4",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/DIAGRAMAS_MERMAID.md",
+      "sha256": "18f5e7dba02eb93b9e0b416afdff3012934bbef80ab4ddeabaaf6afe3901093c",
+      "mermaid_blocks": 7
+    },
+    {
+      "path": "docs/ESPECIFICACAO_IMPLEMENTACAO_PRIMEIRO_CASO.md",
+      "sha256": "5721c92dc291b41bba33afcefc9298f6d1a964f19b0df5fe27f1ecf0a1513d71",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/ESTADO_ATUAL.md",
+      "sha256": "2425d651401840c155da3d84aad9d51c2fb711d52dbe9e20e3ce10435897fc53",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/FERRAMENTAS_PESQUISADAS.md",
+      "sha256": "0deb2997007a1891ee8830d5f39a15876e52724d8ff12c7bcd4d5d8f816eb17c",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/INDICE_DOCUMENTACAO.md",
+      "sha256": "808e07799379b51209e01847431bc8ea1a6041176f478456249edff96d562ec2",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/LANDING_COMERCIAL_E_OPERACAO_PUBLICA.md",
+      "sha256": "e2ce570156951a464cc944992cabe7fdf83f6d3a6a6c03869f7ff9234bb7262e",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/MODELO_CANONICO_E_NORMALIZACAO.md",
+      "sha256": "051cd0dd347e48af010ef0d693c07ab232a1847a41c6ee7aac2390ade3669975",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/PIPELINE_0_5_WEB.md",
+      "sha256": "423b9bd608cc063fa8d65d86bb4d79cb8c3682819d66abe52e80c55ed862d497",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/PIPELINE_DE_GERACAO_DE_LEADS.md",
+      "sha256": "79ccc758d45aac21e622521de1570e0af2bf395a39b21cf3c6d45589d5a9d3d9",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/PLANO_CORRECAO_VEXKEEP_REVISADO_2026-08-26.md",
+      "sha256": "32ed3cbc89f052275a1955de09b01c81c41e4e3a5a260247a94f35017ac12807",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/PLANO_DE_NEGOCIOS_MVP_PRIMEIROS_CLIENTES.md",
+      "sha256": "8480f93582492fd3aac30cf03dee5f5b4ca77e9f057bc94bc997e48777141e72",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/PLANO_VEXKEEP_CHECK_V1.md",
+      "sha256": "bf8a1a9267402b70859232bd0839237f92e2ca44f57bd0e947603c42e6dd4b5f",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/REVISAO_DE_ADOCAO_FERRAMENTAS_2026-08-22.md",
+      "sha256": "648dcf0782d6482260943f58084afef91d703dbe857ffa9dae0da1c7542f7bb6",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/ROADMAP_TECNOLOGIA_NEGOCIOS_2026-09-11.md",
+      "sha256": "76bab8e1f68e89786836c30b1fd70e1bb1d58b7008fb1b507caaede1a26ab3be",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/runbooks/EMERGENCIA.md",
+      "sha256": "ae880b2372ab0e713a057d342d93c9ce49b4e17e199054fd0df713f99ea3a09d",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/runbooks/ENTREGA_E_REVISAO.md",
+      "sha256": "6b1feed6e1abf65cb6be58bf1967407066ab097cea8a72aa793033a50458c94f",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/runbooks/FERRAMENTAS_MANUAIS.md",
+      "sha256": "71e38b4726cbdf432fbabde69a0a280501cbb06a1e9ae838167111bfd36275d6",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/runbooks/ONBOARDING_TECNICO.md",
+      "sha256": "a1f6e74209922eb419a250a8fff1999dce474f13c242abdf17edbfe75f9817c7",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/runbooks/OPERACAO_HOST.md",
+      "sha256": "507a39539643611a53c19a0278ecd5e67f5b892c26f98aaad3972653462f7b55",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "docs/VALIDACAO_LOCAL_MVP.md",
+      "sha256": "63d3220157e5c923c56dcc34e31b00d4b9067e67d191dc0465a3b990a2d2ed01",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "landing-page/DEPLOYMENT.md",
+      "sha256": "ab57c3dea716a63a6bff3d838d547f4f1c17c8a4b1eacb8fa134f640aefbd739",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "landing-page/README.md",
+      "sha256": "192043838d977c03a7d8c3a0f822fcd9ab5cf6700bd555a5239f35402a18993e",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/GUIA_DE_EXECUCAO_DO_TITULAR_PARA_MVP.md",
+      "sha256": "a2d697e9db546dd42ed11827f7b0cd0f64a861472436dbd2c7f36ab54d06fd8f",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/00_PENDENCIAS_ANTES_DO_PRIMEIRO_CLIENTE.md",
+      "sha256": "d585c47e373d0e11fe676c3e45e64c5d85d5da3f83ce720abbbdce6ec4085d6d",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/01_RESUMO_PRE_CONTRATUAL.md",
+      "sha256": "fe7bcaaee41256e389e21106664062aaed4b56e1ef22d6aef5c729da148cd5bb",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/01A_PROPOSTA_COMERCIAL.md",
+      "sha256": "e34754fa5ea027a414b8c21c0c792686664d2795467191e4b378665ffc61e302",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/02_CONTRATO_MESTRE_SERVICOS_SEGURANCA.md",
+      "sha256": "f57b7afd02798d98c2a5157f827dbc05350a0bb3b15481786f2e1091b416fedb",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/03_SOW_ESCOPO_REGRAS_ENGAJAMENTO.md",
+      "sha256": "cb84ce80541244534b9ebb9a4daa157a8081ff7653bc967c087d8184596540be",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/04_AUTORIZACAO_EXPRESSA_TESTES.md",
+      "sha256": "ecaf44835d4a5cdcef9a112c46e8c83e3fe44a522122193463bc29a692b1e1f5",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/05_ANEXO_PROTECAO_DADOS_DPA.md",
+      "sha256": "b546bdd54728e6c3b282f85ef7243aef86c082929eaa0c012e714c38b627abd0",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/06_ACORDO_CONFIDENCIALIDADE_MUTUA.md",
+      "sha256": "0737cc49cd870bd2a8c19b36df0d043c1014b037b7ea20d9bb3fc77357affc70",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/07_POLITICA_RETENCAO_DESTRUICAO.md",
+      "sha256": "945e31e55d086ffc3ce5b40eb547a5811606aef53016afa498e4a01493c04971",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/08_PLANO_COMUNICACAO_INCIDENTE.md",
+      "sha256": "19f30c01b1935ed9c3afa5275f444f06fba352a4e404506f47f19bde77b0a177",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/09_TERMO_ACEITE_ENTREGA.md",
+      "sha256": "8baf12584405567d5b9138aaadb977282419f8739945ece09e7aec36494fd44c",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/10_ORDEM_MUDANCA_ADITIVO.md",
+      "sha256": "a883c59fcbecff39b0a2a8d3daf7cf95527b2f6c8bed56583a589066a301b144",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/11_COMPROVANTE_ENCERRAMENTO_EXCLUSAO.md",
+      "sha256": "f9a5e67468ed75269c27816d82d233be82ba09f6a7dd3767f33e1678d05780a3",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/12_REGISTRO_OPERACOES_TRATAMENTO.md",
+      "sha256": "e2d6ba375b9ba857daaea8b30727e7f8540b73084f2d46529e01fa82afce6f3e",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/13_REGISTRO_SUBOPERADORES_TRANSFERENCIAS.md",
+      "sha256": "4700d5bebc8136b0dd6a97652f7fd1e82d5a08116b68932c2552f8d83c103cc1",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/14_CHECKLIST_GATE_JURIDICO.md",
+      "sha256": "c0f1fbfe00935d79ac405b2796fd4e743eb180a53b7d8f366032d51b8e29d5e0",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/15_BASES_JURIDICAS_E_LIMITES.md",
+      "sha256": "f717bd8c6cc6ded4a750f1eeeb4796c3ea00a92e88f2b3ee0fb86876f6d6bc9d",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/16_ASSINATURA_E_CONTRATACAO_DIGITAL.md",
+      "sha256": "f0c64b07ffaa815ac8e1a9e5435aec44b89c9c9332a079b194eae55889fb4f3d",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/17_COBRANCA_ATENDIMENTO_E_CANCELAMENTO.md",
+      "sha256": "4bfe685e2abc1d43d3b13398184a3cab299bc08b8eee2be0167a2efdecbb3a14",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/18_FECHAMENTO_PONTO_3.md",
+      "sha256": "4aa32008eabdbc3d3c140261dbf145a843e681ce2411b04f55ab82804e510e21",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/README.md",
+      "sha256": "b9ec53b86ab8f3739732992aa55b432745e52e76321ecba9ec8b1077b37384ee",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/juridico/TERMOS_DE_USO_SITE.md",
+      "sha256": "09478e24db0ea3a41632a71d542cb416521c87f032ac078409f134f6ac0386ad",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/modelos/AUTORIZACAO_TESTES_ATIVOS_RASCUNHO.md",
+      "sha256": "284368f92cc6f4b7911a30c84a8f26f548f1fb130010eb17334db5280295a358",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/modelos/CONTRATO_MESTRE_CHECKLIST_JURIDICO.md",
+      "sha256": "b6a7ca4efe5221d8d891cfd60e1897a6f23881415fdbf4bb0fd7ee331998c96d",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/modelos/PROPOSTA_COMERCIAL_RASCUNHO.md",
+      "sha256": "bdf3449993eeb69e497d49a9beedb5ac7b279fa92fee6761054baae88dd4653c",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/modelos/SOW_RASCUNHO.md",
+      "sha256": "919022eee7ada21c683d70309901318bb2419f707c7eabbd3f8e54c8cb55e5a1",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/operacao/MATRIZ_RETENCAO_PARA_REVISAO_JURIDICA.md",
+      "sha256": "06952c536c3ccf11f5cb8923daccc537d801abf042a92ef089f8b3630af5c8eb",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "negocio/README.md",
+      "sha256": "8f97042dad2ac807de7512d95b32123e330e1d7d33d2059c46c5185da7a9d621",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "pipeline/knowledge/hipporag/README.md",
+      "sha256": "6c31af623420731e3b87ace36c2b043a939b576f50a43538d583f56c91bb6243",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "pipeline/README.md",
+      "sha256": "8ae8f296de45d29635e2f21fd9d531fb4b958a4006ab83e3b3de0f8d78e8b985",
+      "mermaid_blocks": 0
+    },
+    {
+      "path": "README.md",
+      "sha256": "48ebfdbe333f6827ab345e5a2ffa6462beddf32162c335cb3c6f86f85401df83",
+      "mermaid_blocks": 1
+    }
+  ],
+  "legal_approval": false,
+  "production_approval": false,
+  "note": "Current local snapshot, not a signature or alteration of historical evidence."
+}

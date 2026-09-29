@@ -1,0 +1,2 @@
+execucao,data,minutos_maquina,minutos_humanos,custo_host_rateado,custo_worker_d1,custo_armazenamento,custo_pagamento,impostos_estimados,outros_custos,custo_hora_sustentavel,custo_unitario_completo,margem_contribuicao_alvo,preco_piso,observacao
+1,AAAA-MM-DD,0,0,0,0,0,0,0,0,0,0,0.60,0,preencher com dado medido

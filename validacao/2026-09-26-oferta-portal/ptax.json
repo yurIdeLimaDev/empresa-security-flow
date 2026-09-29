@@ -1,0 +1,6 @@
+{
+  "source": "Banco Central do Brasil, API PTAX CotacaoDolarDia",
+  "requestedDate": "09-25-2026",
+  "retrievedDate": "2026-09-26",
+  "value": [{ "cotacaoCompra": 5.1985, "cotacaoVenda": 5.1991, "dataHoraCotacao": "2026-09-25 13:10:17.447657" }]
+}

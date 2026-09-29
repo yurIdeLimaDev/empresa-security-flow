@@ -3,7 +3,7 @@
 Contrato canônico preservado: schema `1.0.0`, implementado em agosto.
 Consolidação documental em 13/09/2026; não houve migração do bundle. A nova
 vinculação de `patch_sha256` pertence à autorização de entrega, não é mudança
-de versão deste modelo. Ver [estado atual](ESTADO_FLUXO.md).
+de versão deste modelo. Ver [estado atual](ESTADO_ATUAL.md).
 
 ## Resposta direta sobre capacidades
 
